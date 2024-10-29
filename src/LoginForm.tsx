@@ -56,7 +56,7 @@ const LoginForm: React.FC = () => {
             </p>
           </div>
           <p className="text-center mt-4">
-              <Link to="/home" className="text-primary">
+              <Link to="/" className="text-primary">
                 Back to Home
               </Link>
           </p>
