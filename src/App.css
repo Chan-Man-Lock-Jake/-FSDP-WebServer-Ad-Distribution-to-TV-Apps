@@ -12,3 +12,18 @@
 .card {
   padding: 2em;
 }
+.app {
+  overflow-y: auto; /* Enable vertical scroll */
+  padding-top: 70px; /* Space for fixed-top navbar */
+}
+
+.main-content {
+  padding: 20px;
+  padding-left: 40px;  /* Add left padding */
+  padding-right: 40px; /* Add right padding */
+}
+
+body {
+  padding-left: 20px;
+  padding-right: 20px;
+}

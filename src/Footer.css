@@ -1,0 +1,16 @@
+.footer-section {
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .footer-nav a {
+    margin: 0 15px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .footer-nav a:hover {
+    color: #e91e63;
+  }
+  

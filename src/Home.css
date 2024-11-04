@@ -1,0 +1,43 @@
+
+
+.hero-section {
+  background-color: #f8f9fa;
+  padding: 100px 20px;
+}
+
+.dashboard-placeholder .dashboard-image {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  margin: auto;
+}
+
+.content-placeholder {
+  text-align: center;
+}
+
+.content-image {
+  width: 100%;
+  max-width: 400px; 
+  height: auto;
+  margin: auto;
+}
+
+.ad-templates-section, .real-time-section {
+  display: flex;
+  gap: 20px;
+}
+
+.left, .right {
+  flex: 1;
+}
+
+.highlight {
+  color: #e91e63; 
+}
+
+.advertise-ease-section img {
+  max-width: 400px;
+  width: 100%;
+}
+

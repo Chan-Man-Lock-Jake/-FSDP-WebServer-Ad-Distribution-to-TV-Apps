@@ -1,0 +1,42 @@
+.custom-navbar {
+    padding: 10px 20px; /* Adjust the padding for a balanced look */
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1); /* Add subtle shadow for separation */
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  .nav-link {
+    margin-right: 20px;
+    color: #333 !important;
+  }
+  
+  .nav-link:hover {
+    color: #e91e63 !important; /* Matching the 'Suave' theme color */
+  }
+  
+  .btn-dark {
+    background-color: #000; /* Ensuring the dark button is properly styled */
+  }
+  
+  .btn-outline-dark {
+    border-color: #000;
+    color: #000;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar-collapse {
+      text-align: center;
+    }
+  
+    .d-flex {
+      flex-direction: column;
+    }
+  
+    .btn {
+      margin-bottom: 10px; /* Add spacing between buttons in mobile view */
+    }
+  }
+  
