@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from './Header';
-import Hero from './Hero';
+import Hero from './components/Hero';
 import Features from './Features';
 import Footer from './Footer';
-import './Home.css';
+import './css/Home.css';
 
 const Home: React.FC = () => {
   return (
