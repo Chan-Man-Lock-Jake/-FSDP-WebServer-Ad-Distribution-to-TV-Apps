@@ -1,0 +1,63 @@
+/* SignUp.css */
+
+/* Container that holds both the placeholder and the signup form */
+.signup-page-container {
+    display: flex;
+    height: 100vh; /* Full height of the viewport */
+    align-items: center;
+    justify-content: center;
+    background-color: #f5f5f5;
+  }
+  
+  /* Placeholder image container */
+  .placeholder-image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .placeholder-image {
+    width: 90%;
+    max-width: 600px; /* Set a max width */
+    height: auto;
+    object-fit: cover;
+  }
+  
+  /* Signup form container */
+  .signup-form-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  /* Signup form box */
+  .signup-form-box {
+    background-color: #ffffff;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Custom input fields */
+  .custom-input {
+    border-radius: 25px;
+    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+  }
+  
+  /* Custom signup button */
+  .custom-signup-button {
+    border-radius: 25px;
+    padding: 0.75rem;
+    background-color: #d3d3d3; /* Light grey to show disabled state */
+    cursor: not-allowed;
+    border: none;
+  }
+  

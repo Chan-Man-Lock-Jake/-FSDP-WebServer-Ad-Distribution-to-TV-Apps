@@ -1,59 +1,77 @@
-import React, { useState } from 'react';
-import { Button, Form, Container, Row, Col } from 'react-bootstrap';
+import React from 'react';
+import placeholderImage from '../public/placeholderimage.jpg'; // Placeholder image import
+import './SignUp.css'; // Custom styles for the SignUp page
+
 const SignUp: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('New User Created:', { email, password });
-    // Add sign-up logic here, such as Firebase or your backend API
-  };
-
   return (
-    <Container className="d-flex align-items-center justify-content-center min-vh-100">
-      <Row className="w-100 justify-content-center">
-        <Col xs={12} md={8} lg={5}>
-          <div className="form-wrapper p-4 shadow">
-            <h2 className="text-center mb-4">Sign Up</h2>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formEmail" className="mb-3">
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control
+    <>
+      {/* Main Signup Page Content */}
+      <div className="signup-page-container d-flex">
+        {/* Left Side - Placeholder Image */}
+        <div className="placeholder-image-container">
+          <img src={placeholderImage} alt="Placeholder" className="placeholder-image" />
+        </div>
+
+        {/* Right Side - Signup Form */}
+        <div className="signup-form-container">
+          <div className="signup-form-box">
+            <h2 className="text-center">Sign Up</h2>
+            <form>
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control custom-input"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control custom-input"
+                  placeholder="Company Number"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <input
                   type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  className="form-control custom-input"
+                  placeholder="Email"
                   required
                 />
-              </Form.Group>
-
-              <Form.Group controlId="formPassword" className="mb-3">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
+              </div>
+              <div className="form-group">
+                <input
                   type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  className="form-control custom-input"
+                  placeholder="Password"
                   required
                 />
-              </Form.Group>
-
-              <Button variant="primary" type="submit" className="w-100 mt-3">
-                Create Account
-              </Button>
-            </Form>
-
-            <p className="text-center mt-4">
-              Already have an account?{' '}
-              <a href="/login" className="text-primary">
-                Login
-              </a>
-            </p>
+              </div>
+              <div className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="termsCheck"
+                  required
+                />
+                <label className="form-check-label" htmlFor="termsCheck">
+                  I acknowledge and agree to the Terms and Conditions.
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary w-100 custom-signup-button mt-3"
+                disabled
+              >
+                Sign Up
+              </button>
+            </form>
           </div>
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -1,16 +1,52 @@
-.footer-section {
-    padding: 40px 20px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e0e0e0;
-  }
-  
-  .footer-nav a {
-    margin: 0 15px;
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .footer-nav a:hover {
-    color: #e91e63;
-  }
-  
+/* Footer.css */
+
+.footer {
+  background-color: #f5f5f5; /* Light grey */
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  font-size: 1rem;
+  text-decoration: none;
+  color: #000;
+}
+
+.footer-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.footer-title-highlight {
+  color: #e57373; /* A light pink to match the "Suave" text */
+}
+
+.footer-social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.footer-social-link {
+  font-size: 1.5rem;
+  color: #000;
+  text-decoration: none;
+}
+
+.footer-social-link:hover {
+  color: #007bff; /* Optional hover color */
+}
+
+.footer-copyright {
+  font-size: 0.875rem;
+  color: #666;
+}

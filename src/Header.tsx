@@ -29,9 +29,6 @@ const Header: React.FC = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/pricing">Pricing</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/features">Features</Link>
-            </li>
           </ul>
           <div className="d-flex">
             <Link className="btn btn-dark me-2" to="/login">Login</Link>
