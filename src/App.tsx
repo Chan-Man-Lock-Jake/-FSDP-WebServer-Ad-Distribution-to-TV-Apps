@@ -21,7 +21,6 @@ const App: React.FC = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/faq" element={<Faq />} />
       </Routes>
-      <Footer />
     </Router>
   );
 };
