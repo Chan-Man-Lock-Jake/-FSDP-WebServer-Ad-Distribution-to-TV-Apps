@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Features from './Features';
 import Footer from './Footer';
 import './css/Home.css';
+import BlankSpace from './components/BlankSpace';
 
 const Home: React.FC = () => {
   return (

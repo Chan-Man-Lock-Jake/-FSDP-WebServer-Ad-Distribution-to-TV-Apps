@@ -7,11 +7,13 @@ import Pricing from './Pricing';
 import LoginForm from './LoginForm';
 import SignUp from './SignUp';
 import Faq from './Faq';
+import BlankSpace from './components/BlankSpace';
 
 const App: React.FC = () => {
   return (
     <Router>
       <Header />
+      <BlankSpace />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pricing" element={<Pricing />} />
