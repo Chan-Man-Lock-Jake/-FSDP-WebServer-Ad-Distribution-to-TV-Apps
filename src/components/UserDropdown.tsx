@@ -1,13 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import '../css/UserDropdown.css';
 
 const UserDropdown: React.FC = () => {
   return (
     <div className="dropdown-section">
-      <button className="dropdown-button">User</button>
+      <button className="dropdown-button">User ▼</button>
       <div className="dropdown-content">
-        <a href="#">View Users</a>
-        <a href="#">Add Users</a>
-        <a href="#">Monitor User Activity</a>
+        <Link to="/admin-management">View Users</Link>
+        <Link to="/add-new-user">Add Users</Link>
+        <Link to="/monitor-user-activity">Monitor User Activity</Link>
       </div>
     </div>
   );

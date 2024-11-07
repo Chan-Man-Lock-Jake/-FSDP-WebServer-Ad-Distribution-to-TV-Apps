@@ -2,6 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import UserManagementTable from './components/UserManagementTable';
+import MonitorUserActivity from './MonitorUserActivity';
+import AddNewUserForm from './components/AddNewUserForm';
+import AddNewUserPage from './AddNewUserPage';
 import Home from './Home';
 import Pricing from './Pricing';
 import LoginForm from './LoginForm';
@@ -22,6 +26,8 @@ const App: React.FC = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/admin-management" element={<SystemAdminManagement />} />
+        <Route path="/add-new-user" element={<AddNewUserPage />} />
+          <Route path="/monitor-user-activity" element={<MonitorUserActivity />} />
       </Routes>
     </Router>
   );

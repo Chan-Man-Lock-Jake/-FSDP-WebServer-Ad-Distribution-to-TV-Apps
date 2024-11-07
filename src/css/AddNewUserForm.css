@@ -1,0 +1,92 @@
+/* AddNewUserForm.css */
+
+.add-user-form-container {
+    background-color: #f1f1f1;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 40px auto;
+  }
+  
+  .form-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  /* AddNewUser.css */
+
+.add-user-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .add-user-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .add-user-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .form-input-container {
+    flex: 1 1 calc(50% - 20px);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-input-container label {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .form-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .add-user-button-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .add-user-button {
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-user-button:hover {
+    background-color: #0056b3;
+  }
+  
