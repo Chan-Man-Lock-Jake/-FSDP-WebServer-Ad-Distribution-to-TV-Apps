@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import UserManagementTable from './components/UserManagementTable';
 import MonitorUserActivity from './MonitorUserActivity';
+import AdCampaignManagement from './AdCampaignManagement';
 import AddNewUserForm from './components/AddNewUserForm';
 import AddNewUserPage from './AddNewUserPage';
 import Home from './Home';
@@ -14,6 +15,7 @@ import Faq from './Faq';
 import UserManagement from './UserManagement';
 import BlankSpace from './components/BlankSpace';
 import SystemAdminManagement from './SystemAdminManagement';
+import CreateCampaign from './CreateCampaign';
 
 const App: React.FC = () => {
   return (
@@ -29,6 +31,8 @@ const App: React.FC = () => {
         <Route path="/admin-management" element={<SystemAdminManagement />} />
         <Route path="/add-new-user" element={<AddNewUserPage />} />
         <Route path="/monitor-user-activity" element={<MonitorUserActivity />} />
+        <Route path="/ad-campaign-management" element={<AdCampaignManagement />} />
+        <Route path="/create-campaign" element={<CreateCampaign />} />
         <Route path="/usermanagement" element={<UserManagement/>} />
       </Routes>
     </Router>

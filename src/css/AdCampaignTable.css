@@ -1,0 +1,20 @@
+.ad-campaign-table {
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .ad-campaign-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .ad-campaign-table th, .ad-campaign-table td {
+    padding: 15px;
+    text-align: left;
+  }
+  
+  .ad-campaign-table tr {
+    border-bottom: 1px solid #ddd;
+  }
+  
