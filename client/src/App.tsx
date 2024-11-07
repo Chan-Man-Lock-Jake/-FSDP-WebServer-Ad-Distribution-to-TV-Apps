@@ -33,10 +33,7 @@ const App: React.FC = () => {
         <Route path="/monitor-user-activity" element={<MonitorUserActivity />} />
         <Route path="/ad-campaign-management" element={<AdCampaignManagement />} />
         <Route path="/create-campaign" element={<CreateCampaign />} />
-<<<<<<< HEAD:src/App.tsx
-=======
         <Route path="/usermanagement" element={<UserManagement/>} />
->>>>>>> 953a60981a9e836516e741e6eb709e7a9ebcf7d4:client/src/App.tsx
       </Routes>
     </Router>
   );
