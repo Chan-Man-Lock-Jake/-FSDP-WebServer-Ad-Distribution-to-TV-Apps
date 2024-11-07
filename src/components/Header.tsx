@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/Header.css'; // Custom styles for Header
+import '../css/Header.css'; // Custom styles for Header
 
 const Header: React.FC = () => {
   return (
