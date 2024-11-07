@@ -7,6 +7,7 @@ import Pricing from './Pricing';
 import LoginForm from './LoginForm';
 import SignUp from './SignUp';
 import Faq from './Faq';
+import UserManagement from './UserManagement';
 import BlankSpace from './components/BlankSpace';
 
 const App: React.FC = () => {
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/usermanagement" element={<UserManagement/>} />
       </Routes>
       <Footer />
     </Router>
