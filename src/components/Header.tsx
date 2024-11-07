@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/Header.css'; // Custom styles for Header
+import '../css/Header.css'; // Custom styles for Header
 
 const Header: React.FC = () => {
   return (
@@ -33,6 +33,7 @@ const Header: React.FC = () => {
           <div className="d-flex">
             <Link className="btn btn-dark me-2" to="/login">Login</Link>
             <Link className="btn btn-outline-dark" to="/signup">Join Us</Link>
+            <Link className="btn btn-outline-dark" to="/admin-management">SystemAdminManagement</Link>
           </div>
         </div>
       </div>

@@ -1,0 +1,132 @@
+/* UserManagementTable.css */
+
+.user-management-section {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdowns-section {
+    margin-bottom: 20px;
+  }
+  
+  .dropdown-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .dropdown-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .dropdown-button:hover {
+    background-color: #444;
+  }
+  
+  .filter-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-input-container,
+  .filter-select-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-input,
+  .filter-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 150px;
+  }
+  
+  .filter-button-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .filter-apply-button,
+  .filter-clear-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .filter-apply-button:hover {
+    background-color: #444;
+  }
+  
+  .filter-clear-button:hover {
+    background-color: #555;
+  }
+  
+  .add-user-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .add-user-button:hover {
+    background-color: #444;
+  }
+  
+  .user-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .user-table th, .user-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .user-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .user-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .edit-role-button {
+    background: transparent;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+  }
+  
+  .edit-role-button:hover {
+    color: #0056b3;
+  }
+  
+  .delete-user-button {
+    background: transparent;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+  }
+  
+  .delete-user-button:hover {
+    color: #a71d2a;
+  }
+  

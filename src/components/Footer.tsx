@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom for internal navigation
-import './css/Footer.css'; // Custom styles for the Footer
+import '../css/Footer.css';
+
 
 const Footer: React.FC = () => {
   return (
