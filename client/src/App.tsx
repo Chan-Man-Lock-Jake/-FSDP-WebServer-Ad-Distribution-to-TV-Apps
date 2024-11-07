@@ -12,6 +12,7 @@ import Pricing from './Pricing';
 import LoginForm from './LoginForm';
 import SignUp from './SignUp';
 import Faq from './Faq';
+import UserManagement from './UserManagement';
 import BlankSpace from './components/BlankSpace';
 import SystemAdminManagement from './SystemAdminManagement';
 import CreateCampaign from './CreateCampaign';
@@ -32,6 +33,10 @@ const App: React.FC = () => {
         <Route path="/monitor-user-activity" element={<MonitorUserActivity />} />
         <Route path="/ad-campaign-management" element={<AdCampaignManagement />} />
         <Route path="/create-campaign" element={<CreateCampaign />} />
+<<<<<<< HEAD:src/App.tsx
+=======
+        <Route path="/usermanagement" element={<UserManagement/>} />
+>>>>>>> 953a60981a9e836516e741e6eb709e7a9ebcf7d4:client/src/App.tsx
       </Routes>
     </Router>
   );
