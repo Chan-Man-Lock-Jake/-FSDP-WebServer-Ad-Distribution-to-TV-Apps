@@ -28,7 +28,8 @@ const App: React.FC = () => {
         <Route path="/faq" element={<Faq />} />
         <Route path="/admin-management" element={<SystemAdminManagement />} />
         <Route path="/add-new-user" element={<AddNewUserPage />} />
-          <Route path="/monitor-user-activity" element={<MonitorUserActivity />} />
+        <Route path="/monitor-user-activity" element={<MonitorUserActivity />} />
+        <Route path="/usermanagement" element={<UserManagement/>} />
       </Routes>
     </Router>
   );
