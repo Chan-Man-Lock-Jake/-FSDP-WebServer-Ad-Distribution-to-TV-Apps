@@ -1,0 +1,18 @@
+.ad-campaign-card {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: max-content; 
+  }
+  
+  .ad-campaign-actions button {
+    margin-left: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  

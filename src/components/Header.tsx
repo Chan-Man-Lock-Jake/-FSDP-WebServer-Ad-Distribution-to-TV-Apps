@@ -34,6 +34,7 @@ const Header: React.FC = () => {
             <Link className="btn btn-dark me-2" to="/login">Login</Link>
             <Link className="btn btn-outline-dark" to="/signup">Join Us</Link>
             <Link className="btn btn-outline-dark" to="/admin-management">SystemAdminManagement</Link>
+            <Link className="btn btn-dark me-2" to="/ad-campaign-management">AdCampaignManagement</Link>
           </div>
         </div>
       </div>
