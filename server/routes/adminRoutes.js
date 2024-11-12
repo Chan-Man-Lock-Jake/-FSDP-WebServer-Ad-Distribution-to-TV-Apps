@@ -1,5 +1,6 @@
 import express from 'express';
 import { createBucketController, uploadFileController } from '../controllers/adContentController.js';
+import { createCampaignController, deleteCampaignController } from "../controllers/adCampaignController.js";
 import multer from 'multer';
 
 const router = express.Router();
@@ -8,9 +9,14 @@ const router = express.Router();
 const upload = multer({ dest: 'uploads/' }); // Temporary storage folder
 
 // Route to create a bucket with folders
-router.post('/create-bucket', createBucketController);
+router.post('/create-bucket', createBucketController); // Reconsider when to place this!!!
 
-// Route to upload a file to a specific folder in a bucket
+// Upload a file (advertisements/template contents) to folder in company bucket
 router.post('/upload-file', upload.single('file'), uploadFileController);
+
+//Ad Campaign
+router.post('/create-campaign', createCampaignController ) // Create campaign
+router.delete('/delete-campaign', deleteCampaignController) // Delete campaign 
+router.post('/publish-campaign')                           // Publishes campaign to TV display
 
 export default router;

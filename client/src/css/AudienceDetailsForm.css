@@ -1,0 +1,48 @@
+.audience-details-form {
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .audience-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+  }
+  
+  .form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  .previous-button, .next-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ccc;
+  }
+  
+  .previous-button:hover, .next-button:hover {
+    background-color: #888;
+  }
+  
