@@ -6,7 +6,11 @@ const CreateCampaign: React.FC = () => {
   return (
     <div className="create-campaign-page">
       <nav className="navbar">
-        <button className="logout-button">Log Out</button>
+      <div className="campaign-card">
+          <Link to="/">
+            <p className="campaign-text">Back</p>
+          </Link>
+        </div>
       </nav>
 
       <main className="main-content">
