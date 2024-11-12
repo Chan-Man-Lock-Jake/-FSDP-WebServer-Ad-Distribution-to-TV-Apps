@@ -16,6 +16,8 @@ import UserManagement from './UserManagement';
 import BlankSpace from './components/BlankSpace';
 import SystemAdminManagement from './SystemAdminManagement';
 import CreateCampaign from './CreateCampaign';
+import DisplayAd from './DisplayAd';
+import PushAd from './PushAd';
 
 const App: React.FC = () => {
   return (
@@ -34,6 +36,8 @@ const App: React.FC = () => {
         <Route path="/ad-campaign-management" element={<AdCampaignManagement />} />
         <Route path="/create-campaign" element={<CreateCampaign />} />
         <Route path="/usermanagement" element={<UserManagement/>} />
+        <Route path="/displayAd" element={<DisplayAd />} />
+        <Route path="/pushAd" element={<PushAd />} />
       </Routes>
     </Router>
   );
