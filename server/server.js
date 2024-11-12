@@ -1,24 +1,15 @@
 import express from 'express';
-import bodyParser from 'body-parser'; // to parse JSON body
-import multer from 'multer'; // to handle file uploads
-import userRoutes from './routes/userRoutes.js';  // assuming user-related routes
-import adminRoutes from './routes/adminRoutes.js';  // assuming admin-related routes
-import dotenv from 'dotenv';
-
-dotenv.config(); // Load environment variables from .env
+import cors from 'cors';
+import userRoutes from './routes/userRoutes.js';  // Assuming userRoutes has the necessary route handlers
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware to parse JSON body and handle file uploads
-app.use(bodyParser.json()); // Parse JSON data in requests
+app.use(cors()); // Allow all origins (or configure it for specific ones)
+app.use(express.json());
 
-// Initialize multer for file handling
-const upload = multer({ dest: 'uploads/' }); // temporary folder for uploaded files
-
-// Routes
-app.use('/api', userRoutes);  // User routes
-app.use('/api/files', adminRoutes);  // Admin routes for creating buckets and uploading files
+// Use userRoutes directly
+app.use('/api/user', userRoutes); // All routes defined in userRoutes will be prefixed with '/api/user'
 
 // Start the server
 app.listen(port, () => {

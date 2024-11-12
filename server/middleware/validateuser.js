@@ -12,7 +12,7 @@ const validateUser = (req, res, next) => {
         return res.status(400).json({ message: 'Username is required' });
     }
 
-    // Validate UserPassword 
+    // Validate UserPassword --Edit later for hashed password 
     if (!UserPassword || UserPassword.length < 6) {
         return res.status(400).json({ message: 'UserPassword must be at least 6 characters long' });
     }

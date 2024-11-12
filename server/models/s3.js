@@ -31,7 +31,7 @@ const createS3Bucket = async (bucketName) => {
 
 // Function to create folders inside the S3 bucket
 const createS3Folders = async (bucketName) => {
-    const folderNames = ['static', 'video', 'scrolling', 'interactive'];
+    const folderNames = ['static', 'video', 'scrolling', 'interactive', 'advertisements'];
 
     try {
         for (let folder of folderNames) {
