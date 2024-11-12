@@ -13,6 +13,8 @@ dotenv.config();
 // Create `__dirname` since it's not available in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+import cors from 'cors';
+import userRoutes from './routes/userRoutes.js';  // Assuming userRoutes has the necessary route handlers
 
 const app = express();
 const port = process.env.PORT || 3000;

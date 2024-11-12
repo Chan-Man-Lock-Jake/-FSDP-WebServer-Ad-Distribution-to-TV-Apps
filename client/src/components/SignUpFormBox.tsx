@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const SignUpFormBox: React.FC = () => {
+  // Initializing form data state
   const [formData, setFormData] = useState({
-    name: '',
-    companyNumber: '',
-    companyName: '', // Added companyName to initial state
-    email: '',
-    password: '',
+    name: "",
+    companyNumber: "",
+    companyName: "", // Added companyName to initial state
+    email: "",
+    password: "",
   });
 
   const [agreeTerms, setAgreeTerms] = useState(false);
 
+  // Handle input changes in the form fields
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -20,34 +22,38 @@ const SignUpFormBox: React.FC = () => {
     });
   };
 
+  // Handle checkbox for terms and conditions
   const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAgreeTerms(e.target.checked);
-    console.log('Agree Terms:', agreeTerms);
+    console.log("Agree Terms:", agreeTerms);
   };
 
+  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Create a new user object to send to the backend
+    // Dynamically generate UserID
     const newUser = {
-      UserID: `ACC${Math.floor(1000000 + Math.random() * 9000000)}`, // Generate a random UserID
+      UserID: `ACC${Math.floor(1000000 + Math.random() * 9000000)}`, // Corrected to use backticks for template literals
       Username: formData.name,
       UserPassword: formData.password,
-      UserFullName: formData.name,
       UserCtcNo: formData.companyNumber,
       CompanyName: formData.companyName, // Use companyName from formData
       UserEmail: formData.email,
-      UserRole: 'User', // Default role
+      UserRole: "User", // Default role
       Company: formData.companyName, // Using companyName as the company
     };
 
     try {
       // Send user data to the backend
-      const response = await axios.post('/api/addUser', newUser);
-      alert('User signed up successfully!');
+      const response = await axios.post(
+        "http://localhost:3000/api/user/addUser",
+        newUser
+      );
+      alert("User signed up successfully!");
     } catch (error) {
-      console.error('Error during signup:', error);
-      alert('There was an error signing up. Please try again.');
+      console.error("Error during signup:", error);
+      alert("There was an error signing up. Please try again.");
     }
   };
 
@@ -56,6 +62,7 @@ const SignUpFormBox: React.FC = () => {
       <div className="signup-form-box">
         <h2 className="text-center">Sign Up</h2>
         <form onSubmit={handleSubmit}>
+          {/* Name Field */}
           <div className="form-group">
             <input
               type="text"
@@ -67,6 +74,8 @@ const SignUpFormBox: React.FC = () => {
               required
             />
           </div>
+
+          {/* Company Contact Number Field */}
           <div className="form-group">
             <input
               type="text"
@@ -78,17 +87,21 @@ const SignUpFormBox: React.FC = () => {
               required
             />
           </div>
+
+          {/* Company Name Field */}
           <div className="form-group">
             <input
               type="text"
               className="form-control custom-input"
               placeholder="Company Name"
-              name="companyName" // Changed from companyNumber to companyName
+              name="companyName"
               value={formData.companyName}
               onChange={handleChange}
               required
             />
           </div>
+
+          {/* Email Field */}
           <div className="form-group">
             <input
               type="email"
@@ -100,6 +113,8 @@ const SignUpFormBox: React.FC = () => {
               required
             />
           </div>
+
+          {/* Password Field */}
           <div className="form-group">
             <input
               type="password"
@@ -111,6 +126,8 @@ const SignUpFormBox: React.FC = () => {
               required
             />
           </div>
+
+          {/* Terms and Conditions Checkbox */}
           <div className="form-check">
             <input
               type="checkbox"
@@ -124,6 +141,8 @@ const SignUpFormBox: React.FC = () => {
               I acknowledge and agree to the Terms and Conditions.
             </label>
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
             className="btn btn-primary w-100 custom-signup-button mt-3"
