@@ -1,24 +1,39 @@
 import express from 'express';
-import bodyParser from 'body-parser'; // to parse JSON body
-import multer from 'multer'; // to handle file uploads
-import userRoutes from './routes/userRoutes.js';  // assuming user-related routes
-import adminRoutes from './routes/adminRoutes.js';  // assuming admin-related routes
+import bodyParser from 'body-parser'; 
+import multer from 'multer'; 
+import userRoutes from './routes/userRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
+import cors from 'cors'; 
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config(); // Load environment variables from .env
+dotenv.config();
+
+// Create `__dirname` since it's not available in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware to parse JSON body and handle file uploads
-app.use(bodyParser.json()); // Parse JSON data in requests
+app.use(cors());
+app.use(bodyParser.json());
 
 // Initialize multer for file handling
-const upload = multer({ dest: 'uploads/' }); // temporary folder for uploaded files
+const upload = multer({ dest: 'uploads/' });
+
+// Serve static files
+app.use(express.static(path.join(__dirname, '../client')));
+
+// Default route to serve `index.html` directly
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client', 'index.html'));
+});
 
 // Routes
-app.use('/api', userRoutes);  // User routes
-app.use('/api/files', adminRoutes);  // Admin routes for creating buckets and uploading files
+app.use('/api', userRoutes); 
+app.use('/api/files', adminRoutes);
 
 // Start the server
 app.listen(port, () => {

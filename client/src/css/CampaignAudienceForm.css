@@ -1,0 +1,45 @@
+.campaign-audience-form {
+    text-align: center;
+    padding: 40px;
+  }
+  
+  .audience-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .audience-option {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .audience-option.selected {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  .previous-button, .next-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ccc;
+  }
+  
+  .previous-button:hover, .next-button:hover {
+    background-color: #888;
+  }
+  
