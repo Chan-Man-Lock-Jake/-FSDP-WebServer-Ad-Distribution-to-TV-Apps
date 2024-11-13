@@ -16,10 +16,10 @@ const AdSelectionForm: React.FC = () => {
         </div>
 
         <div className="ad-navigation-buttons">
-          <Link to="/campaign-metric-selection">
+          <Link to="/ad-metric-selection">
             <button className="ad-navigation-button">Previous</button>
           </Link>
-          <Link to="/campaign-summary">
+          <Link to="/campaign-timeline">
             <button className="ad-navigation-button">Next</button>
           </Link>
         </div>

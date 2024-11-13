@@ -1,0 +1,104 @@
+/* client/src/css/CampaignDateForm.css */
+
+.campaign-date-form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .campaign-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .campaign-description {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  .date-time-picker {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+  }
+  
+  .picker-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .picker-group label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .react-datepicker-wrapper,
+  .react-time-picker {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    width: fit-content;
+  }
+  
+  .react-time-picker input {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100px;
+    text-align: center;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  .previous-button,
+  .next-button {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .previous-button:hover,
+  .next-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .previous-button {
+    background-color: #6c757d;
+  }
+  
+  .previous-button:hover {
+    background-color: #5a6268;
+  }
+  

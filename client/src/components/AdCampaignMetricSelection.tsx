@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/AdCampaignMetricSelection.css';
+import { useCampaign } from '../context/CampaignContext';
 
 const AdCampaignMetricSelection: React.FC = () => {
-  const [selectedMetrics, setSelectedMetrics] = useState<string[]>([]);
+  const { campaignData, setCampaignData } = useCampaign();
+  const [selectedMetrics, setSelectedMetrics] = useState<string[]>(campaignData.metrics);
+
+  // Update campaignData when metrics change
+  useEffect(() => {
+    setCampaignData((prevData) => ({ ...prevData, metrics: selectedMetrics }));
+  }, [selectedMetrics, setCampaignData]);
 
   const handleMetricClick = (metric: string) => {
     setSelectedMetrics((prev) => {
@@ -38,7 +45,7 @@ const AdCampaignMetricSelection: React.FC = () => {
         </div>
 
         <div className="ad-campaign-navigation-buttons">
-          <Link to="/ad-date-selection">
+          <Link to="/campaign-details">
             <button className="ad-campaign-navigation-button">Previous</button>
           </Link>
           <Link to="/ad-selection-page">

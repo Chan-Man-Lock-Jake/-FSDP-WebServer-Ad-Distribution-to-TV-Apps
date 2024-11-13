@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/CampaignAudienceForm.css';
+import { useCampaign } from '../context/CampaignContext';
 
 const CampaignAudienceForm: React.FC = () => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const { campaignData, setCampaignData } = useCampaign();
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(campaignData.audience);
+
   const navigate = useNavigate();
 
   const handleSelection = (option: string) => {
@@ -15,12 +18,11 @@ const CampaignAudienceForm: React.FC = () => {
   };
 
   const handleNext = () => {
-    if (selectedOptions.includes('Age') || selectedOptions.includes('Location')) {
-      navigate('/audience-details-form');
-    } else {
-      // Directly go to the next step
-      navigate('/ad-metric-selection');
-    }
+    setCampaignData({
+      ...campaignData,
+      audience: selectedOptions,
+    });
+    navigate('/audience-details-form');
   };
 
   return (

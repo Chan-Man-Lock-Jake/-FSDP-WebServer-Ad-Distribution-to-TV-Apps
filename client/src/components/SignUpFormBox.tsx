@@ -6,7 +6,7 @@ const SignUpFormBox: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     companyNumber: "",
-    companyName: "", // Added companyName to initial state
+    companyName: "",
     email: "",
     password: "",
   });
@@ -38,10 +38,10 @@ const SignUpFormBox: React.FC = () => {
       Username: formData.name,
       UserPassword: formData.password,
       UserCtcNo: formData.companyNumber,
-      CompanyName: formData.companyName, // Use companyName from formData
+      CompanyName: formData.companyName,
       UserEmail: formData.email,
       UserRole: "User", // Default role
-      Company: formData.companyName, // Using companyName as the company
+      Company: formData.companyName,
     };
 
     try {

@@ -1,97 +1,81 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+// client/src/pages/CampaignSummary.tsx
+import React, { useState } from 'react';
+import { useCampaign } from '../context/CampaignContext';
 import '../css/CampaignSummary.css';
 
 const CampaignSummary: React.FC = () => {
-  // States to store campaign details
-  const [advertisement, setAdvertisement] = useState('');
-  const [ageGroup, setAgeGroup] = useState<string | null>(null);
-  const [location, setLocation] = useState<string | null>(null);
-  const [metrics, setMetrics] = useState<string[]>([]);
-  const [dateRange, setDateRange] = useState<{ start: string; end: string }>({
-    start: '',
-    end: '',
-  });
-  const [title, setTitle] = useState('');
-  const [tvGroups, setTvGroups] = useState<string[]>([]);
+  const { campaignData } = useCampaign();
+  const [saveStatus, setSaveStatus] = useState('');
 
-  const navigate = useNavigate();
-
-  // Mocking fetch data from previous inputs
-  useEffect(() => {
-    // Here you can fetch data from a global state (like Redux), context API, or any temporary storage.
-    setAdvertisement('Sample Advertisement');
-    setAgeGroup('20-28');
-    setLocation('Northeast');
-    setMetrics(['Polling']);
-    setDateRange({ start: '10/03/2024', end: '10/17/2024' });
-    setTitle('Lorem Ipsum Ad Campaign');
-    setTvGroups(['TV Group A', 'TV Group B']);
-  }, []);
-
-  // Handle Save functionality
-  const handleSave = () => {
-    // Save campaign details logic here (could be an API call)
-    alert('Campaign saved successfully!');
+  const handleSave = async () => {
+    try {
+      // Here you would make an API call to save the campaign data
+      setSaveStatus('Campaign saved successfully!');
+    } catch (error) {
+      setSaveStatus('Error saving campaign. Please try again.');
+    }
   };
 
   return (
-    <div className="campaign-summary-page">
-      <h2 className="text-center">Ad Campaign</h2>
+    <div className="campaign-summary-container">
+      <h1 className="campaign-title">Ad Campaign Summary</h1>
 
-      {/* Advertisement Section */}
-      <div className="summary-section advertisement">
-        <div className="summary-box advertisement-box">
-          {advertisement ? <p>Advertisement</p> : <p>No Advertisement Selected</p>}
+      <div className="campaign-summary-content">
+        {/* Advertisement Section */}
+        <div className="summary-box advertisement">
+          <h4>Advertisement</h4>
+          <p>{campaignData.advertisement || 'No Advertisement Selected'}</p>
         </div>
-      </div>
 
-      {/* Summary of Selections */}
-      <div className="summary-section details">
-        <button className="summary-detail-button">{ageGroup}</button>
-        <button className="summary-detail-button">{location}</button>
-        {metrics.map((metric, index) => (
-          <button key={index} className="summary-detail-button">
-            {metric}
-          </button>
-        ))}
-      </div>
-
-      {/* Date and Campaign Title */}
-      <div className="summary-section date-and-title">
-        <div className="calendar-section">
-          <div className="calendar-box">{`${dateRange.start} - ${dateRange.end}`}</div>
-        </div>
-        <div className="title-section">
-          <div className="title-box">
-            <h4>Title</h4>
-            <p>{title}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* TV Groups Section */}
-      <div className="summary-section tv-groups">
-        <div className="summary-box tv-groups-box">
-          <p>TV Groups</p>
-          {tvGroups.length > 0 ? (
+        {/* Summary of Selections */}
+        <div className="summary-box audience">
+          <h4>Target Audience</h4>
+          {campaignData.audience.length > 0 ? (
             <ul>
-              {tvGroups.map((group, index) => (
-                <li key={index}>{group}</li>
+              {campaignData.audience.map((aud, index) => (
+                <li key={index}>{aud}</li>
               ))}
             </ul>
           ) : (
-            <p>No TV Groups Selected</p>
+            <p>No Audience Selected</p>
           )}
+        </div>
+
+        {/* Metrics Section */}
+        <div className="summary-box metrics">
+          <h4>Performance Metrics</h4>
+          {campaignData.metrics.length > 0 ? (
+            <ul>
+              {campaignData.metrics.map((metric, index) => (
+                <li key={index}>{metric}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No Metrics Selected</p>
+          )}
+        </div>
+
+        {/* Date Range Section */}
+        <div className="summary-box date-range">
+          <h4>Campaign Timeline</h4>
+          <p>
+            {new Date(campaignData.startDate).toLocaleString()} - {new Date(campaignData.endDate).toLocaleString()}
+          </p>
+        </div>
+
+        {/* Campaign Title & Objective Section */}
+        <div className="summary-box title-objective">
+          <h4>Title</h4>
+          <p>{campaignData.campaignName}</p>
+          <h4>Objective</h4>
+          <p>{campaignData.campaignObjective}</p>
         </div>
       </div>
 
-      {/* Save Button */}
-      <div className="save-button-container">
-        <button className="save-button" onClick={handleSave}>
-          Save
-        </button>
-      </div>
+      <button className="save-button" onClick={handleSave}>
+        Save
+      </button>
+      {saveStatus && <p className="save-status">{saveStatus}</p>}
     </div>
   );
 };

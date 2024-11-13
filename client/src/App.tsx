@@ -24,6 +24,7 @@ import AdCampaignMetricSelection from './components/AdCampaignMetricSelection';
 import AdSelectionForm from './components/AdSelectionForm'; 
 import ExistingCampaigns from './ExistingCampaigns';
 import CampaignSummary from './components/CampaignSummary';
+import CampaignTimelineForm from './components/CampaignTimelineForm';
 
 
 const App: React.FC = () => {
@@ -50,6 +51,7 @@ const App: React.FC = () => {
         <Route path="/audience-details-form" element={<AudienceDetailsForm />} />
         <Route path="/ad-metric-selection" element={<AdCampaignMetricSelection />} /> 
         <Route path="/ad-selection-page" element={<AdSelectionForm />} /> 
+        <Route path="/campaign-timeline" element={<CampaignTimelineForm />} />
         <Route path="/campaign-summary" element={<CampaignSummary />} />
 
       </Routes>

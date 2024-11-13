@@ -1,16 +1,20 @@
+// client/src/pages/NewCampaignForm.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCampaign } from './context/CampaignContext';
 import './css/NewCampaignForm.css';
 
 const NewCampaignForm: React.FC = () => {
+  const { campaignData, setCampaignData } = useCampaign();
   const navigate = useNavigate();
 
-  const handlePrevious = () => {
-    navigate('/create-campaign'); // Navigate to the create campaign page
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setCampaignData({ ...campaignData, campaignName: value });
   };
 
   const handleNext = () => {
-    navigate('/next-campaign-form'); // Navigate to the next form page
+    navigate('/next-campaign-form');
   };
 
   return (
@@ -24,10 +28,12 @@ const NewCampaignForm: React.FC = () => {
           id="campaignTitle"
           className="form-input"
           placeholder="Enter campaign title"
+          value={campaignData.campaignName}
+          onChange={handleChange}
         />
       </form>
       <div className="button-group">
-        <button className="previous-button" onClick={handlePrevious}>
+        <button className="next-button" onClick={() => navigate('/')}>
           Previous
         </button>
         <button className="next-button" onClick={handleNext}>
