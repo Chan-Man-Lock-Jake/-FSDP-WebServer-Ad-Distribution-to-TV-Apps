@@ -36,7 +36,7 @@ const Header: React.FC = () => {
             <Link className="btn btn-outline-dark" to="/signup">Join Us</Link>
             <Link className="btn btn-outline-dark" to="/admin-management">SystemAdminManagement</Link>
             <Link className="btn btn-dark me-2" to="/ad-campaign-management">AdCampaignManagement</Link>
-            <Link className="btn btn-dark me-2" to="/AdTypePage">AdTypePage</Link>
+            <Link className="btn btn-dark me-2" to="/create-ad">Create Ad</Link>
           </div>
         </div>
       </div>
