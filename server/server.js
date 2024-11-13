@@ -11,7 +11,6 @@ import { fileURLToPath } from 'url';
 dotenv.config();
 import http from 'http';
 import { Server } from 'socket.io';
-import cors from 'cors';
 
 // Create `__dirname` since it's not available in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -20,7 +19,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+var HOST = '172.20.10.2' || 'localhost';
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -45,7 +44,7 @@ app.use('/api/files', adminRoutes);  // Admin routes for creating buckets and up
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: `http://${HOST}:5173`,
     methods: ['GET', 'POST']
   },
 });
@@ -53,14 +52,27 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
-  socket.on('send_message', (data) => {
-    console.log(data);
-    socket.broadcast.emit('receive_message', data);
+  socket.on("joinRoom", (data) => {
+    socket.leave();
+    socket.join(data);
+    console.log(`Request to join room: ${data}`);
+    console.log(socket.rooms);
+  });
+
+  socket.on("leaveRoom", (room) => {
+    socket.leave(room);
+    console.log(`User left room: ${room}`);
   });
 
   socket.on('push_ad', (data) => {
     console.log("Ad pushed");
-    socket.broadcast.emit('display_ad', data);
+    console.log(`Request to push to room: ${data.room}`)
+    socket.to(data.room).emit('display_ad', data.message);
+  });
+
+  socket.on('push_clear_ad', () => {
+    console.log("Ad cleared");
+    socket.broadcast.emit('clear_ad');
   });
 
   socket.on('disconnect', () => {
@@ -70,5 +82,5 @@ io.on('connection', (socket) => {
 
 // Start the server
 server.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://${HOST}:${port}`);
 });

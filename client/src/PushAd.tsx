@@ -1,23 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
-const socket = io("http://localhost:3000/");
+var HOST = '172.20.10.2' || 'localhost'
+const socket = io(`http://${HOST}:3000/`);
 
-export function PushAd() {
+const PushAd: React.FC = () => {
+    const [room, setRoom] = useState("");
+
     const pushAd = () => {
-        socket.emit("push_ad", {message: "Advertisement"});
+        socket.emit("push_ad", {message: "Advertisement", room});
+        console.log(`Pushing to room: ${room}`);
     };
 
-    useEffect(() => {
-        socket.on("receive_message", (data) => {
-            console.log(`Ad Recieved`);
-            alert(data.message);
-        });
-    }, [socket]);
+    const clearLocalStorage = () => {
+        socket.emit("push_clear_ad");
+    };
+
+    // useEffect(() => {
+    //     socket.on("receive_message", (data) => {
+    //         console.log(`Ad Received`);
+    //         alert(data.message);
+    //     });
+
+    //     return () => {
+    //         socket.off("receive_message");
+    //     };
+    // }, []);
 
     return (
         <div className="App">
+            <input placeholder='TV Group' onChange={(event) => setRoom(event.target.value)}/>
             <button onClick={pushAd}>Push Advertisement</button>
+            <button onClick={clearLocalStorage}>Clear Storage</button>
         </div>
     )
 }

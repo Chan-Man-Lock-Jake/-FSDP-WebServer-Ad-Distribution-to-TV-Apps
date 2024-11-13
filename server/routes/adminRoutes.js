@@ -1,7 +1,7 @@
 import express from 'express';
 import { createBucketController, uploadFileController } from '../controllers/adContentController.js';
 import { createCampaignController, deleteCampaignController } from "../controllers/adCampaignController.js";
-import { saveCampaign } from '../controllers/adCampaignController.js';
+//import { saveCampaign } from '../controllers/adCampaignController.js';
 import multer from 'multer';
 
 const router = express.Router();
@@ -16,7 +16,7 @@ router.post('/create-bucket', createBucketController); // Reconsider when to pla
 router.post('/upload-file', upload.single('file'), uploadFileController);
 
 //Ad Campaign
-router.post('/saveCampaign', saveCampaign);
+//router.post('/saveCampaign', saveCampaign);
 router.post('/create-campaign', createCampaignController ) // Create campaign
 router.delete('/delete-campaign', deleteCampaignController) // Delete campaign 
 router.post('/publish-campaign')                           // Publishes campaign to TV display

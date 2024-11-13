@@ -2,30 +2,49 @@ import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import img from './assets/react.svg';
 
-const socket = io("http://localhost:3000/");
+var HOST = '172.20.10.2' || 'localhost'
+const socket = io(`http://${HOST}:3000/`);
 
-function DisplayAd() {
-    const [adReceived, setAdReceived] = useState("")
+const DisplayAd: React.FC = () => {
+    const [room, setRoom] = useState("");
+    const [currentRoom, setCurrentRoom] = useState<string | null>(null); 
+    const [adReceived, setAdReceived] = useState<string | null>(localStorage.getItem('adReceived') || null);
 
-    const sendMessage = () => {
-        socket.emit("send_message", {message: "Hello"});
+    const joinRoom = () => {
+        if (room !== "") {
+            if (currentRoom && currentRoom !== room) {
+                console.log(`Leaving room: ${currentRoom}`);
+                socket.emit("leaveRoom", currentRoom);  // Notify server you're leaving the room
+            }
+            console.log(`Joining room: ${room}`);
+            setCurrentRoom(room); // Update the current room state
+            socket.emit("joinRoom", room)
+        }
     };
 
     useEffect(() => {
-        socket.on("receive_message", (data) => {
-            alert(data.message);
+        socket.on("display_ad", (data) => {
+            //alert(data.message);
+            setAdReceived(img);
+            localStorage.setItem('adReceived', img);
         });
 
-        socket.on("display_ad", (data) => {
-            alert(data.message);
-            setAdReceived(img);
+        socket.on("clear_ad", () => {
+            localStorage.removeItem('adReceived');
+            setAdReceived(null);
+            console.log('LocalStorage cleared');
         });
-    }, [socket]);
+
+        return () => {
+            socket.off("display_ad");
+            socket.off("clear_ad");
+        };
+    }, []);
 
     return (
         <div className="App">
-            <input placeholder="Message..."/>
-            <button onClick={sendMessage}>Send Message</button>
+            <input placeholder='TV Group' onChange={(event) => setRoom(event.target.value)}/>
+            <button onClick={joinRoom}> Join Room</button>
             <img src={img} alt="Received Ad"/>
             {adReceived && <img src={adReceived} alt="Received Ad"/>}
         </div>
