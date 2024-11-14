@@ -1,35 +1,37 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import UserManagementTable from "./components/UserManagementTable";
-import MonitorUserActivity from "./MonitorUserActivity";
-import AdCampaignManagement from "./AdCampaignManagement";
-import AddNewUserForm from "./components/AddNewUserForm";
-import CampaignAudienceForm from "./components/CampaignAudienceForm";
-import AddNewUserPage from "./AddNewUserPage";
-import Home from "./Home";
-import Pricing from "./Pricing";
-import LoginForm from "./LoginForm";
-import SignUp from "./SignUp";
-import Faq from "./Faq";
-import UserManagement from "./UserManagement";
-import BlankSpace from "./components/BlankSpace";
-import SystemAdminManagement from "./SystemAdminManagement";
-import CreateCampaign from "./CreateCampaign";
-import NewCampaignForm from "./NewCampaignForm";
-import NextCampaignForm from "./NextCampaignForm";
-import AudienceDetailsForm from "./components/AudienceDetailsForm";
-import AdCampaignMetricSelection from "./components/AdCampaignMetricSelection";
-import AdSelectionForm from "./components/AdSelectionForm";
-import ExistingCampaigns from "./ExistingCampaigns";
-import CampaignSummary from "./components/CampaignSummary";
-import CampaignTimelineForm from "./components/CampaignTimelineForm";
-import CreateAd from "./components/CreateAd"; // Changed from AdType to CreateAd
-import ViewAdTemplate from "./components/ViewAdTemplate"; // Added new page
-import CreateAdTemplate from "./components/CreateAdTemplate"; // Added new page
-import CreateAdDetails from "./components/CreateAdDetails"; // Add this import
-import Canvas from "./Canvas";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import UserManagementTable from './components/UserManagementTable';
+import MonitorUserActivity from './MonitorUserActivity';
+import AdCampaignManagement from './AdCampaignManagement';
+import AddNewUserForm from './components/AddNewUserForm';
+import CampaignAudienceForm from './components/CampaignAudienceForm';
+import AddNewUserPage from './AddNewUserPage';
+import Home from './Home';
+import Pricing from './Pricing';
+import LoginForm from './LoginForm';
+import SignUp from './SignUp';
+import Faq from './Faq';
+import UserManagement from './UserManagement';
+import BlankSpace from './components/BlankSpace';
+import SystemAdminManagement from './SystemAdminManagement';
+import CreateCampaign from './CreateCampaign';
+import NewCampaignForm from './NewCampaignForm';
+import NextCampaignForm from './NextCampaignForm';
+import AudienceDetailsForm from './components/AudienceDetailsForm';
+import AdCampaignMetricSelection from './components/AdCampaignMetricSelection';
+import AdSelectionForm from './components/AdSelectionForm';
+import ExistingCampaigns from './ExistingCampaigns';
+import CampaignSummary from './components/CampaignSummary';
+import CampaignTimelineForm from './components/CampaignTimelineForm'
+import CreateAd from './components/CreateAd'; // Changed from AdType to CreateAd
+import ViewAdTemplate from './components/ViewAdTemplate'; // Added new page
+import CreateAdTemplate from './components/CreateAdTemplate'; // Added new page
+import CreateAdDetails from './components/CreateAdDetails'; // Add this import
+import DisplayAd from './DisplayAd';
+import PushAd from './PushAd';
+import Canvas from './Canvas';
 
 const App: React.FC = () => {
   return (
@@ -55,6 +57,8 @@ const App: React.FC = () => {
         />
         <Route path="/create-campaign" element={<CreateCampaign />} />
         <Route path="/usermanagement" element={<UserManagement />} />
+        <Route path="/displayAd" element={<DisplayAd />} />
+        <Route path="/pushAd" element={<PushAd />} />
         <Route path="/new-campaign-form" element={<NewCampaignForm />} />
         <Route path="/next-campaign-form" element={<NextCampaignForm />} />
         <Route path="/campaign-details" element={<CampaignAudienceForm />} />
@@ -77,6 +81,8 @@ const App: React.FC = () => {
         {/* Added route for CreateAdTemplate */}
         <Route path="/create-ad-details" element={<CreateAdDetails />} />
         <Route path="/canvas" element={<Canvas />} />
+        <Route path="/displayAd" element={<DisplayAd />} />
+        <Route path="/pushAd" element={<PushAd />} />
       </Routes>
       <Footer />
     </Router>

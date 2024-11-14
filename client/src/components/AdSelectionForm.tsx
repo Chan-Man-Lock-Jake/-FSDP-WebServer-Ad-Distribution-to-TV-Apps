@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate, Link } from "react-router-dom"; // Import useNavigate for navigation
 import "../css/AdSelectionForm.css";
 
 const AdSelectionForm: React.FC = () => {
@@ -70,12 +70,20 @@ const AdSelectionForm: React.FC = () => {
           />
           <button onClick={handleUpload} disabled={!file || loading}>
             {loading ? "Uploading..." : "Upload Ad"}
-          </button >
+          </button>
           <button onClick={handleCreateAd}>Create Ad</button>
         </div>
 
         {/* Display any error message */}
         {error && <p className="error-message">{error}</p>}
+        <div className="navigation-buttons">
+          <Link to="/ad-metric-selection">
+            <button className="previous-button">Previous</button>
+          </Link>
+          <Link to="/campaign-timeline">
+            <button className="next-button">Next</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

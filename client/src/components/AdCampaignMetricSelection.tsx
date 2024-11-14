@@ -44,12 +44,12 @@ const AdCampaignMetricSelection: React.FC = () => {
           {/* Add more metrics as needed */}
         </div>
 
-        <div className="ad-campaign-navigation-buttons">
-          <Link to="/campaign-details">
-            <button className="ad-campaign-navigation-button">Previous</button>
+        <div className="navigation-buttons">
+          <Link to="/audience-details-form">
+            <button className="previous-button">Previous</button>
           </Link>
           <Link to="/ad-selection-page">
-            <button className="ad-campaign-navigation-button">Next</button>
+            <button className="previous-button">Next</button>
           </Link>
         </div>
       </div>

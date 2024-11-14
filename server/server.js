@@ -7,22 +7,20 @@ import fs from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config(); // Load environment variables
+dotenv.config();
+
+// Create `__dirname` since it's not available in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Set up the S3 client
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  },
-});
+var HOST = '' || 'localhost';
 
-// Middleware to handle CORS and parsing JSON data
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' })); // Increase JSON size limit for large payloads (50MB example)
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // For URL-encoded form data
@@ -122,6 +120,18 @@ app.post("/saveCanvasImage", (req, res) => {
   });
 });
 
+// Set up the S3 client
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  },
+});
+
+// Middleware to handle CORS and parsing JSON data
+app.use(cors());
+
 // Function to generate the URL of the uploaded S3 object
 const getS3Url = (s3Key) => {
   return `https://flowers.co.s3.amazonaws.com/${s3Key}`;  // Adjust if your S3 bucket URL differs
@@ -180,8 +190,51 @@ app.get('/retrieve-ad/:folder/:fileName', async (req, res) => {
     res.status(500).json({ message: 'Error retrieving file from S3' });
   }
 });
+// Routes
+app.use('/api', userRoutes); 
+app.use('/api/files', adminRoutes);
+app.use('/api', userRoutes);  // User routes
+app.use('/api/files', adminRoutes);  // Admin routes for creating buckets and uploading files
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: `http://${HOST}:5173`,
+    methods: ['GET', 'POST']
+  },
+});
+
+io.on('connection', (socket) => {
+  console.log(`User connected: ${socket.id}`);
+
+  socket.on("joinRoom", (data) => {
+    socket.join(data);
+    console.log(`Request to join room: ${data}`);
+    console.log(socket.rooms);
+  });
+
+  socket.on("leaveRoom", (room) => {
+    socket.leave(room);
+    console.log(`User left room: ${room}`);
+  });
+
+  socket.on('push_ad', (data) => {
+    console.log("Ad pushed");
+    console.log(`Request to push to room: ${data.room}`)
+    socket.to(data.room).emit('display_ad', data.message);
+  });
+
+  socket.on('push_clear_ad', () => {
+    console.log("Ad cleared");
+    socket.broadcast.emit('clear_ad');
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`User disconnected: ${socket.id}`);
+  });
+});
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+server.listen(port, () => {
+  console.log(`Server is running on http://${HOST}:${port}`);
 });

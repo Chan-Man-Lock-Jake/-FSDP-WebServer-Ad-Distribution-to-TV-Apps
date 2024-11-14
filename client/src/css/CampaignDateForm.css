@@ -1,8 +1,10 @@
 /* client/src/css/CampaignDateForm.css */
 
-.campaign-date-form-container {
+.campaign-timeline-form-container {
     max-width: 600px;
+    width:100%;
     margin: 50px auto;
+    margin-bottom: 100px;
     padding: 20px;
     border-radius: 10px;
     background-color: #f9f9f9;
@@ -11,7 +13,6 @@
   }
   
   .campaign-title {
-    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 2rem;
     margin-bottom: 10px;
@@ -19,13 +20,12 @@
   }
   
   .campaign-description {
-    font-family: 'Poppins', sans-serif;
     font-size: 1.2rem;
     color: #666;
     margin-bottom: 30px;
   }
   
-  .date-time-picker {
+  .date-picker-container {
     display: flex;
     justify-content: space-between;
     margin: 20px 0;
@@ -43,7 +43,6 @@
   }
   
   .picker-group label {
-    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 1.1rem;
     color: #333;
@@ -51,7 +50,6 @@
   
   .react-datepicker-wrapper,
   .react-time-picker {
-    font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     padding: 5px;
     border-radius: 5px;
@@ -78,7 +76,6 @@
   
   .previous-button,
   .next-button {
-    font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     color: #fff;
     background-color: #007bff;
