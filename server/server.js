@@ -3,12 +3,15 @@ import bodyParser from 'body-parser';
 import multer from 'multer';
 import cors from 'cors';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import  userRoutes  from './routes/userRoutes.js';
+import  adminRoutes  from './routes/adminRoutes.js';
 import fs from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from 'dotenv';
-import path from 'path';
 import { fileURLToPath } from 'url';
+import http from 'http';
+import { Server } from 'socket.io';
 
 dotenv.config();
 
