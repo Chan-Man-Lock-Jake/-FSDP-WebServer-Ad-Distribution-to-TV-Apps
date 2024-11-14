@@ -1,39 +1,185 @@
 import express from 'express';
-import bodyParser from 'body-parser'; 
-import multer from 'multer'; 
-import userRoutes from './routes/userRoutes.js';
-import adminRoutes from './routes/adminRoutes.js';
-import cors from 'cors'; 
-import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
+import multer from 'multer';
+import cors from 'cors';
+import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { v4 as uuidv4 } from 'uuid';
+import dotenv from 'dotenv';
 
-dotenv.config();
-
-// Create `__dirname` since it's not available in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config(); // Load environment variables
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
-app.use(cors());
-app.use(bodyParser.json());
-
-// Initialize multer for file handling
-const upload = multer({ dest: 'uploads/' });
-
-// Serve static files
-app.use(express.static(path.join(__dirname, '../client')));
-
-// Default route to serve `index.html` directly
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client', 'index.html'));
+// Set up the S3 client
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  },
 });
 
-// Routes
-app.use('/api', userRoutes); 
-app.use('/api/files', adminRoutes);
+// Middleware to handle CORS and parsing JSON data
+app.use(cors());
+app.use(bodyParser.json({ limit: '50mb' })); // Increase JSON size limit for large payloads (50MB example)
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // For URL-encoded form data
+
+// Serve static files
+const uploadDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+
+app.use('/uploads', express.static(uploadDir)); // Serve uploaded files
+
+// Multer configuration for file uploads (increase file size limit to 50MB)
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, uploadDir),
+  filename: (req, file, cb) => cb(null, `${uuidv4()}-${file.originalname}`),
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 50 * 1024 * 1024 }, // Increase file size limit (50MB)
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image') || file.mimetype.startsWith('video')) {
+      cb(null, true); // Allow images and videos only
+    } else {
+      cb(new Error('Invalid file type. Only images and videos are allowed.'));
+    }
+  },
+});
+
+// Function to upload to S3
+const uploadAd = async (filePath, mimeType) => {
+  try {
+    const fileContent = fs.readFileSync(filePath);
+    const contentType = mimeType || 'application/octet-stream'; // Default to binary stream if unknown
+
+    const s3Key = `advertisement/${path.basename(filePath)}`;  // Upload to the 'advertisement' folder in S3
+
+    const uploadParams = {
+      Bucket: 'flowers.co',
+      Key: s3Key,
+      Body: fileContent,
+      ContentType: contentType,
+    };
+
+    // Upload the file to S3
+    await s3Client.send(new PutObjectCommand(uploadParams));
+
+    // Delete the local file after uploading to S3
+    fs.unlinkSync(filePath);
+    console.log(`Uploaded file to S3: ${s3Key}`);
+  } catch (error) {
+    console.error('Error uploading to S3:', error);
+    throw error;
+  }
+};
+
+// Endpoint to handle image and video uploads
+app.post('/upload', upload.array('file'), (req, res) => {
+  if (req.files) {
+    const files = req.files.map((file) => {
+      const filePath = `/uploads/${file.filename}`; // Local path of the uploaded file
+      const mimeType = file.mimetype;
+
+      return {
+        url: filePath,
+        type: file.mimetype.startsWith("video") ? "video" : "image",
+      };
+    });
+
+    res.json({ files }); // Return the local file path to be used for display
+  } else {
+    res.status(400).json({ message: 'No files were uploaded.' });
+  }
+});
+
+// Endpoint to save the canvas image and upload it to S3
+app.post("/saveCanvasImage", (req, res) => {
+  const { imageDataUrl } = req.body;
+  const buffer = Buffer.from(imageDataUrl.replace(/^data:image\/\w+;base64,/, ""), "base64");
+  const filePath = path.join(uploadDir, `${uuidv4()}.png`); // Create a unique file path for the image
+
+  // Save the image locally
+  fs.writeFile(filePath, buffer, async (err) => {
+    if (err) {
+      console.error("Error saving screenshot:", err);
+      return res.status(500).json({ message: "Failed to save screenshot." });
+    }
+
+    // Now upload the saved image to S3
+    try {
+      const mimeType = 'image/png';  // Set the appropriate MIME type for the canvas image
+      await uploadAd(filePath, mimeType); // Upload the file to S3
+      res.json({ message: "Screenshot saved successfully and uploaded to S3." });
+    } catch (uploadError) {
+      console.error("Error uploading to S3:", uploadError);
+      res.status(500).json({ message: "Failed to upload to S3." });
+    }
+  });
+});
+
+// Function to generate the URL of the uploaded S3 object
+const getS3Url = (s3Key) => {
+  return `https://flowers.co.s3.amazonaws.com/${s3Key}`;  // Adjust if your S3 bucket URL differs
+};
+
+// Endpoint to handle image and video uploads
+app.post('/upload', upload.array('file'), (req, res) => {
+  if (req.files) {
+    const files = req.files.map((file) => {
+      const filePath = `/uploads/${file.filename}`; // Local path of the uploaded file
+      const mimeType = file.mimetype;
+
+      // Upload to S3
+      uploadAd(path.join(uploadDir, file.filename), mimeType).catch((err) => {
+        console.error("Error uploading file to S3:", err);
+      });
+
+      const s3Key = `advertisement/${file.filename}`;
+      const s3Url = getS3Url(s3Key); // Generate the URL for the uploaded image
+
+      return {
+        url: s3Url,  // Return the public URL of the file in S3
+        type: file.mimetype.startsWith("video") ? "video" : "image",
+      };
+    });
+
+    res.json({ files }); // Return the URL of the uploaded file to the frontend
+  } else {
+    res.status(400).json({ message: 'No files were uploaded.' });
+  }
+});
+
+// Endpoint to retrieve file from S3
+app.get('/retrieve-ad/:folder/:fileName', async (req, res) => {
+  const { folder, fileName } = req.params;
+  const bucketName = 'flowers.co';  // Your S3 bucket name
+  const s3Key = `${folder}/${fileName.trim()}`;  // Ensure no extra spaces in the file name
+
+  try {
+    // Define the parameters for retrieving the file from S3
+    const getObjectParams = {
+      Bucket: bucketName,
+      Key: s3Key,  // Path inside the bucket
+    };
+
+    // Fetch the file from S3
+    const data = await s3Client.send(new GetObjectCommand(getObjectParams));
+
+    // Set the correct content type based on file
+    res.setHeader('Content-Type', data.ContentType);
+
+    // Pipe the file to the response stream (this sends the file as the response)
+    data.Body.pipe(res);
+  } catch (error) {
+    console.error('Error retrieving file from S3:', error);
+    res.status(500).json({ message: 'Error retrieving file from S3' });
+  }
+});
 
 // Start the server
 app.listen(port, () => {
