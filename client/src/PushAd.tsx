@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 
-var HOST = '172.20.10.2' || 'localhost'
+var HOST = '' || 'localhost'
 const socket = io(`http://${HOST}:3000/`);
 
 const PushAd: React.FC = () => {

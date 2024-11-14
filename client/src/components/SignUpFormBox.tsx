@@ -47,7 +47,7 @@ const SignUpFormBox: React.FC = () => {
     try {
       // Send user data to the backend
       const response = await axios.post(
-        "http://localhost:3000/api/user/addUser",
+        "http://localhost:3000/api/addUser",
         newUser
       );
       alert("User signed up successfully!");

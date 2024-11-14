@@ -43,13 +43,21 @@
     width: 100%;
     text-align: center;
   }
-  
+
+  /* Form group */
+  .form-group {
+    background-color: #ffffff;
+    display: flex;
+    border-radius: 8px;
+    width: 336px;
+    text-align: center;
+  }
+
   /* Custom input fields */
   .custom-input {
-    border-radius: 25px;
-    padding: 0.75rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid #ccc;
+    background-color: #ffffff;
+    display: flex;
+    width: 336px;
   }
   
   /* Custom signup button */

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-var HOST = '172.20.10.2' || 'localhost';
+var HOST = '' || 'localhost';
 
 export default defineConfig({
   root: 'client',

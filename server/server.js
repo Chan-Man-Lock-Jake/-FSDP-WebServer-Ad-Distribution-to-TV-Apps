@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
 
-var HOST = '172.20.10.2' || 'localhost';
+var HOST = '' || 'localhost';
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -53,7 +53,6 @@ io.on('connection', (socket) => {
   console.log(`User connected: ${socket.id}`);
 
   socket.on("joinRoom", (data) => {
-    socket.leave();
     socket.join(data);
     console.log(`Request to join room: ${data}`);
     console.log(socket.rooms);

@@ -7,7 +7,7 @@ html, body {
 }
 
 .form-wrapper {
-  background-color: #d3d3d3; /* Light grey background color for the form */
+  background-color: #c9adad; /* Light grey background color for the form */
   padding: 2rem;
   border-radius: 15px; /* Rounded corners for the form */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for better look */

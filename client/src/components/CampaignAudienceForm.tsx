@@ -26,27 +26,29 @@ const CampaignAudienceForm: React.FC = () => {
   };
 
   return (
-    <div className="campaign-audience-form">
-      <h1>Ad Campaign</h1>
-      <p>Choose your audience based on</p>
-      <div className="audience-options">
-        {['Age', 'Location', 'Gender', 'Interests', 'Income Level', 'Occupation'].map((option) => (
-          <button
-            key={option}
-            className={`audience-option ${selectedOptions.includes(option) ? 'selected' : ''}`}
-            onClick={() => handleSelection(option)}
-          >
-            {option}
+    <div className="campaign-audience-page">
+      <div className="campaign-audience-container">
+        <h1 className="campaign-audience-title">Ad Campaign</h1>
+        <p className="campaign-audience-subtitle">Choose your audience based on</p>
+        <div className="audience-options">
+          {['Age', 'Location', 'Gender', 'Interests', 'Income Level', 'Occupation'].map((option) => (
+            <button
+              key={option}
+              className={`audience-option ${selectedOptions.includes(option) ? 'selected' : ''}`}
+              onClick={() => handleSelection(option)}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+        <div className="navigation-buttons">
+          <button onClick={() => navigate('/create-campaign')} className="previous-button">
+            Previous
           </button>
-        ))}
-      </div>
-      <div className="navigation-buttons">
-        <button onClick={() => navigate('/create-campaign')} className="previous-button">
-          Previous
-        </button>
-        <button onClick={handleNext} className="next-button">
-          Next
-        </button>
+          <button onClick={handleNext} className="next-button">
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

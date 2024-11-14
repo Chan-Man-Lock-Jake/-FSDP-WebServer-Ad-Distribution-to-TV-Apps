@@ -3,7 +3,7 @@ import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 import dotenv from 'dotenv';
 
 // Load environment variables
-dotenv.config();
+dotenv.config({path: 'server/.env'});
 
 // Set up DynamoDB client 
 const dynamoDBClient = new DynamoDBClient({
@@ -13,6 +13,8 @@ const dynamoDBClient = new DynamoDBClient({
     secretAccessKey: process.env.SECRET_ACCESS_KEY,
   },
 });
+
+console.log(process.env.AWS_REGION, "Cannot read ENV");
 
 // Wrap the DynamoDB client with the DocumentClient for easier usage with JSON data
 const dynamoDB = DynamoDBDocumentClient.from(dynamoDBClient);
