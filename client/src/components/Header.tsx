@@ -38,6 +38,7 @@ const Header: React.FC = () => {
             <Link className="btn btn-dark me-2" to="/ad-campaign-management">AdCampaignManagement</Link>
             <Link className="btn btn-dark me-2" to="/DisplayAd">DisplayAd</Link>
             <Link className="btn btn-dark me-2" to="/PushAd">PushAd</Link>
+            <Link className="btn btn-dark me-2" to="/create-ad">Create Ad</Link>
           </div>
         </div>
       </div>

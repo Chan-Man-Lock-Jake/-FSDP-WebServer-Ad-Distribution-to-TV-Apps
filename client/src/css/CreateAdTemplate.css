@@ -1,0 +1,96 @@
+/* client/src/css/CreateAdTemplate.css */
+
+.create-ad-template-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .back-link {
+    margin-bottom: 15px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #444;
+    font-weight: bold;
+  }
+  
+  .create-ad-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .create-ad-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    position: relative;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    background-color: #e0e0e0;
+    font-size: 1.2rem;
+    outline: none;
+  }
+  
+  .file-upload-container {
+    display: block;
+    position: relative;
+  }
+  
+  .file-placeholder {
+    width: 100%;
+    height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 15px;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .file-upload-icon {
+    font-size: 2rem;
+    color: #888;
+  }
+  
+  .file-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .create-button {
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .file-type {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
