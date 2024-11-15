@@ -115,6 +115,14 @@ const Canvas: React.FC = () => {
     );
   };
 
+  const handleDelete = () => {
+    // Remove the selected media from the state
+    setMediaFiles((prev) =>
+      prev.filter((media) => media.id !== selectedItemId)
+    );
+    setSelectedItemId(null); // Deselect item after deletion
+  };
+
   const handleSaveToServer = async () => {
     if (!boxRef.current) return;
 
@@ -249,6 +257,7 @@ const Canvas: React.FC = () => {
         <button onClick={handleSaveToServer}>Save to Server</button>
       </div>
 
+      {/* Controls Section for Edit/Delete */}
       {selectedItemId && (
         <div style={{ marginTop: "20px" }}>
           <h3>Edit Selected Item</h3>
@@ -281,6 +290,11 @@ const Canvas: React.FC = () => {
           <span>
             {mediaFiles.find((media) => media.id === selectedItemId)?.height} px
           </span>
+          <br />
+          {/* Delete button */}
+          <button onClick={handleDelete} style={{ marginTop: "10px" }}>
+            Delete Selected Item
+          </button>
         </div>
       )}
 
