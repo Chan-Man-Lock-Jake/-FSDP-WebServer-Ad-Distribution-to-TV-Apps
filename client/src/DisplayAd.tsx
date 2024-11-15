@@ -19,14 +19,23 @@ const DisplayAd: React.FC = () => {
             console.log(`Joining room: ${room}`);
             setCurrentRoom(room); // Update the current room state
             socket.emit("joinRoom", room)
+            socket.emit("request_current_ad", room);
+        }
+    };
+
+    const goFullscreen = () => {
+        const adElement = document.getElementById('ad-image');
+        if (adElement && adElement.requestFullscreen) {
+            adElement.requestFullscreen();
         }
     };
 
     useEffect(() => {
         socket.on("display_ad", (data) => {
             //alert(data.message);
-            setAdReceived(img);
-            localStorage.setItem('adReceived', img);
+            setAdReceived(data.message);
+            console.log("Ad recieved: ", data)
+            localStorage.setItem('adReceived', data.message);
         });
 
         socket.on("clear_ad", () => {
@@ -41,12 +50,52 @@ const DisplayAd: React.FC = () => {
         };
     }, []);
 
+    const App = {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        padding: '50px',
+        marginBottom: '200px',
+    }
+
+    const section = {
+        height: '60px',
+        margin: '20px',
+    }
+
+    const input = {
+        height: '100%',
+    } 
+
+    const button = {
+        height: '100%',
+    }
+
+    const ad = {
+        width: '100%',
+        maxWidth: '800px', // limit width on regular screen
+        cursor: 'pointer',
+    }
+
     return (
-        <div className="App">
-            <input placeholder='TV Group' onChange={(event) => setRoom(event.target.value)}/>
-            <button onClick={joinRoom}> Join Room</button>
-            <img src={img} alt="Received Ad"/>
-            {adReceived && <img src={adReceived} alt="Received Ad"/>}
+        <div className="App" style={App}>
+            <div style={section}>
+            <input style={input} placeholder='TV Group' onChange={(event) => setRoom(event.target.value)}/>
+            <button style={button} onClick={joinRoom}> Join Room</button>
+            </div>
+            {adReceived ? (
+                <>
+                    <img
+                        id="ad-image"
+                        src={adReceived}
+                        alt="Received Ad"
+                        style={ad}
+                        onClick={goFullscreen} // Fullscreen on image click
+                    />
+                    <button onClick={goFullscreen}>Go Fullscreen</button>
+                </>
+            ) : (<p>No advertisement received</p>)}
         </div>
     )
 }

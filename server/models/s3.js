@@ -69,4 +69,30 @@ const uploadFileToFolder = async (bucketName, folderName, file) => {
     }
 };
 
-export { createS3Bucket, createS3Folders, uploadFileToFolder };
+const retrieveAllFilesFromFolder = async (bucketName, folderName) => {
+    let allFiles = [];
+    let continuationToken = null;
+    
+    do {
+        const params = {
+          Bucket: bucketName,
+          Prefix: `${folderName}/`,
+          ContinuationToken: continuationToken, // Continue where the last list left off
+        };
+  
+        try {
+          const data = await s3.listObjectsV2(params).promise();
+          allFiles = allFiles.concat(data.Contents); // Add the files to the list
+  
+          // If there are more files, the continuationToken will be set for the next request
+          continuationToken = data.IsTruncated ? data.NextContinuationToken : null;
+        } catch (error) {
+          console.error('Error retrieving files:', error);
+          throw error;
+        }
+    } while (continuationToken); // Continue looping as long as there are more files to fetch
+  
+    return allFiles;
+}
+
+export { createS3Bucket, createS3Folders, uploadFileToFolder, retrieveAllFilesFromFolder };

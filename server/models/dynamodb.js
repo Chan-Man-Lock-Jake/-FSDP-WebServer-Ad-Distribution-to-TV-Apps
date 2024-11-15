@@ -14,8 +14,6 @@ const dynamoDBClient = new DynamoDBClient({
   },
 });
 
-console.log(process.env.AWS_REGION, "Cannot read ENV");
-
 // Wrap the DynamoDB client with the DocumentClient for easier usage with JSON data
 const dynamoDB = DynamoDBDocumentClient.from(dynamoDBClient);
 
