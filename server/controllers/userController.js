@@ -14,7 +14,7 @@ const createUserController = async (req, res) => {
 
 // User Login
 const userLoginController = async (req, res) => {
-    console.log("Request Body:", req.body); // Log request body
+    console.log("Request Body:", req.body);
     const { Email, Password } = req.body || {};
 
     if (!Email || !Password) {

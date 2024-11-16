@@ -7,7 +7,7 @@ const router = express.Router();
 // Create new user after sign up
 router.post('/signup', validateUser, createUserController);
 
-// Define route for logging in
+// User login 
 router.post('/login', userLoginController);
 
 export default router;

@@ -14,7 +14,8 @@ const createUser = async (user) => {
             CompanyName: user.CompanyName,
             Email: user.Email,
             Password: user.Password,
-            Role: `Admin`
+            Role: `Admin`,
+            Status: `Approved`
         },
     };
 
@@ -67,6 +68,15 @@ const userLogin = async (email, password) => {
 
         if (result.Items && result.Items.length > 0) {
             const foundUser = result.Items[0];
+
+            // Check if the user's status is approved
+            if (foundUser.Status !== 'Approved') {
+                return {
+                    success: false,
+                    message: 'Your account is not approved yet. Please contact support.',
+                };
+            }
+
             return {
                 success: true,
                 message: 'Login successful',
