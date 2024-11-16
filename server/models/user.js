@@ -1,6 +1,7 @@
 import { dynamoDB } from './dynamodb.js';
-import { PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
 import { s3 } from './s3.js'
+import { PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { CreateBucketCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 
 // Create new user
 const createUser = async (user) => {
@@ -17,12 +18,32 @@ const createUser = async (user) => {
         },
     };
 
-    try {
+      try {
         await dynamoDB.send(new PutCommand(params));
-        return { message: 'User added to database successful' };
+        console.log('User added to database successfully.');
+
+        const bucketName = user.CompanyName.toLowerCase().replace(/\s+/g, '-') + '-bucket'; // Convert to lowercase and replace spaces with dashes
+        console.log(`Creating S3 bucket: ${bucketName}`);
+
+        // Create bucket
+        await s3.send(new CreateBucketCommand({ Bucket: bucketName }));
+
+        // Add folders to the S3 bucket
+        const folders = ['interactive/', 'scrolling/', 'video/', 'advertisement/'];
+        for (const folder of folders) {
+            const folderParams = {
+                Bucket: bucketName,
+                Key: folder, // S3 folders are created by adding objects with trailing slashes in the key
+                Body: '', // Empty body to create a folder
+            };
+            await s3.send(new PutObjectCommand(folderParams));
+            console.log(`Folder "${folder}" created in bucket "${bucketName}".`);
+        }
+
+        return { message: 'User added to database and S3 bucket created successfully' };
     } catch (error) {
-        console.error('Error adding user to database:', error);
-        throw new Error('Error adding user');
+        console.error('Error creating user or S3 bucket:', error);
+        throw new Error('Error adding user and setting up S3 bucket');
     }
 };
 

@@ -5,10 +5,6 @@ const validateUser = async (req, res, next) => {
     const user = req.body;
     const errors = [];
 
-    if (!user.CompanyName || typeof user.CompanyName !== 'string') {
-        errors.push('CompanyName is required.');
-    }
-
     if (!user.Email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.Email)) {
         errors.push('Email must be a valid email address.');
     }
@@ -16,6 +12,28 @@ const validateUser = async (req, res, next) => {
     if (!user.Password || typeof user.Password !== 'string' || user.Password.length < 8) {
         errors.push('Password is required, must be at least 8 characters long.');
     }
+
+    // Check if company name already exists
+    if (user.CompanyName) {
+        try {
+            const companyNameParams = {
+                TableName: 'User',
+                FilterExpression: 'CompanyName = :companyName',
+                ExpressionAttributeValues: {
+                    ':companyName': user.CompanyName,
+                },
+            };
+            const companyNameResult = await dynamoDB.send(new ScanCommand(companyNameParams));
+
+            if (companyNameResult.Items && companyNameResult.Items.length > 0) {
+                errors.push(`CompanyName "${user.CompanyName}" already exists.`);
+            }
+        } catch (error) {
+            console.error('Error checking CompanyName existence:', error);
+            errors.push('Internal server error while checking CompanyName.');
+        }
+    }
+
 
     // Check if UserID already exists in the database
     if (user.UserID) {

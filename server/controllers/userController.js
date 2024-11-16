@@ -25,12 +25,22 @@ const userLoginController = async (req, res) => {
         const loginResponse = await userLogin(Email, Password);
 
         if (loginResponse.success) {
+            // Save user info in the session
             req.session.user = {
                 UserID: loginResponse.user.UserID,
                 Name: loginResponse.user.Name,
                 Role: loginResponse.user.Role,
             };
-            res.status(200).json(loginResponse);
+
+            // Log the session ID
+            console.log("Session ID:", req.session.id);
+
+            res.status(200).json({
+                success: true,
+                message: loginResponse.message,
+                user: req.session.user,
+                sessionId: req.session.id, // Include session ID in response
+            });
         } else {
             res.status(401).json(loginResponse);
         }
@@ -40,4 +50,4 @@ const userLoginController = async (req, res) => {
     }
 };
 
-export { createUserController, userLoginController, userLogoutController };
+export { createUserController, userLoginController };
