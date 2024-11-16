@@ -2,21 +2,24 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 import dotenv from 'dotenv';
 
-// Load environment variables
-dotenv.config({path: 'server/.env'});
+// Loading environment variables from .env 
+dotenv.config();
 
-// Set up DynamoDB client 
+// Validate that required environment variables are present
+if (!process.env.AWS_REGION || !process.env.ACCESS_KEY_ID || !process.env.SECRET_ACCESS_KEY) {
+  throw new Error('Missing required AWS environment variables (AWS_REGION, ACCESS_KEY_ID, SECRET_ACCESS_KEY)');
+}
+
+// Initialize DynamoDB Client
 const dynamoDBClient = new DynamoDBClient({
-  region: process.env.AWS_REGION, 
+  region: process.env.AWS_REGION,
   credentials: {
     accessKeyId: process.env.ACCESS_KEY_ID,
     secretAccessKey: process.env.SECRET_ACCESS_KEY,
   },
 });
 
-console.log(process.env.AWS_REGION, "Cannot read ENV");
-
-// Wrap the DynamoDB client with the DocumentClient for easier usage with JSON data
+// Handles marshaling and unmarshaling
 const dynamoDB = DynamoDBDocumentClient.from(dynamoDBClient);
 
 export { dynamoDB };

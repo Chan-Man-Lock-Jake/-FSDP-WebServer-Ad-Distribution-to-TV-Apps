@@ -1,12 +1,10 @@
-import { addUser } from '../models/user.js';
-import { dynamoDB } from '../models/dynamodb.js';
-import { GetCommand } from '@aws-sdk/lib-dynamodb';
+import { createUser, userLogin } from '../models/user.js';
 
-// Add user
-const addUserController = async (req, res) => {
+// Create user
+const createUserController = async (req, res) => {
     try {
-        const newUser = req.body;
-        const response = await addUser(newUser); // Adding user to DynamoDB table
+        const newUser = req.body; 
+        const response = await createUser(newUser);
         res.status(201).json(response);
     } catch (error) {
         console.error('Error adding user:', error);
@@ -14,26 +12,43 @@ const addUserController = async (req, res) => {
     }
 };
 
-// User login
-const loginUserController = async (req, res) => {
-    const { Username, UserPassword } = req.body;
+// User Login
+const userLoginController = async (req, res) => {
+    console.log("Request Body:", req.body); // Log request body
+    const { Email, Password } = req.body || {};
+
+    if (!Email || !Password) {
+        return res.status(400).json({ message: 'Email and Password are required.' });
+    }
 
     try {
-        const params = {
-            TableName: 'User',
-            Key: { Username },
-        };
-        const { Item } = await dynamoDB.send(new GetCommand(params));
+        const loginResponse = await userLogin(Email, Password);
 
-        if (Item && Item.UserPassword === UserPassword) {
-            res.status(200).json({ success: true, message: 'Login successful!' });
+        if (loginResponse.success) {
+            req.session.user = {
+                UserID: loginResponse.user.UserID,
+                Name: loginResponse.user.Name,
+                Role: loginResponse.user.Role,
+            };
+            res.status(200).json(loginResponse);
         } else {
-            res.status(401).json({ success: false, message: 'Invalid username or password' });
+            res.status(401).json(loginResponse);
         }
     } catch (error) {
-        console.error('Error logging in:', error);
+        console.error('Error during login:', error);
         res.status(500).json({ message: 'Login failed' });
     }
 };
 
-export { addUserController, loginUserController };
+// User Logout
+const userLogoutController = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error during logout:', err);
+            return res.status(500).json({ message: 'Logout failed' });
+        }
+        res.status(200).json({ message: 'Logout successful' });
+    });
+};
+
+export { createUserController, userLoginController, userLogoutController };

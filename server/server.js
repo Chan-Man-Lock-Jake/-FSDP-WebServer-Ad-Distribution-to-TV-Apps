@@ -4,7 +4,7 @@ import multer from 'multer';
 import cors from 'cors';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import  userRoutes  from './routes/userRoutes.js';
-import  adminRoutes  from './routes/adminRoutes.js';
+//import  adminRoutes  from './routes/adminRoutes.js';
 import fs from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,21 +12,36 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import http from 'http';
 import { Server } from 'socket.io';
+import session from 'express-session';
 
 dotenv.config();
+
+const app = express();
+app.use(express.json()); // Middleware to parse JSON requests
+const port = process.env.PORT || 3000;
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+
+app.use(
+    session({
+        secret: process.env.SESSION_KEY, 
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false }, // Set to `true` if using HTTPS
+    })
+);
+
+// User route 
+app.use('/user', userRoutes);
 
 // Create `__dirname` since it's not available in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
-const port = process.env.PORT || 3000;
-
 var HOST = '' || 'localhost';
 
-app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' })); // Increase JSON size limit for large payloads (50MB example)
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // For URL-encoded form data
+
 
 // Serve static files
 const uploadDir = path.join(process.cwd(), 'uploads');
@@ -193,11 +208,6 @@ app.get('/retrieve-ad/:folder/:fileName', async (req, res) => {
     res.status(500).json({ message: 'Error retrieving file from S3' });
   }
 });
-// Routes
-app.use('/api', userRoutes); 
-app.use('/api/files', adminRoutes);
-app.use('/api', userRoutes);  // User routes
-app.use('/api/files', adminRoutes);  // Admin routes for creating buckets and uploading files
 
 const server = http.createServer(app);
 const io = new Server(server, {

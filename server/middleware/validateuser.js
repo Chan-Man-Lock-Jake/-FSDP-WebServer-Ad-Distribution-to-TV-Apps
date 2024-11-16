@@ -1,51 +1,83 @@
-const validateUser = (req, res, next) => {
-    const { UserID, Username, UserPassword, UserFullName, UserCtcNo, UserEmail, UserRole, Company } = req.body;
-    
-    // Validate UserID 
-    const userIDPattern = /^ACC\d{7}$/;
-    if (!userIDPattern.test(UserID)) {
-        return res.status(400).json({ message: 'UserID must start with "ACC" followed by 7 digits' });
+import { dynamoDB } from '../models/dynamodb.js';
+import { GetCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
+
+const validateUser = async (req, res, next) => {
+    const user = req.body;
+    const errors = [];
+
+    if (!user.CompanyName || typeof user.CompanyName !== 'string') {
+        errors.push('CompanyName is required.');
     }
 
-    // Validate Username 
-    if (!Username || typeof Username !== 'string') {
-        return res.status(400).json({ message: 'Username is required' });
+    if (!user.Email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.Email)) {
+        errors.push('Email must be a valid email address.');
     }
 
-    // Validate UserPassword --Edit later for hashed password 
-    if (!UserPassword || UserPassword.length < 6) {
-        return res.status(400).json({ message: 'UserPassword must be at least 6 characters long' });
+    if (!user.Password || typeof user.Password !== 'string' || user.Password.length < 8) {
+        errors.push('Password is required, must be at least 8 characters long.');
     }
 
-    // Validate UserFullName 
-    if (!UserFullName || typeof UserFullName !== 'string') {
-        return res.status(400).json({ message: 'UserFullName is required' });
+    // Check if UserID already exists in the database
+    if (user.UserID) {
+        try {
+            const userIdParams = {
+                TableName: 'User',
+                Key: { UserID: user.UserID },
+            };
+            const userIdResult = await dynamoDB.send(new GetCommand(userIdParams));
+
+            if (userIdResult.Item) {
+                errors.push(`UserID ${user.UserID} already exists.`);
+            }
+        } catch (error) {
+            console.error('Error checking UserID existence:', error);
+            errors.push('Internal server error while checking UserID.');
+        }
     }
 
-    // Validate UserCtcNo
-    const contactNoPattern = /^\d{1,20}$/; // Shouldbe between 1 to 20 digits
-    if (!contactNoPattern.test(UserCtcNo)) {
-        return res.status(400).json({ message: 'UserCtcNo must be a number between 1 and 20 digits' });
+    // Check if UserCtcNumber exists in the database
+    try {
+        const contactScanParams = {
+            TableName: 'User',
+            FilterExpression: 'UserCtcNumber = :contact',
+            ExpressionAttributeValues: {
+                ':contact': user.UserCtcNumber,
+            },
+        };
+        const contactScanResult = await dynamoDB.send(new ScanCommand(contactScanParams));
+
+        if (contactScanResult.Items && contactScanResult.Items.length > 0) {
+            errors.push(`Contact number ${user.UserCtcNumber} already exists.`);
+        }
+    } catch (error) {
+        console.error('Error checking contact number existence:', error);
     }
 
-    // Validate UserEmail
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailPattern.test(UserEmail)) {
-        return res.status(400).json({ message: 'UserEmail must be a valid email address' });
+    // Check if Email exists in the database
+    try {
+        const emailScanParams = {
+            TableName: 'User',
+            FilterExpression: 'Email = :email',
+            ExpressionAttributeValues: {
+                ':email': user.Email,
+            },
+        };
+        const emailScanResult = await dynamoDB.send(new ScanCommand(emailScanParams));
+
+        if (emailScanResult.Items && emailScanResult.Items.length > 0) {
+            errors.push(`Email ${user.Email} already exists.`);
+        }
+    } catch (error) {
+        console.error('Error checking email existence:', error);
     }
 
-    // Validate UserRole 
-    const validRoles = ['User', 'Admin', 'Operator', 'Content Creator']; 
-    if (!validRoles.includes(UserRole)) {
-        return res.status(400).json({ message: 'UserRole must be either "User", "Admin", "Operator", or "Content Creator".' });
+    // Log all errors if any exist
+    if (errors.length > 0) {
+        console.error('Validation errors:', errors);
+        return res.status(400).json({ message: 'Validation failed', errors });
     }
 
-    // Validate Company 
-    if (!Company || typeof Company !== 'string') {
-        return res.status(400).json({ message: 'Company is required' });
-    }
-
-    next();
+    next(); 
 };
 
 export { validateUser };

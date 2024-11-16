@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUpFormBox: React.FC = () => {
+  const navigate = useNavigate(); // Initialize navigate from React Router
+
   // Initializing form data state
   const [formData, setFormData] = useState({
     name: "",
-    companyNumber: "",
+    userCtcNo: "",
     companyName: "",
     email: "",
     password: "",
   });
 
-  const [agreeTerms, setAgreeTerms] = useState(false);
+  const [agreeTerms, setAgreeTerms] = useState(false); // State for terms checkbox
+  const [message, setMessage] = useState<string | null>(null); // State for success messages
+  const [errors, setErrors] = useState<string[]>([]); // State for validation errors
 
   // Handle input changes in the form fields
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,35 +30,50 @@ const SignUpFormBox: React.FC = () => {
   // Handle checkbox for terms and conditions
   const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAgreeTerms(e.target.checked);
-    console.log("Agree Terms:", agreeTerms);
   };
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Dynamically generate UserID
     const newUser = {
-      UserID: `ACC${Math.floor(1000000 + Math.random() * 9000000)}`, // Corrected to use backticks for template literals
-      Username: formData.name,
-      UserPassword: formData.password,
-      UserCtcNo: formData.companyNumber,
+      Name: formData.name,
+      UserCtcNo: formData.userCtcNo,
       CompanyName: formData.companyName,
-      UserEmail: formData.email,
-      UserRole: "User", // Default role
-      Company: formData.companyName,
+      Email: formData.email,
+      Password: formData.password,
     };
 
     try {
+      // Reset errors before making the request
+      setErrors([]);
+      setMessage(null);
+
       // Send user data to the backend
-      const response = await axios.post(
-        "http://localhost:3000/api/addUser",
-        newUser
-      );
-      alert("User signed up successfully!");
-    } catch (error) {
+      await axios.post("http://localhost:3000/user/signup", newUser);
+
+      // Show success message briefly
+      setMessage("Sign up successful!");
+
+      // Redirect to the home page after 2 seconds
+      setTimeout(() => {
+        navigate("/"); // Redirect to the home page
+      }, 2000);
+    } catch (error: any) {
       console.error("Error during signup:", error);
-      alert("There was an error signing up. Please try again.");
+
+      // Extract validation errors from the backend response
+      if (
+        error.response?.data?.errors &&
+        Array.isArray(error.response.data.errors)
+      ) {
+        setErrors(error.response.data.errors);
+      } else {
+        setMessage(
+          error.response?.data?.message ||
+            "There was an error signing up. Please try again."
+        );
+      }
     }
   };
 
@@ -61,6 +81,21 @@ const SignUpFormBox: React.FC = () => {
     <div className="signup-form-container">
       <div className="signup-form-box">
         <h2 className="text-center">Sign Up</h2>
+
+        {/* Display success or error message */}
+        {message && <div className="alert alert-info">{message}</div>}
+
+        {/* Display validation errors */}
+        {errors.length > 0 && (
+          <div className="alert alert-danger">
+            <ul>
+              {errors.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           {/* Name Field */}
           <div className="form-group">
@@ -80,9 +115,9 @@ const SignUpFormBox: React.FC = () => {
             <input
               type="text"
               className="form-control custom-input"
-              placeholder="Company Contact Number"
-              name="companyNumber"
-              value={formData.companyNumber}
+              placeholder="Company/Your Contact Number"
+              name="userCtcNo"
+              value={formData.userCtcNo}
               onChange={handleChange}
               required
             />
