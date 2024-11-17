@@ -1,4 +1,4 @@
-import { createUser, userLogin } from '../models/user.js';
+import { createUser, userLogin, createCampaign } from '../models/user.js';
 
 // Create user
 const createUserController = async (req, res) => {
@@ -50,4 +50,17 @@ const userLoginController = async (req, res) => {
     }
 };
 
-export { createUserController, userLoginController };
+const createCampaignController = async (req, res) => {
+    try {
+        const campaign = req.body;
+
+        // Call createCampaign function, passing the campaign and request object
+        const response = await createCampaign(campaign, req);
+        res.status(201).json(response);
+    } catch (error) {
+        console.error('Error creating campaign:', error);
+        res.status(500).json({ message: 'Error creating campaign' });
+    }
+};
+
+export { createUserController, userLoginController, createCampaignController };

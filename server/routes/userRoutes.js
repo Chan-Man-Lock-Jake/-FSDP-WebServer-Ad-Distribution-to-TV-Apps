@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUserController, userLoginController } from '../controllers/userController.js';
+import { createCampaignController, createUserController, userLoginController } from '../controllers/userController.js';
 import { validateUser } from '../middleware/validateUser.js';
 
 const router = express.Router();
@@ -9,5 +9,8 @@ router.post('/signup', validateUser, createUserController);
 
 // User login 
 router.post('/login', userLoginController);
+
+// Create Campaign
+router.post('/create-campaign', createCampaignController)
 
 export default router;
