@@ -7,9 +7,9 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BlankSpace />
-    <CampaignProvider>
+    {/* <BlankSpace /> */}
+    {/* <CampaignProvider> */}
     <App />
-    </CampaignProvider>
+    {/* </CampaignProvider> */}
   </StrictMode>,
 )
