@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react';
 var HOST = '' || 'localhost';
 
 export default defineConfig({
-  root: 'client',
   plugins: [react()],
   server: {
     host: HOST,
