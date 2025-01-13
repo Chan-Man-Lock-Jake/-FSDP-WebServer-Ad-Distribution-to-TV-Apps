@@ -28,7 +28,9 @@
     "react-datepicker": "^7.5.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
+    "react-slick": "^0.30.3",
     "react-time-picker": "^7.0.0",
+    "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.8.1",
     "uuid": "^11.0.3"
   },

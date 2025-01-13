@@ -1,48 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/Header.css'; // Custom styles for Header
+import '../css/Header.css'; // Ensure this matches the CSS file's location
 
 const Header: React.FC = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top custom-navbar">
-      <div className="container">
-        {/* Logo */}
-        <Link className="navbar-brand" to="/">Logo</Link>
+    <header className="header">
+      <div className="header-container">
+        {/* Logo Section */}
+        <div className="header-logo">
+          <img src="/assets/icons/suave_logo_bgremoved.svg" alt="Suave Logo" className="logo-image" />
+        </div>
 
-        {/* Toggle Button for Mobile View */}
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        {/* Navigation Links */}
+        <nav className="header-navigation">
+          <Link to="/features" className="header-nav-link">Features</Link>
+          <Link to="/company" className="header-nav-link">Company</Link>
+          <Link to="/pricing" className="header-nav-link">Pricing</Link>
+        </nav>
 
-        {/* Navbar Links and Buttons */}
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/pricing">Pricing</Link>
-            </li>
-          </ul>
-          <div className="d-flex">
-            
-            <Link className="btn btn-dark me-2" to="/login">Login</Link>
-            <Link className="btn btn-outline-dark" to="/signup">Join Us</Link>
-            <Link className="btn btn-outline-dark" to="/admin-management">SystemAdminManagement</Link>
-            <Link className="btn btn-dark me-2" to="/ad-campaign-management">AdCampaignManagement</Link>
-            <Link className="btn btn-dark me-2" to="/DisplayAd">DisplayAd</Link>
-            <Link className="btn btn-dark me-2" to="/PushAd">PushAd</Link>
-            <Link className="btn btn-dark me-2" to="/create-ad">Create Ad</Link>
-          </div>
+        {/* Action Buttons */}
+        <div className="header-actions">
+          <button className="header-button request-demo">Request Demo</button>
+          <button className="header-button login">Login</button>
         </div>
       </div>
-    </nav>
+    </header>
   );
 };
 

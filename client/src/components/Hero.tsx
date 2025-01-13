@@ -1,31 +1,51 @@
 import React from "react";
-import "../css/LandingPage.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import "../css/Hero.css";
+import nycBill from "../assets/nycBill.jpg";
 
 const Hero: React.FC = () => {
+  const sliderSettings = {
+    dots: true, // Show dots for navigation
+    infinite: true, // Infinite looping
+    speed: 500, // Transition speed
+    slidesToShow: 1, // Number of slides visible
+    slidesToScroll: 1, // Number of slides to scroll at once
+    arrows: false, // Hide arrow navigation
+    autoplay: true, // Automatically slide
+    autoplaySpeed: 3000, // Delay between slides
+  };
+
   return (
     <div className="landing-page">
       {/* TV Section */}
       <section className="tv-section">
         <div className="tv-container">
           <div className="tv-screen">
-            <h1>Elevate Your Brand with Suave Ad Solutions</h1>
-            <p>Manage, customize, and deliver your advertisements seamlessly across TVs!</p>
+            <h1 className="tv-title">Elevate Your Brand with Suave Ad Solutions</h1>
+            <p className="tv-description">
+              Manage, customize, and deliver your advertisements seamlessly across TVs!
+            </p>
             <button className="get-started-btn">Get Started</button>
           </div>
+          <div className="tv-stand"></div>
         </div>
       </section>
 
       {/* Carousel Section */}
-      <section className="carousel">
-        <div className="carousel-item">
-          <img src="/path-to-first-image.jpg" alt="Home" />
-        </div>
-        <div className="carousel-item">
-          <img src="/path-to-second-image.jpg" alt="Campaign" />
-        </div>
-        <div className="carousel-item">
-          <img src="/path-to-third-image.jpg" alt="Advertisement" />
-        </div>
+      <section className="carousel-section">
+        <Slider {...sliderSettings}>
+          <div className="carousel-item">
+            <img src={nycBill} alt="Home" />
+          </div>
+          <div className="carousel-item">
+            <img src={nycBill} alt="Campaign" />
+          </div>
+          <div className="carousel-item">
+            <img src={nycBill} alt="Advertisement" />
+          </div>
+        </Slider>
       </section>
 
       {/* Unified Platform Section */}
@@ -49,11 +69,6 @@ const Hero: React.FC = () => {
           </ul>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <p>© 2025 Suave Ad Solutions. All rights reserved.</p>
-      </footer>
     </div>
   );
 };
