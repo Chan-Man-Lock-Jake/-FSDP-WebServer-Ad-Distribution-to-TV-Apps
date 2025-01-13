@@ -4,6 +4,8 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import "../css/Hero.css";
 import nycBill from "../assets/nycBill.jpg";
+import tempImg1 from "../assets/placeholderimage.jpg"
+import tempImg2 from "../assets/PlaceHolder2.png"
 
 const Hero: React.FC = () => {
   const sliderSettings = {
@@ -40,35 +42,42 @@ const Hero: React.FC = () => {
             <img src={nycBill} alt="Home" />
           </div>
           <div className="carousel-item">
-            <img src={nycBill} alt="Campaign" />
+            <img src={tempImg1} alt="Campaign" />
           </div>
           <div className="carousel-item">
-            <img src={nycBill} alt="Advertisement" />
+            <img src={tempImg2} alt="Advertisement" />
           </div>
         </Slider>
       </section>
 
       {/* Unified Platform Section */}
       <section className="unified-platform-section">
-        <div className="platform-content">
-          <h2>A Unified Platform for All Your Advertisement Needs</h2>
-          <button className="start-free-trial-btn">Start Free Trial</button>
-          <ul className="platform-features">
-            <li>
-              <h3>Multi-Level Access Management</h3>
-              <p>Manage users efficiently with advanced role-based access control.</p>
-            </li>
-            <li>
-              <h3>Dynamic Ad Distribution</h3>
-              <p>Distribute ads dynamically across targeted channels for maximum reach.</p>
-            </li>
-            <li>
-              <h3>Customizable Elements</h3>
-              <p>Tailor your ads with customizable templates and intuitive design tools.</p>
-            </li>
-          </ul>
-        </div>
-      </section>
+  <div className="platform-content">
+    {/* Left Section */}
+    <div className="platform-left">
+      <h2 className="platform-title">A Unified Platform for All Your Advertisement Needs</h2>
+      <button className="start-free-trial-btn">Start Free Trial</button>
+    </div>
+    {/* Right Section */}
+    <div className="platform-right">
+      <ul className="platform-features">
+        <li>
+          <h3>Multi-Level Access Management</h3>
+          <p>Manage users efficiently with advanced role-based access control.</p>
+        </li>
+        <li>
+          <h3>Dynamic Ad Distribution</h3>
+          <p>Distribute ads dynamically across targeted channels for maximum reach.</p>
+        </li>
+        <li>
+          <h3>Customizable Elements</h3>
+          <p>Tailor your ads with customizable templates and intuitive design tools.</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
     </div>
   );
 };
