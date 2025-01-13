@@ -33,12 +33,14 @@ import DisplayAd from './DisplayAd';
 import PushAd from './PushAd';
 import Canvas from './Canvas';
 import Dashboard from './pages/Dashboard';
+import Hero from './components/Hero';
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path ="/home" element = {<Home />} />
       </Routes>
       {/* <Header />
       <BlankSpace />
