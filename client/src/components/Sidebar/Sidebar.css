@@ -8,10 +8,6 @@
     margin: 0;
     padding: 0;
 }
-p {
-    color: black;
-    font-size: 1000px;
-}
 #toggle-btn{
     rotate: 90deg;
     background: none;
@@ -44,6 +40,7 @@ p {
 }
 #sidebar ul{
     list-style: none;
+    padding: 0px;
 }
 #sidebar ul > li:first-child{
     display: flex;

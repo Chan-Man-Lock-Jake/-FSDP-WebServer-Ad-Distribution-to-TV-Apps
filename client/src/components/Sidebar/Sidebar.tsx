@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Sidebar.css';
 
-const Navbar: React.FC = () => {
+const Sidebar: React.FC = () => {
     const toggleSidebar = () => {
         const sidebar = document.getElementById('sidebar')
         const toggleButton = document.getElementById('toggle-btn')
@@ -65,10 +66,10 @@ const Navbar: React.FC = () => {
                     </button>
                 </li>
                 <li id="dashboard" className="active" onClick={(event) => toggleActive(event.currentTarget)}>
-                    <a>
+                    <Link to="dashboard">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h240v-560H200v560Zm320 0h240v-280H520v280Zm0-360h240v-200H520v200Z"/></svg>
                         <span>Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
                 <li>
                     <button onClick={(event) => toggleSubmenu(event.currentTarget)} className="dropdown-btn">
@@ -92,7 +93,7 @@ const Navbar: React.FC = () => {
                     <ul className="sub-menu">
                         <div>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><a>View Existing Campaigns</a></li>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><a>Create New Campaign</a></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="createadcampaign">Create New Campaign</Link></li>
                         </div>
                     </ul>
                 </li>
@@ -134,4 +135,4 @@ const Navbar: React.FC = () => {
 };
 
 
-export default Navbar;
+export default Sidebar;

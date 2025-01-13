@@ -32,20 +32,30 @@ import CreateAdDetails from './components/CreateAdDetails'; // Add this import
 import DisplayAd from './DisplayAd';
 import PushAd from './PushAd';
 import Canvas from './Canvas';
-import Dashboard from './pages/Dashboard';
+
+import PrivateLayout from './pages/PrivateLayout/PrivateLayout';
+import PublicLayout from './pages/PublicLayout/PublicLayout';
+import Landing from './pages/Landing/Landing';
+import Dashboard from './pages/Dashboard/Dashboard';
+import CreateAdCampaign from './pages/Campaign/CreateAdCampaign';
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
       </Routes>
-      {/* <Header />
-      <BlankSpace />
+      {/* <Header /> */}
+      {/* <BlankSpace /> */}
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/login" element={<LoginForm />} />
+        <Route path="/admin" element={<PrivateLayout />}>
+          <Route path="dashboard" element={<Dashboard/>} />
+          <Route path="createadcampaign" element={<CreateAdCampaign/>} />
+        </Route>
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<Landing />} />
+          <Route path="pricing" element={<Pricing />} />
+          <Route path="login" element={<LoginForm />} />
+        </Route>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/admin-management" element={<SystemAdminManagement />} />
@@ -77,18 +87,18 @@ const App: React.FC = () => {
         <Route path="/ad-selection-page" element={<AdSelectionForm />} />
         <Route path="/campaign-timeline" element={<CampaignTimelineForm />} />
         <Route path="/campaign-summary" element={<CampaignSummary />} />
-        <Route path="/create-ad" element={<CreateAd />} />{" "} */}
+        <Route path="/create-ad" element={<CreateAd />} />{" "}
         {/* Updated route for CreateAd */}
-        {/* <Route path="/view-ad-template" element={<ViewAdTemplate />} />{" "} */}
+        <Route path="/view-ad-template" element={<ViewAdTemplate />} />{" "}
         {/* Added route for ViewAdTemplate */}
-        {/* <Route path="/create-ad-template" element={<CreateAdTemplate />} />{" "} */}
+        <Route path="/create-ad-template" element={<CreateAdTemplate />} />{" "}
         {/* Added route for CreateAdTemplate */}
-        {/* <Route path="/create-ad-details" element={<CreateAdDetails />} />
+        <Route path="/create-ad-details" element={<CreateAdDetails />} />
         <Route path="/canvas" element={<Canvas />} />
         <Route path="/displayAd" element={<DisplayAd />} />
         <Route path="/pushAd" element={<PushAd />} />
       </Routes>
-      <Footer /> */}
+        {/* <Footer /> */}
     </Router>
   );
 };

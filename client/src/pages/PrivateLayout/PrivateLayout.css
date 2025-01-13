@@ -3,3 +3,7 @@
     display: grid;
     grid-template-columns: auto 1fr;
 }
+main{
+    display: flex;
+    background-color: var(--bg-clr);
+}
