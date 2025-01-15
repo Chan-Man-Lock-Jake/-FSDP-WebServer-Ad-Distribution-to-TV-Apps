@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/LoginForm.css';
 import LoginFormBox from './LoginFormBox';
-import placeholderImage from '../../public/placeholderimage.jpg';
+import placeholderImage from '../assets/placeholderimage.jpg';
 
 
 const LoginContainer: React.FC = () => {

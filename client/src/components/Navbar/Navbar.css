@@ -1,0 +1,70 @@
+:root{
+    --base-clr: #2A4E50;
+    --base-clr-2: #375A5C;
+    --base-clr-3: #394648;
+    --hover-clr: #349B91;
+    --text-clr: #FFFFFF;
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+#navbar{
+    box-sizing: border-box;
+    height: 70px;
+    width: 100vw;
+    background-color: var(--base-clr-3);
+}
+#navbar ul{
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0;
+    margin: 0;
+}
+#navbar a{
+    display: flex;
+    color: var(--text-clr);
+    font-weight: 400;
+    padding: .85em;
+    gap: 1em;
+}
+#navbar .mini-navbar{
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+}
+#navbar .mini-navbar span:hover{
+    border-width: .1em;
+    border-color: var(--text-clr);
+    border-bottom-style: solid;
+}
+#navbar .demo-btn span{
+    display: block;
+    white-space: nowrap;
+    padding: 2px 9px 4px;
+    border: .1em;
+    border-color: var(--text-clr);
+    border-style: solid;
+    border-radius: 25px;
+}
+#navbar .demo-btn span:hover{
+    color: var(--base-clr-3);
+    background-color: var(--text-clr);
+}
+#navbar .login-btn span{
+    display: block;
+    white-space: nowrap;
+    padding: 2px 9px 4px;
+    border: .1em;
+    border-color: var(--base-clr-3);
+    border-style: hidden;
+    border-radius: 25px;
+    margin-right: 30px;
+}
+#navbar .login-btn span:hover{
+    color: var(--base-clr-3);
+    background-color: var(--text-clr);
+}
