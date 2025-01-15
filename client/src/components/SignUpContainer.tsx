@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/Signup.css';
 import SignUpFormBox from './SignUpFormBox';
-import placeholderImage from '../../public/placeholderimage.jpg';
+import placeholderImage from '../assets/placeholderimage.jpg';
 
 
 const SignUpContainer: React.FC = () => {

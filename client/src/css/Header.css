@@ -1,46 +1,101 @@
-.custom-navbar {
-    padding: 10px 20px; /* Adjust the padding for a balanced look */
-    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1); /* Add subtle shadow for separation */
+/* Header Container */
+.header {
+  background-color: #2e3a3f; /* Dark background color */
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the header content */
+}
+
+/* Logo Section */
+.header-logo .logo-image {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+/* Navigation Links */
+.header-navigation {
+  display: flex;
+  gap: 20px;
+}
+
+.header-nav-link {
+  color: #fff; /* White text color */
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.header-nav-link:hover {
+  text-decoration: underline;
+}
+
+/* Action Buttons */
+.header-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.header-button {
+  padding: 8px 15px;
+  border: 1px solid #fff; /* White border */
+  border-radius: 20px;
+  color: #fff;
+  background-color: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.header-button:hover {
+  background-color: #fff;
+  color: #2e3a3f; /* Dark background for hover effect */
+}
+
+.request-demo {
+  font-weight: bold;
+}
+
+.login {
+  font-weight: 400;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .navbar-brand {
-    font-weight: bold;
-    font-size: 1.5rem;
+
+  .header-navigation {
+    margin-top: 10px;
+    gap: 15px;
   }
-  .navbar {
-    z-index: 1000; /* High enough value to keep it above other content */
+
+  .header-actions {
+    margin-top: 10px;
+    gap: 10px;
   }
-  
-  
-  .nav-link {
-    margin-right: 20px;
-    color: #333 !important;
+}
+
+@media (max-width: 480px) {
+  .header-nav-link {
+    font-size: 14px;
   }
-  
-  .nav-link:hover {
-    color: #e91e63 !important; /* Matching the 'Suave' theme color */
+
+  .header-button {
+    font-size: 12px;
+    padding: 5px 10px;
   }
-  
-  .btn-dark {
-    background-color: #000; /* Ensuring the dark button is properly styled */
+
+  .header-logo .logo-image {
+    height: 30px;
   }
-  
-  .btn-outline-dark {
-    border-color: #000;
-    color: #000;
-  }
-  
-  @media (max-width: 768px) {
-    .navbar-collapse {
-      text-align: center;
-    }
-  
-    .d-flex {
-      flex-direction: column;
-    }
-  
-    .btn {
-      margin-bottom: 10px; /* Add spacing between buttons in mobile view */
-    }
-  }
-  
+}
