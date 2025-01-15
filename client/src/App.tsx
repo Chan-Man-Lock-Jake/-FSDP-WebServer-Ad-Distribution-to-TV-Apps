@@ -9,7 +9,7 @@ import AddNewUserForm from './components/AddNewUserForm';
 import CampaignAudienceForm from './components/CampaignAudienceForm';
 import AddNewUserPage from './AddNewUserPage';
 import Home from './Home';
-import Pricing from './Pricing';
+import Pricing from './pages/Pricing/Pricing';
 import LoginForm from './LoginForm';
 import SignUp from './SignUp';
 import Faq from './Faq';

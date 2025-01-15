@@ -2,10 +2,11 @@ import React from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import "../css/Hero.css";
-import nycBill from "../assets/nycBill.jpg";
-import tempImg1 from "../assets/placeholderimage.jpg"
-import tempImg2 from "../assets/PlaceHolder2.png"
+import "./Hero.css";
+import nycBill from "../../assets/nycBill.jpg";
+import tempImg1 from "../../assets/placeholderimage.jpg"
+import tempImg2 from "../../assets/PlaceHolder2.png"
+import { Link } from "react-router-dom";
 
 const Hero: React.FC = () => {
   const sliderSettings = {
@@ -29,7 +30,11 @@ const Hero: React.FC = () => {
             <p className="tv-description">
               Manage, customize, and deliver your advertisements seamlessly across TVs!
             </p>
-            <button className="get-started-btn">Get Started</button>
+            <button className="get-started-btn">
+      <Link to="/pricing" style={{ textDecoration: "none", color: "inherit" }}>
+        Get Started
+      </Link>
+    </button>
           </div>
           <div className="tv-stand"></div>
         </div>
@@ -56,7 +61,10 @@ const Hero: React.FC = () => {
     {/* Left Section */}
     <div className="platform-left">
       <h2 className="platform-title">A Unified Platform for All Your Advertisement Needs</h2>
-      <button className="start-free-trial-btn">Start Free Trial</button>
+      <button className="start-free-trial-btn">
+      <Link to="/pricing" style={{ textDecoration: "none", color: "inherit" }}>
+      Start Free Trial
+      </Link></button>
     </div>
     {/* Right Section */}
     <div className="platform-right">

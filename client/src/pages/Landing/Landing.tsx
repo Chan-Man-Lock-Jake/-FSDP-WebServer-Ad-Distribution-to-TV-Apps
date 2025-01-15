@@ -1,10 +1,15 @@
 import React from 'react';
+import Hero from './Hero';
+import Footer from '../../components/Footer';
+
 
 const Landing: React.FC = () => {
     return (
         <div>
-            <p>MEOW MEOW MEOW MEOW MEOW </p>
+            <Hero />
+            <Footer />
         </div>
+
     );
 }
 
