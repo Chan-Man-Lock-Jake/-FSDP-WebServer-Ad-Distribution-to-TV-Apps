@@ -37,7 +37,9 @@ const LoginContainer: React.FC = () => {
     <div className="login-page">
       {/* Left Section: Login Form */}
       <div className="login-form-section">
-        <img src={suaveLogo} alt="Suave Logo" className="suave-logo" />
+        <div className="logo-container">
+          <img src={suaveLogo} alt="Suave Logo" className="suave-logo" />
+        </div>
         <div className="login-form-container">
           <h1>Log in to your account</h1>
           <p>Welcome back! Enter your credentials to log in</p>
@@ -52,7 +54,7 @@ const LoginContainer: React.FC = () => {
               {message}
             </div>
           )}
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="form-container">
             <div className="form-group">
               <label htmlFor="email">Username</label>
               <input
@@ -80,6 +82,10 @@ const LoginContainer: React.FC = () => {
                 required
               />
             </div>
+            <div className="form-group checkbox-container">
+              <input type="checkbox" id="remember" />
+              <label htmlFor="remember">Remember Me</label>
+            </div>
             <button type="submit" className="login-button">
               Login
             </button>
@@ -105,4 +111,3 @@ const LoginContainer: React.FC = () => {
 };
 
 export default LoginContainer;
-
