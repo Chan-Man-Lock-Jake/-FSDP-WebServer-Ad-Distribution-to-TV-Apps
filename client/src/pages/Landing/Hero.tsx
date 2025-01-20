@@ -55,32 +55,52 @@ const Hero: React.FC = () => {
         </Slider>
       </section>
 
-      {/* Unified Platform Section */}
-      <section className="unified-platform-section">
+     {/* Unified Platform Section */}
+<section className="unified-platform-section">
   <div className="platform-content">
     {/* Left Section */}
     <div className="platform-left">
-      <h2 className="platform-title">A Unified Platform for All Your Advertisement Needs</h2>
+      <h2 className="platform-title">
+        A Unified Platform for All Your Advertisement Needs
+      </h2>
       <button className="start-free-trial-btn">
-      <Link to="/pricing" style={{ textDecoration: "none", color: "inherit" }}>
-      Start Free Trial
-      </Link></button>
+        <Link to="/pricing" style={{ textDecoration: "none", color: "inherit" }}>
+          Start Free Trial
+        </Link>
+      </button>
     </div>
     {/* Right Section */}
     <div className="platform-right">
       <ul className="platform-features">
-        <li>
-          <h3>Multi-Level Access Management</h3>
-          <p>Manage users efficiently with advanced role-based access control.</p>
-        </li>
-        <li>
-          <h3>Dynamic Ad Distribution</h3>
-          <p>Distribute ads dynamically across targeted channels for maximum reach.</p>
-        </li>
-        <li>
-          <h3>Customizable Elements</h3>
-          <p>Tailor your ads with customizable templates and intuitive design tools.</p>
-        </li>
+      <li>
+  <h3>Multi-Level Access Management</h3>
+  <p>
+    Manage users efficiently with advanced role-based access control. Assign 
+    granular permissions to individual team members and ensure that every user 
+    has the right level of access to critical tools and data. This feature helps 
+    maintain security and streamlines collaboration by eliminating unnecessary 
+    bottlenecks.
+  </p>
+</li>
+<li>
+  <h3>Dynamic Ad Distribution</h3>
+  <p>
+    Distribute ads dynamically across targeted channels for maximum reach. 
+    Our platform leverages advanced algorithms to deliver your advertisements 
+    to the most relevant audiences at the right time, ensuring cost efficiency 
+    and improved engagement rates. Scale your campaigns effortlessly and 
+    achieve unparalleled visibility.
+  </p>
+</li>
+<li>
+  <h3>Customizable Elements</h3>
+  <p>
+    Tailor your ads with customizable templates and intuitive design tools. 
+    Personalize your messaging, visuals, and layouts to align with your brand 
+    identity. This flexibility empowers you to create impactful campaigns that 
+    resonate with your target audience and leave a lasting impression.
+  </p>
+</li>
       </ul>
     </div>
   </div>

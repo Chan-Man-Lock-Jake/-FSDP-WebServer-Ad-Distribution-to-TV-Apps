@@ -1,10 +1,12 @@
+/* General Login Page Styling */
 .login-page {
   display: flex;
   height: 100vh;
   background-color: #f9f5f1;
+  font-family: Arial, sans-serif;
 }
 
-/* Login Form Section */
+/* Left Section: Login Form */
 .login-form-section {
   flex: 1;
   padding: 60px;
@@ -18,88 +20,95 @@
 .logo-container {
   display: flex;
   justify-content: center;
-  align-items: center;
   margin-bottom: 40px;
 }
 
-#email, #password {
-  width: 100%; /* Make it fill the parent container */
-  max-width: 400px; /* Set a maximum width */
-  padding: 15px; /* Increase padding for a larger input field */
-  font-size: 1.2rem; /* Larger font size for better readability */
-  border: 1px solid #ccc; /* Add a subtle border */
-  border-radius: 5px; /* Rounded corners */
-  box-sizing: border-box; /* Ensure padding doesn't affect width */
-}
-
 .suave-logo {
-  width: 100px;
+  width: 120px;
+  height: auto;
 }
 
 .login-form-container {
   width: 100%;
   max-width: 500px;
+  text-align: left;
 }
 
 .login-form-container h1 {
   font-size: 2rem;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .login-form-container p {
   font-size: 1rem;
   color: #666;
-  margin-bottom: 30px;
-}
-
-.form-container {
-  width: 100%;
-}
-
-.form-group {
   margin-bottom: 20px;
 }
 
-.form-group label {
-  font-size: 1rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
+.form-container {
+  width: 100%; /* Set the width to take up the available space */
+  max-width: 600px; /* Adjust the maximum width to allow for expansion */
+  margin: 0 auto; /* Center the container */
+  padding: 20px; /* Add some padding for better spacing */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+/* Input Field Styling */
 .form-group input {
-  width: 100%; /* Adjusted to take full width of the container */
-  max-width: 600px; /* Optional: Add a max width to limit expansion */
-  padding: 15px; /* Larger padding for a bigger input box */
-  font-size: 1.2rem; /* Increased font size for better readability */
+  width: 100%; /* Make the input field fill the container */
+  max-width: none; /* Remove any maximum width restrictions */
+  padding: 15px;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-sizing: border-box; /* Ensure padding doesn't affect width */
-}
-
-
-.checkbox-container {
-  display: flex;
-  align-items: center;
-}
-
-.checkbox-container input {
-  margin-right: 10px;
+  box-sizing: border-box;
 }
 
 .forgot-password-link {
   font-size: 0.9rem;
-  color: #009688;
+  color: #0aa;
   text-decoration: none;
+  float: right;
+  margin-top: 5px;
 }
 
 .forgot-password-link:hover {
   text-decoration: underline;
 }
 
+/* Checkbox Styling */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.checkbox-container label {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* Button Styling */
 .login-button {
   width: 100%;
-  padding: 12px;
+  padding: 15px;
   font-size: 1.2rem;
   font-weight: bold;
   color: #ffffff;
@@ -107,12 +116,14 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .login-button:hover {
   background-color: #00796b;
 }
 
+/* Signup Text */
 .signup-text {
   margin-top: 20px;
   font-size: 1rem;
@@ -120,7 +131,7 @@
 }
 
 .signup-text a {
-  color: #009688;
+  color: #0aa;
   text-decoration: none;
 }
 
@@ -128,7 +139,7 @@
   text-decoration: underline;
 }
 
-/* Illustration Section */
+/* Right Section: Illustration */
 .illustration-section {
   flex: 1;
   padding: 60px;
@@ -137,17 +148,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .illustration-section h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .illustration-section p {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .illustration-image {
