@@ -108,9 +108,19 @@ const CreateAdCampaign: React.FC = () => {
                 </li>
                 <li>
                     <div>
-                        <a>Scheduled Time Slot</a>
+                        <a>Schedule Time Slot</a>
                         <p>Select your scheduled time slot for your advertisement.</p>
                     </div>
+                    <form id='schedule-time-slot-form'>
+                        <label htmlFor='start-time'>Start Time</label>
+                        <input id='start-time' type="time"/>
+                        <label htmlFor='duration'>Duration (hours)</label>
+                        <input id='duration' type="number"/>
+                        <label htmlFor='end-time'>End Time</label>
+                        <input id='end-time' type="time"/>
+                        <label htmlFor='interval'>Interval (hours)</label>
+                        <input id='interval' type="number"/>
+                    </form>
                 </li>
             </ul>
             <div className='next-container'>

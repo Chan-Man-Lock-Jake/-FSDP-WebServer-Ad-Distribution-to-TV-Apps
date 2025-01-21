@@ -243,7 +243,29 @@ section {
     }
   }
 }
-
+#schedule-time-slot-form {
+  display: flex;
+  flex-direction: column;
+  
+  label {
+    all: unset;
+    display: flex;
+    width: 200px;
+    color: black;
+  }
+  input {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 20px;
+    width: 138px;
+    height: 17px;
+    font-size: large;
+    border: 1px solid black;
+    border-radius: 8px;
+  }
+}
 .next-container {
   all: unset;
   display: flex;
