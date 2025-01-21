@@ -5,46 +5,48 @@ import { CreateBucketCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 
 // Create new user
 const createUser = async (user) => {
-    const params = {
+    // Fetch the last UserId
+    const fetchParams = {
         TableName: 'User',
-        Item: {
-            UserID: `ACC${Math.floor(1000000 + Math.random() * 9000000)}`, // Generate a 7-digit random UserID
-            Name: user.Name,
-            UserCtcNo: user.UserCtcNo,
-            CompanyName: user.CompanyName,
-            Email: user.Email,
-            Password: user.Password,
-            Role: `Admin`,
-            Status: `Approved`
-        },
+        ProjectionExpression: 'UserId',
     };
 
-      try {
+    try {
+        const result = await dynamoDB.send(new ScanCommand(fetchParams));
+        let lastUserId = 'U00000'; // Default starting UserId if no users exist
+
+        if (result.Items && result.Items.length > 0) {
+            // Sort UserIds in descending order to get the latest
+            const sortedUsers = result.Items.sort((a, b) => b.UserId.localeCompare(a.UserId));
+            lastUserId = sortedUsers[0].UserId; // Get the last UserId
+        }
+
+        // Increment the UserId
+        const userIdNumber = parseInt(lastUserId.slice(1), 10) + 1; // Extract numeric part and increment
+        const newUserId = `U${String(userIdNumber).padStart(5, '0')}`; // Format back to 'UXXXXX'
+
+        // Define parameters for adding a new user
+        const params = {
+            TableName: 'User',
+            Item: {
+                UserId: newUserId, // Use the incremented UserId
+                Name: user.Name,
+                Email: user.Email,
+                Password: user.Password,
+                Role: user.Role || 'User', // Default role to 'User' if not provided
+                CreatedAt: new Date().toISOString(), // Store the current timestamp
+            },
+        };
+
+        // Insert the new user into the database
         await dynamoDB.send(new PutCommand(params));
         console.log('User added to database successfully.');
 
-        const bucketName = user.CompanyName.toLowerCase().replace(/\s+/g, '-') + '-bucket'; // Convert to lowercase and replace spaces with dashes
-        console.log(`Creating S3 bucket: ${bucketName}`);
-
-        // Create bucket
-        await s3.send(new CreateBucketCommand({ Bucket: bucketName }));
-
-        // Add folders to the S3 bucket
-        const folders = ['interactive/', 'scrolling/', 'video/', 'advertisement/'];
-        for (const folder of folders) {
-            const folderParams = {
-                Bucket: bucketName,
-                Key: folder, // S3 folders are created by adding objects with trailing slashes in the key
-                Body: '', // Empty body to create a folder
-            };
-            await s3.send(new PutObjectCommand(folderParams));
-            console.log(`Folder "${folder}" created in bucket "${bucketName}".`);
-        }
-
-        return { message: 'User added to database and S3 bucket created successfully' };
+        // Return a success message
+        return { message: 'User added successfully', UserId: newUserId };
     } catch (error) {
-        console.error('Error creating user or S3 bucket:', error);
-        throw new Error('Error adding user and setting up S3 bucket');
+        console.error('Error adding user:', error);
+        throw new Error('Error adding user');
     }
 };
 

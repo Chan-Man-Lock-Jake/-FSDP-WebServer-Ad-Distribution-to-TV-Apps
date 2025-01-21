@@ -1,16 +1,9 @@
 import express from 'express';
 import { createCampaignController, createUserController, userLoginController } from '../controllers/userController.js';
 import { validateUser } from '../middleware/validateUser.js';
-
 const router = express.Router();
 
-// Create new user after sign up
-router.post('/signup', validateUser, createUserController);
-
-// User login 
-router.post('/login', userLoginController);
-
-// Create Campaign
-router.post('/create-campaign', createCampaignController)
-
+router.post('/signup', createUserController); // Correct function name
+router.post('/login', userLoginController); // Correct function name
+router.post('/create-campaign', createCampaignController); // Correct function name
 export default router;

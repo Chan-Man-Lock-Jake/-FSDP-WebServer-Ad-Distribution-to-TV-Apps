@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../css/LoginForm.css";
-import illustrationImage from "../assets/icons/undraw_digital-artwork_xlmm.svg";
-import suaveLogo from "../assets/icons/suave_logo_bgremoved.svg";
+import "./LoginForm.css";
+import illustrationImage from "../../assets/icons/undraw_digital-artwork_xlmm.svg";
+import suaveLogo from "../../assets/icons/suave_logo_bgremoved.svg";
 import axios from "axios";
 
 const LoginContainer: React.FC = () => {
@@ -11,27 +11,46 @@ const LoginContainer: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     try {
-      await axios.post(
+      // Send login request
+      const response = await axios.post(
         "http://localhost:3000/user/login",
         {
-          Email: email,
+          Email: email, // Ensure field matches backend expectations
           Password: password,
         },
         {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true, // To allow cookies (if used for sessions)
         }
       );
-      setMessage("Login successful!");
+  
+      // Handle successful login
+      if (response.data.success) {
+        setMessage("Login successful!");
+  
+        // Optionally, redirect based on user role
+        if (response.data.user.Role === "Admin") {
+          window.location.href = "/admin/dashboard"; // Redirect for Admins
+        } else if (response.data.user.Role === "Content Creator") {
+          window.location.href = "/creator/dashboard"; // Redirect for Content Creators
+        } else {
+          window.location.href = "/user/dashboard"; // Redirect for standard users
+        }
+      } else {
+        setMessage(response.data.message || "Login failed. Please try again.");
+      }
     } catch (error: any) {
+      // Handle login errors
       setMessage(
         error.response?.data?.message || "Login failed. Please try again."
       );
     }
   };
+  
 
   return (
     <div className="login-page">
