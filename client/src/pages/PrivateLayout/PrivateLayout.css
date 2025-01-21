@@ -5,5 +5,7 @@
 }
 main{
     display: flex;
+    height: 100vh;
+    overflow-y: auto;
     background-color: var(--bg-clr);
 }

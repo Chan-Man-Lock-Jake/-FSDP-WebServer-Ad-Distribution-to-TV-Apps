@@ -1,7 +1,7 @@
 import React from 'react';
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 import './CreateAdCampaign.css';
+import "react-calendar/dist/Calendar.css";
 
 const CreateAdCampaign: React.FC = () => {
     return (
@@ -12,7 +12,7 @@ const CreateAdCampaign: React.FC = () => {
                         <a>Campaign Description</a>
                         <p>Come up with a name and objective for your TV Group!</p>
                     </div>
-                    <form id='tv-group-description-form'>
+                    <form id='campaign-description-form'>
                         <div>
                             <a>Campaign Name</a>
                             <input id='campaign-name' placeholder='e.g. Christmas Specials Chicken Burger'/>
@@ -28,25 +28,81 @@ const CreateAdCampaign: React.FC = () => {
                         <a>Demographic</a>
                         <p>Select your demographics based on the options provided.</p>
                     </div>
+                    <form id='demographic-form'>
+                        <div>
+                            <div>
+                                <a>Gender</a>
+                                <a>Age Range</a>
+                            </div>
+                            <div>
+                                <div>
+                                <select>
+                                    <option label='select option'></option>
+                                    <option>M</option>
+                                    <option>F</option>
+                                </select>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="red"><path d="M200-440v-80h560v80H200Z"/></svg>
+                                </div>
+                                <div>
+                                <input placeholder='e.g. 15-20'/>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="red"><path d="M200-440v-80h560v80H200Z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <select>
+                            <option label='Add Option'></option>
+                            <option>Gender</option>
+                            <option>Age Range</option>
+                        </select>
+                    </form>
                 </li>
                 <li>
                     <div>
                         <a>Performance Measurement</a>
                         <p>Select your demographics based on the options provided.</p>
                     </div>
+                    <form id='performance-measurement-form'>
+                        <div>
+                            <div>
+                                <a>Polls</a>
+                               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="red"><path d="M200-440v-80h560v80H200Z"/></svg>
+                            </div>
+                            <div>
+                                <a>Interaction Rate</a>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="red"><path d="M200-440v-80h560v80H200Z"/></svg>
+                            </div>
+                            <div>
+                                <a>Share Rate</a>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="red"><path d="M200-440v-80h560v80H200Z"/></svg>
+                            </div>
+                        </div>
+                        <select>
+                            <option label='Add Option'></option>
+                            <option>Polls</option>
+                            <option>Share Rate</option>
+                            <option>Interaction Rate</option>
+                        </select>
+                    </form>
                 </li>
                 <li>
                     <div>
                         <a>Advertisement</a>
                         <p>Select your demographics based on the options provided.</p>
                     </div>
+                    <form id='advertisement-form'>
+                        <a>Upload from</a>
+                        <div id='upload-ad'>
+                            <button>Local Storage</button>
+                            <button>Platform Storage</button>
+                        </div>
+                    </form>
                 </li>
                 <li>
                     <div>
                         <a>Schedule</a>
                         <p>Select a timeline to launch your campaign.</p>
                     </div>
-                    <form>
+                    <form id='schedule-form'>
                         <Calendar />
                     </form>
                 </li>
@@ -57,6 +113,9 @@ const CreateAdCampaign: React.FC = () => {
                     </div>
                 </li>
             </ul>
+            <div className='next-container'>
+                <button id='next-button'>Next</button>
+            </div>
         </section>
     );
 }
