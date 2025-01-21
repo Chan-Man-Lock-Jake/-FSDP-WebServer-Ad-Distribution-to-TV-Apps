@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './components/Header';
-import Hero from './components/Hero';
+import Hero from './pages/Landing/Hero';
 import Features from './Features';
 import Footer from './components/Footer';
 import './css/Home.css';

@@ -1,10 +1,25 @@
 /* General Page Styling */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  width: 100%;
+}
 
 
 .landing-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
   background-color: #f9f5f1;
   font-family: Arial, sans-serif;
+  text-align: center; /* Optional for text alignment */
+  padding: 20px; /* Add some spacing around the edges */
+  box-sizing: border-box; /* Include padding in height calculations */
 }
+
 
 /* TV Section */
 .tv-section {
@@ -79,33 +94,45 @@
 }
 
 /* Carousel Section */
-/* Carousel Section */
 .carousel-section {
   width: 100%;
-  padding: 20px 0;
-  background-color: #f9f5f1;
+  max-width: 1200px; /* Adjust max-width to your layout */
+  margin: 0 auto; /* Center the carousel horizontally */
+  overflow: hidden; /* Hide any overflow */
+  padding: 20px 0; /* Add vertical spacing */
   display: flex;
-  justify-content: center; /* Center align the carousel */
-  align-items: center; /* Vertically align */
+  justify-content: center; /* Center carousel */
+  align-items: center;
 }
+
+.carousel-item {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Center image in the container */
+  align-items: center;
+}
+
 
 .slick-slider {
   width: 80%; /* Ensure the carousel is centered and within bounds */
+  overflow: hidden;
   max-width: 1200px;
 }
 
 .carousel-item img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 10px;
+  width: 100%; /* Matches the width of the container */
+  height: 500px; /* Adjust height as needed for your design */
+  object-fit: cover; /* Crop the image to fill the container */
+  border-radius: 10px; /* Optional, for rounded corners */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Dots customization (optional, adjust if necessary) */
 .slick-dots {
-  bottom: -20px; /* Adjust position */
   text-align: center; /* Ensure dots are centered */
+}
+.slick-dots {
+  bottom: 10px; /* Position the dots closer to the carousel */
 }
 
 .slick-dots li {
@@ -113,7 +140,7 @@
 }
 
 .slick-dots li button:before {
-  color: #007bff; /* Dot color */
+  color: #001c3a; /* Dot color */
   font-size: 12px;
 }
 
@@ -127,49 +154,56 @@
   margin: 0 auto;
   max-width: 80%;
 }
+.carousel-wrapper {
+  overflow: hidden;
+  width: 100%; /* Constrain the slider */
+}
 
-
+main > * {
+  max-width: 100%;
+  margin: 0 auto;
+}
 /* Unified Platform Section */
 .unified-platform-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: 60px 20px; /* Increased padding for better spacing */
   background-color: #f9f5f1;
 }
 
 .platform-content {
-  display: flex;
-  flex-wrap: wrap; /* Allow responsiveness */
-  gap: 20px; /* Space between columns */
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 40px; /* Space between columns */
   max-width: 1200px; /* Limit overall width */
   width: 100%;
+  align-items: center;
 }
 
 .platform-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
+  text-align: left;
 }
 
 .platform-title {
-  font-size: 2rem;
-  color: #333;
+  font-size: 2.5rem;
   font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .start-free-trial-btn {
-  padding: 10px 20px;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 25px;
   font-size: 1rem;
   font-weight: bold;
-  color: #000;
+  color: #000000;
   background-color: #fdd835;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  text-align: center;
   transition: background-color 0.3s ease;
 }
 
@@ -178,22 +212,23 @@
 }
 
 .platform-right {
-  flex: 1;
+  text-align: left; /* Align text to the left for consistency */
 }
 
 .platform-features {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .platform-features li {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .platform-features h3 {
-  font-size: 1.2rem;
-  color: #333;
+  font-size: 1.5rem;
   font-weight: bold;
+  color: #333;
   margin-bottom: 10px;
 }
 
@@ -202,4 +237,3 @@
   color: #666;
   line-height: 1.6;
 }
-

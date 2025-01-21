@@ -1,0 +1,148 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f5f1;
+    min-height: 100vh;
+    padding: 0 20px; /* Add padding to both sides */
+    margin: 0;
+    box-sizing: border-box;
+    width: calc(100% - 40px); /* Account for the padding */
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #444444;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  
+  .header-text h1 {
+    margin: 0;
+    font-size: 2.5rem; /* Larger font size */
+  }
+  
+  .header-text p {
+    margin: 0;
+    font-size: 1.5rem; /* Larger subtitle */
+  }
+  
+.header-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px; /* Larger height */
+  width: 120px; /* Larger width */
+}
+
+.header-avatar img {
+  height: 100%; /* Ensure it fills the container */
+  width: 100%;
+  border-radius: 50%; /* Makes the avatar circular */
+  object-fit: cover; /* Ensure proper scaling */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+}
+  
+.dashboard-content {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0; /* Maintain vertical padding */
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  .user-activity,
+  .calendar,
+  .active-campaigns {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+  }
+  
+  .user-activity {
+    flex: 2; /* Larger width */
+  }
+  
+  .calendar {
+    flex: 1; /* Smaller width */
+    text-align: center;
+  }
+  
+  .active-campaigns {
+    flex: 1; /* Smaller width */
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    justify-items: center;
+    align-items: center;
+  }
+  
+  .calendar-day,
+  .calendar-header {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .calendar-day {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .calendar-day:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .calendar-day.highlight {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: red;
+    font-weight: bold;
+  }
+  
+  .calendar-day.selected {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .calendar-day.sunday {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .selected-date {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .dashboard-content {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .user-activity,
+    .calendar,
+    .active-campaigns {
+      flex: 1; /* Stack full width on smaller screens */
+    }
+  }
+  
