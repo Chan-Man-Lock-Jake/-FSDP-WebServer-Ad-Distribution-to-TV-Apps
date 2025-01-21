@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import multer from 'multer';
-import cors from 'cors';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import  userRoutes  from './routes/userRoutes.js';
 //import  adminRoutes  from './routes/adminRoutes.js';
@@ -14,21 +13,31 @@ import http from 'http';
 import { Server } from 'socket.io';
 import session from 'express-session';
 
+
 dotenv.config();
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON requests
 const port = process.env.PORT || 3000;
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+import cors from 'cors';
 
+// Update CORS configuration
 app.use(
-    session({
-        secret: process.env.SESSION_KEY, 
-        resave: false,
-        saveUninitialized: true,
-        cookie: { secure: false }, // Set to `true` if using HTTPS
-    })
+  cors({
+    origin: "http://localhost:5173", // Allow requests from your frontend
+    credentials: true, // Allow sending cookies or authorization headers
+  })
 );
+
+
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 
 // User route 
 app.use('/user', userRoutes);

@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginContainer from './components/LoginContainer'; // Import LoginContainer component
-import BlankSpace from './components/BlankSpace';
+import LoginContainer from './LoginContainer'; // Import LoginContainer component
+import BlankSpace from '../../components/BlankSpace';
 
 const LoginForm: React.FC = () => {
   return (
