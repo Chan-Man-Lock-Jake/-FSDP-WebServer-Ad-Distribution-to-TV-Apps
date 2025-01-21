@@ -6,13 +6,19 @@
   --bg-clr: #f2e9e4;
 }
 * {
+  font-family: inherit;
+
   margin: 0;
   padding: 0;
 }
 p {
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0px;
 }
 section {
+  /* zoom: 1.2;  */
+
   padding: 0;
   width: 100%;
 }
@@ -35,18 +41,21 @@ section {
 }
 #create-campaign-flow li {
   display: flex;
-  border-radius: 20px;
-  margin: 50px;
+  margin: 50px 70px;
   color: red;
+  box-shadow: 0px 4px 8px grey;
+  border-radius: 20px;
   background-color: var(--text-clr);
 
   > div {
     padding: 30px;
-    width: 200px;
+    margin-right: 100px;
+    width: 250px;
 
     > a {
       display: flex;
-      font-size: 25px;
+      font-size: 32px;
+      color: black;
       flex-wrap: wrap;
     }
   }
@@ -65,7 +74,8 @@ section {
       display: flex;
 
       > a {
-        font-weight: 400;
+        font-size: 18px;
+        font-weight: 500;
         padding-bottom: 5px;
       }
       > textarea {
@@ -78,17 +88,20 @@ section {
         border-radius: 10px;
         border-width: 0.5px;
         padding: 10px;
+        font-size: 16px;
       }
     }
   }
 }
 #campaign-description-form {
   > div {
+    max-width: 500px;
     flex-direction: column;
   }
 }
 #demographic-form {
   justify-content: space-evenly;
+  margin: 20px 0px;
 
   select {
     color: red;
@@ -96,7 +109,7 @@ section {
   
   > div {
     justify-content: space-between;
-    max-width: 450px;
+    max-width: 500px;
     
     > div {
       display: flex;
@@ -148,8 +161,10 @@ section {
   }
 }
 #performance-measurement-form {
+  margin: 20px 0px;
+
   > div {
-    max-width: 450px;
+    max-width: 500px;
     flex-wrap: wrap;
     justify-content: space-between;
     
@@ -190,8 +205,12 @@ section {
 #advertisement-form {
   display: flex;
   height: 250px;
+  margin: 20px 0px;
+  max-width: 500px;
   > a {
     align-self: center;
+    font-size: 24px;
+    font-weight: 500;
     padding: 10px;
   }
   #upload-ad {
@@ -200,7 +219,7 @@ section {
     justify-content: space-evenly;
     width: auto;
     height: 100%;
-    border: 1px dotted black;
+    border: 2px dotted darkgray;
     border-radius: 10px;
     background-color: white;
     > button {
@@ -209,9 +228,14 @@ section {
   }
 }
 #schedule-form {
+  margin: 20px 0px;
+
+  abbr{
+    text-decoration: none;
+  }
   .react-calendar {
     all: unset;
-    max-width: 450px;
+    max-width: 500px;
 
     button {
       all: unset;
@@ -246,6 +270,7 @@ section {
 #schedule-time-slot-form {
   display: flex;
   flex-direction: column;
+  margin: 20px 0px;
   
   label {
     all: unset;
