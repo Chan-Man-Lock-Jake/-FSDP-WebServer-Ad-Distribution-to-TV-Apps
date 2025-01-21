@@ -1,33 +1,61 @@
 import React from 'react';
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import './CreateAdCampaign.css';
 
 const CreateAdCampaign: React.FC = () => {
     return (
         <section id='create-campaign-flow'>
             <ul>
-                <li>
+                <li className='Campaign-Description-Section'>
                     <div>
-                        <a>TV Group Description</a>
-                        <p>Come up with a name, location and description for your TV Group!</p>
+                        <a>Campaign Description</a>
+                        <p>Come up with a name and objective for your TV Group!</p>
                     </div>
                     <form id='tv-group-description-form'>
                         <div>
-                            <a>Group Name</a>
-                            <input placeholder='e.g. Jewel Changi Jinjja Chicken'/>
+                            <a>Campaign Name</a>
+                            <input id='campaign-name' placeholder='e.g. Christmas Specials Chicken Burger'/>
                         </div>
-                        <div>
-                            <a>Location</a>
-                            <input placeholder='e.g. Jewel Changi'/>
-                        </div>
-                        <div>
-                            <a>Group Description</a>
-                            <input placeholder='e.g. Christmas special menu'/>
+                        <div className='campaign-objective'>
+                            <a>Campaign Objective</a>
+                            <textarea id='campaign-objective' placeholder='e.g. Brand awareness/Increase sale profits/To persuade/To inform'/>
                         </div>
                     </form>
                 </li>
-                <li><a><span>Scheduled Time Slot</span></a></li>
-                <li><a><span>Performance Measurement</span></a></li>
-                <li><a><span>Advertisement</span></a></li>
+                <li>
+                    <div>
+                        <a>Demographic</a>
+                        <p>Select your demographics based on the options provided.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a>Performance Measurement</a>
+                        <p>Select your demographics based on the options provided.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a>Advertisement</a>
+                        <p>Select your demographics based on the options provided.</p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <a>Schedule</a>
+                        <p>Select a timeline to launch your campaign.</p>
+                    </div>
+                    <form>
+                        <Calendar />
+                    </form>
+                </li>
+                <li>
+                    <div>
+                        <a>Scheduled Time Slot</a>
+                        <p>Select your scheduled time slot for your advertisement.</p>
+                    </div>
+                </li>
             </ul>
         </section>
     );
