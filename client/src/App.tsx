@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import CreateAdCampaign from "./pages/Campaign/CreateAdCampaign";
 import AccountDetails from "./pages/AccountSettings/AccountDetails";
 import SystemAdminManagement from "./SystemAdminManagement";
+import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
 
 const App: React.FC = () => {
   const currentUserRole = "Admin"; // Replace with your actual user role logic
@@ -17,17 +18,14 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        {/* Private Routes for Admin */}
-        {currentUserRole === "Admin" && (
-          <Route path="/admin" element={<PrivateLayout />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="createadcampaign" element={<CreateAdCampaign />} />
-            <Route path="account-details" element={<AccountDetails />} />
-            <Route path="admin-management" element={<SystemAdminManagement />} />
-          </Route>
-        )}
-
-        {/* Public Routes for Non-Admin Users */}
+      </Routes>
+      {/* <Header /> */}
+      {/* <BlankSpace /> */}
+      <Routes>
+        <Route path="/admin" element={<PrivateLayout />}>
+          <Route path="dashboard" element={<Dashboard/>} />
+          <Route path="createadcampaign" element={<CreateAdCampaign/>} />
+        </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
           <Route path="pricing" element={<Pricing />} />
