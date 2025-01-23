@@ -42,7 +42,7 @@ section {
 #create-campaign-flow li {
   display: flex;
   margin: 50px 70px;
-  color: red;
+  color: rgb(0, 0, 0);
   box-shadow: 0px 4px 8px grey;
   border-radius: 20px;
   background-color: var(--text-clr);
@@ -55,6 +55,7 @@ section {
     > a {
       display: flex;
       font-size: 32px;
+      font-weight: 500;
       color: black;
       flex-wrap: wrap;
     }

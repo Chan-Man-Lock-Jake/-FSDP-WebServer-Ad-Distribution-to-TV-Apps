@@ -1,5 +1,6 @@
 import React from 'react';
 import Calendar from "react-calendar";
+import { Link } from 'react-router-dom';
 import './CreateAdCampaign.css';
 import "react-calendar/dist/Calendar.css";
 
@@ -123,9 +124,9 @@ const CreateAdCampaign: React.FC = () => {
                     </form>
                 </li>
             </ul>
-            <div className='next-container'>
+            <Link to='../reviewadcampaign' className='next-container'>
                 <button id='next-button'>Next</button>
-            </div>
+            </Link>
         </section>
     );
 }

@@ -12,7 +12,7 @@
     background-color: white;
     > div {
         padding-bottom: 90px;
-
+        
         > div {
             display: flex;
             flex-direction: row;
