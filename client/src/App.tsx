@@ -11,7 +11,7 @@ import AddNewUserPage from './AddNewUserPage';
 import Home from './Home';
 import Pricing from './pages/Pricing/Pricing';
 import LoginForm from './pages/Login/LoginForm';
-import SignUp from './pages/SignUp/SignUp';
+import SignupForm from './pages/SignUp/SignupForm';
 import Faq from './Faq';
 import UserManagement from './UserManagement';
 import BlankSpace from './components/BlankSpace';
@@ -29,8 +29,8 @@ import CreateAd from './components/CreateAd'; // Changed from AdType to CreateAd
 import ViewAdTemplate from './components/ViewAdTemplate'; // Added new page
 import CreateAdTemplate from './components/CreateAdTemplate'; // Added new page
 import CreateAdDetails from './components/CreateAdDetails'; // Add this import
-import DisplayAd from './DisplayAd';
-import PushAd from './PushAd';
+// import DisplayAd from './DisplayAd';
+// import PushAd from './PushAd';
 import Canvas from './Canvas';
 
 import PrivateLayout from './pages/PrivateLayout/PrivateLayout';
@@ -39,12 +39,15 @@ import Landing from './pages/Landing/Landing';
 import Dashboard from './pages/Dashboard/Dashboard';
 import CreateAdCampaign from './pages/Campaign/CreateAdCampaign';
 import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import Login from './pages/Login/login';
+import SignUp from './pages/SignUp/SignUp';
+
 
 const App: React.FC = () => {
   return (
     <Router>
-      <Routes>
-      </Routes>
+      <ScrollToTop />
       {/* <Header /> */}
       {/* <BlankSpace /> */}
       <Routes>
@@ -56,10 +59,12 @@ const App: React.FC = () => {
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
           <Route path="pricing" element={<Pricing />} />
-          <Route path="login" element={<LoginForm />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="loginform" element={<LoginForm />} />
         </Route>
         <Route path="/home" element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signupform" element={<SignupForm />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/admin-management" element={<SystemAdminManagement />} />
         <Route path="/add-new-user" element={<AddNewUserPage />} />
@@ -74,8 +79,8 @@ const App: React.FC = () => {
         />
         <Route path="/create-campaign" element={<CreateCampaign />} />
         <Route path="/usermanagement" element={<UserManagement />} />
-        <Route path="/displayAd" element={<DisplayAd />} />
-        <Route path="/pushAd" element={<PushAd />} />
+        {/* <Route path="/displayAd" element={<DisplayAd />} /> */}
+        {/* <Route path="/pushAd" element={<PushAd />} /> */}
         <Route path="/new-campaign-form" element={<NewCampaignForm />} />
         <Route path="/next-campaign-form" element={<NextCampaignForm />} />
         <Route path="/campaign-details" element={<CampaignAudienceForm />} />
@@ -98,8 +103,8 @@ const App: React.FC = () => {
         {/* Added route for CreateAdTemplate */}
         <Route path="/create-ad-details" element={<CreateAdDetails />} />
         <Route path="/canvas" element={<Canvas />} />
-        <Route path="/displayAd" element={<DisplayAd />} />
-        <Route path="/pushAd" element={<PushAd />} />
+        {/* <Route path="/displayAd" element={<DisplayAd />} /> */}
+        {/* <Route path="/pushAd" element={<PushAd />} /> */}
       </Routes>
         {/* <Footer /> */}
     </Router>

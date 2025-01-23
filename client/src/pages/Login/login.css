@@ -1,24 +1,109 @@
-/* login.css */
-html, body {
-  height: 100%;
-  margin: 0;
+:root {
+  --base-clr: #2a4e50;
+  --base-clr-2: #375a5c;
+  --hover-clr: #349b91;
+  --text-clr: #ffffff;
+  --bg-clr: #f2e9e4;
+}
+section {
+  > div {
+    padding-top: 50px;
+  }
+}
+h1 {
+  font-size: 32px;
+  font-weight: 500;
+}
+.login-flow {
+  display: flex;
+  flex-direction: row;
+}
+.left {
+  display: flex;
+  background-color: var(--text-clr);
+}
+.right {
+  display: flex;
+  background-color: var(--hover-clr);
+  * {
+    color: var(--text-clr);
+  }
+  > div {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    max-height: 550px;
+    padding-left: 80px;
+    margin: auto;
+  }
+}
+#login-form{
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  max-height: 550px;
+  padding: 20px;
+  margin: auto;
+
+  label {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  span {
+    font-weight: 500;
+  }
+  p {
+    text-align: center;
+    margin-top: 50px;
+    font-weight: 500;
+  }
+  a {
+    color: var(--hover-clr);
+    font-weight: 500;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  input {
+    all: unset;
+    display: flex;
+    flex-grow: 2;
+    padding: 10px;
+    border: 1px solid darkgrey;
+    border-radius: 10px;
+  }
+  button {
+    padding: 15px;
+    margin-top: 70px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text-clr);
+    background-color: var(--hover-clr);
+  }
+  button:hover{
+    background-color: var(--base-clr-2);
+  }
+}
+.error-message {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
   padding: 0;
-  background-color: #f8f9fa; /* Light background color for the page */
-}
-
-.form-wrapper {
-  background-color: #c9adad; /* Light grey background color for the form */
-  padding: 2rem;
-  border-radius: 15px; /* Rounded corners for the form */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for better look */
-}
-
-button {
-  border-radius: 5px;
-}
-
-input {
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 15px;
+  
+  > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    margin: 20px;
+    border-radius: 10px;
+    color: white;
+    background-color: rgba(255, 10, 10, 0.863);
+    transition: opacity 3s ease-out;
+  }
 }

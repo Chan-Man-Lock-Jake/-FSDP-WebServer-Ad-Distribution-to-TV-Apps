@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './SignUp.css';
+import './login.css';
 import illustrationImage from "../../assets/icons/undraw_digital-artwork_xlmm.svg";
 
-const SignUp: React.FC = () => {
+const Login: React.FC = () => {
     const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("User");
     const [message, setMessage] = useState<string | null>(null);
 
     const ErrorPopup = () => {
@@ -24,7 +22,7 @@ const SignUp: React.FC = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch( "http://localhost:3000/user/signup",
+            const response = await fetch( "http://localhost:3000/user/login", 
                 {
                     method: 'POST',
                     headers: {
@@ -32,10 +30,8 @@ const SignUp: React.FC = () => {
                     },
                     body: JSON.stringify
                     ({
-                        Email: email,
-                        Name: name,
-                        Password: password,
-                        Role: role,
+                        Email: email, 
+                        Password: password
                     })
                 }
             )
@@ -45,7 +41,7 @@ const SignUp: React.FC = () => {
             } else {
                 const error = await response.json();
                 console.error(error); // Handle error response from backend
-                setMessage(error.response?.data?.message || "Sign up failed. Please try again.");
+                setMessage(error.response?.data?.message || "Login failed. Please try again.");
             }
         } catch (error) {
             console.log(error);
@@ -53,7 +49,7 @@ const SignUp: React.FC = () => {
     }
 
     return (
-        <section className='signup-flow'>
+        <section className='login-flow'>
             <ErrorPopup />
             <div className='left'>
                 {/* <svg version="1.1" viewBox="0 0 2048 595" width="138" height="40" xmlns="http://www.w3.org/2000/svg">
@@ -70,23 +66,15 @@ const SignUp: React.FC = () => {
                 <path transform="translate(714,351)" d="m0 0h34l3 3 6 17 5 8 8 6 21 9 5 4v31l-3 6-3 3h-12l-12-3-16-6-11-6-12-11-8-9-8-16-4-13-1-5v-12l5-5z" fill="#000"/>
                 <path transform="translate(823,199)" d="m0 0h7l17 4 17 7 13 9 8 8 7 10 6 14 3 10v12l-5 6-5 2h-30l-5-5-8-18-5-5-24-12-3-4v-27l3-8z" fill="#000"/>
                 </svg> */}
-                <form onSubmit={handleSubmit} id='signup-form'>
-                    <h1>Sign up for an account</h1>
-                    <span>Create your account by entering your details below.</span>
+                <form onSubmit={handleSubmit} id='login-form'>
+                    <h1>Log in to your account</h1>
+                    <span>Welcome back! Enter credentials to log in</span>
                     <label htmlFor="email">Email</label>
                     <input onChange={(e) => setEmail(e.target.value)} type="email" name="Email" id="email" />
-                    <label htmlFor="name">Name</label>
-                    <input onChange={(e) => setName(e.target.value)} type="name" name="Name" id="name" />
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Password<a href="">Forgot Password?</a></label>
                     <input onChange={(e) => setPassword(e.target.value)} type="password" name="Password" id="password" />
-                    <label htmlFor="role">Role</label>
-                    <select onChange={(e) => setRole(e.target.value)} id="role">
-                        <option value="User">User</option>
-                        <option value="Content Creator">Content Creator</option>
-                        <option value="Admin">Admin</option>
-                    </select>
-                    <button type="submit">Sign Up</button>
-                    <p>Already have an account? <a href='/login'>Log In</a></p>
+                    <button type="submit">Login</button>
+                    <p>Don’t have an account? <a href="/signup">Create an account</a></p>
                 </form>
             </div>
             <div  className='right'>
@@ -100,4 +88,4 @@ const SignUp: React.FC = () => {
     );
 }
 
-export default SignUp;
+export default Login;
