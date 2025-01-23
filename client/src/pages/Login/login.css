@@ -16,14 +16,16 @@ h1 {
 }
 .login-flow {
   display: flex;
-  flex-direction: row;
+  width: 100vw;
 }
 .left {
   display: flex;
+  flex: 1;
   background-color: var(--text-clr);
 }
 .right {
   display: flex;
+  flex: 1;
   background-color: var(--hover-clr);
   * {
     color: var(--text-clr);
@@ -61,6 +63,7 @@ h1 {
     font-weight: 500;
   }
   a {
+    all: unset;
     color: var(--hover-clr);
     font-weight: 500;
   }

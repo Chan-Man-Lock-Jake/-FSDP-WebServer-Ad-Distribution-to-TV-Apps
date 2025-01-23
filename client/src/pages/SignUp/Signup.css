@@ -63,6 +63,7 @@
       font-weight: 500;
     }
     a {
+      all: unset;
       color: var(--hover-clr);
       font-weight: 500;
     }
