@@ -15,13 +15,14 @@ import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
 const App: React.FC = () => {
   const currentUserRole = "Admin"; // Replace with your actual user role logic
 
+  const currentUserRole = "Admin"; // Replace with your actual user role logic
+
   return (
     <Router>
       <Routes>
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
           <Route path="createadcampaign" element={<CreateAdCampaign/>} />
-          <Route path="reviewadcampaign" element={<ReviewAdCampaign/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
@@ -30,6 +31,8 @@ const App: React.FC = () => {
           <Route path="signup" element={<SignUp />} />
           <Route path="account-details" element={<AccountDetails />} />
         </Route>
+        {/* Catch-All Route */}
+        <Route path="*" element={<div>404 - Page Not Found</div>} />
       </Routes>
     </Router>
   );

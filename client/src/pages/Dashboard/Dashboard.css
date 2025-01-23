@@ -25,6 +25,33 @@ html, body {
   z-index: 1000; /* Ensure it overlaps other elements */
 }
 
+/* Reset default browser styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f9f5f1; /* Body background */
+}
+
+.dashboard-layout {
+  display: flex;
+  height: 100vh; /* Full height to avoid extra white space */
+  overflow: hidden; /* Prevent unnecessary scrolling */
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #2a4e50;
+  height: 100vh; /* Full height */
+  position: fixed; /* Ensure sidebar stays fixed */
+  top: 0;
+  left: 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure it overlaps other elements */
+}
+
 .dashboard-container {
   flex: 1;
   display: flex;
@@ -63,13 +90,20 @@ html, body {
   width: 80px;
   border-radius: 50%;
   overflow: hidden; /* Ensure the avatar doesn't overflow */
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  overflow: hidden; /* Ensure the avatar doesn't overflow */
 }
 
 .header-avatar img {
   height: 100%;
+  height: 100%;
   width: 100%;
   object-fit: cover; /* Maintain aspect ratio */
+  object-fit: cover; /* Maintain aspect ratio */
 }
+
 
 .dashboard-content {
   display: flex;
@@ -140,7 +174,87 @@ html, body {
 
 @media screen and (max-width: 768px) {
   .dashboard-layout {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.user-activity, .calendar, .active-campaigns {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-activity {
+  flex: 2; /* Take more space */
+}
+
+.calendar, .active-campaigns {
+  flex: 1; /* Share equal space */
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  text-align: center;
+}
+
+.calendar-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.calendar-day:hover {
+  background-color: #f0f0f0;
+}
+
+.calendar-day.highlight {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: red;
+  font-weight: bold;
+}
+
+.calendar-day.selected {
+  background-color: #007bff;
+  color: white;
+}
+
+.calendar-day.sunday {
+  color: red;
+  font-weight: bold;
+}
+
+.selected-date {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-style: italic;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-layout {
       flex-direction: column;
+  }
+
+  .dashboard-container {
+      margin-left: 0;
+      padding: 10px;
+  }
+
+  .dashboard-content {
+      flex-direction: column;
+  }
+}
+
   }
 
   .dashboard-container {
