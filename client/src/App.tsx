@@ -39,6 +39,9 @@ import Landing from './pages/Landing/Landing';
 import Dashboard from './pages/Dashboard/Dashboard';
 import CreateAdCampaign from './pages/Campaign/CreateAdCampaign';
 
+// Routes addded by Charlotte
+import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -50,6 +53,7 @@ const App: React.FC = () => {
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
           <Route path="createadcampaign" element={<CreateAdCampaign/>} />
+          <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />

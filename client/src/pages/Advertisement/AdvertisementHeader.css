@@ -1,0 +1,74 @@
+.advertisement-header {
+  margin: 0;
+  padding: 0;
+  font-family: Lato, sans-serif;
+  width: 100%; /* Ensure the header spans the full width of the viewport */
+}
+
+.header-title-container {
+  background-color: white;
+  width: 100%; /* Make the title container span the full width */
+  padding: 10px 20px; /* Maintain padding for content */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4); /* Keep the shadow for styling */
+  box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+.header-title {
+  color: black;
+  font-weight: 600;
+  font-size: 36px;
+  margin: 10px 0; /* Adjust vertical spacing */
+  padding-left: 35px; /* Maintain consistent left padding */
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align buttons to the left */
+  gap: 20px; /* Add space between buttons */
+  width: 100%; /* Ensure the container spans full width */
+  max-width: 1200px; /* Match the cards container width */
+  padding: 10px 0; /* Add vertical padding */
+  margin: 0 auto; /* Center the container horizontally */
+  box-sizing: border-box; /* Include padding and borders in the width */
+}
+
+.tabs {
+  display: flex;
+  gap: 15px; /* Space between the tabs */
+}
+
+.tab {
+  padding: 10px 20px;
+  border: none;
+  background-color: white;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab.active-tab {
+  background-color: #f56a79;
+  color: white;
+}
+
+.tab:not(.active-tab):hover {
+  background-color: #fcdede;
+}
+
+.state-dropdown {
+  padding: 10px 15px;
+  border: none;
+  background-color: white;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  appearance: none; /* Remove the native dropdown styling */
+  text-align: center;
+}
