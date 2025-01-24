@@ -16,10 +16,6 @@ import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
 import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
 
 const App: React.FC = () => {
-  const currentUserRole = "Admin"; // Replace with your actual user role logic
-
-  const currentUserRole = "Admin"; // Replace with your actual user role logic
-
   return (
     <Router>
       <Routes>
