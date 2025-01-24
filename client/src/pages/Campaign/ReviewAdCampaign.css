@@ -1,0 +1,96 @@
+* {
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+}
+#campaign-details {
+    display: flex;
+    flex-direction: column;
+    padding: 0 70px;
+    margin: 50px 70px;
+    border-radius: 20px;
+    background-color: white;
+    > div {
+        padding-bottom: 90px;
+        
+        > div {
+            display: flex;
+            flex-direction: row;
+            padding-top: 10px;
+        }
+    }
+    h1 {
+        font-weight: 500;
+        margin: 30px auto;
+    }
+    h2 {
+        font-weight: 500;
+        font-size: 28px;
+    }
+    a {
+        font-weight: 400;
+        font-size: 20px;
+        color: grey;
+    }
+    span { 
+        display: block;
+        width: 190px;
+        padding: 2px 0;
+        margin-right: 50px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 400;
+        border-radius: 10px;
+        color: white;
+        background-color: var(--hover-clr);
+    }
+    section {
+        width: 100%;
+    }
+    .calendar {
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0px 0px 20px grey;
+        max-width: 1000px;
+        margin-top: 10px;
+        
+        abbr{
+            text-decoration: none;
+        }
+        .react-calendar {
+          all: unset;
+            span{
+                all: unset;
+            }
+          button {
+            all: unset;
+          }
+        }
+        .react-calendar__navigation {
+          button{
+            padding: 10px;
+            width: 50px;
+          }
+        }
+        .react-calendar__viewContainer {
+          button{
+            padding: 10px 0;
+          }
+        }
+        .react-calendar__navigation, .react-calendar__viewContainer{
+          color: black;
+          .react-calendar__tile--active{
+            color: white;
+            background-color: var(--base-clr);
+          }
+          button{
+            border-radius: 5px;
+            text-align: center;
+          }
+          button:hover{
+            background-color: var(--hover-clr);
+            border: none;
+          }
+        }
+    }
+}

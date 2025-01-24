@@ -48,7 +48,6 @@ const Dashboard: React.FC = () => {
 
   const isSunday = (date: Date) => date.getDay() === 0;
 
-  // Fetch User Activity
   useEffect(() => {
     axios
       .get("/api/user-activity")
@@ -56,7 +55,6 @@ const Dashboard: React.FC = () => {
       .catch(() => setUserActivity([]));
   }, []);
 
-  // Fetch Active Campaigns
   useEffect(() => {
     axios
       .get("/api/active-campaigns")
@@ -66,7 +64,6 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="dashboard-container">
-      {/* Header Section */}
       <div className="dashboard-header">
         <div className="header-text">
           <h1>Hello, Suzy!</h1>
@@ -76,9 +73,8 @@ const Dashboard: React.FC = () => {
           <img src={dogeAvatar} alt="Suzy Avatar" />
         </div>
       </div>
-  
+
       <div className="dashboard-content">
-        {/* User Activity Section */}
         <div className="user-activity">
           <h2>User Activity</h2>
           <ul>
@@ -100,10 +96,8 @@ const Dashboard: React.FC = () => {
             )}
           </ul>
         </div>
-  
-        {/* Right Section */}
+
         <div className="right-section">
-          {/* Calendar */}
           <div className="calendar">
             <h2>Calendar</h2>
             <div className="calendar-grid">
@@ -130,8 +124,7 @@ const Dashboard: React.FC = () => {
               </p>
             )}
           </div>
-  
-          {/* Active Campaigns */}
+
           <div className="active-campaigns">
             <h2>Active Campaigns</h2>
             <ul>
@@ -151,7 +144,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
     </div>
-  );  
+  );
 };
 
 export default Dashboard;
