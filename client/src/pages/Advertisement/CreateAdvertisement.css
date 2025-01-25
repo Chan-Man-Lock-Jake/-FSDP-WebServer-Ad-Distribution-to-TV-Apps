@@ -1,0 +1,103 @@
+.create-advertisements {
+
+    > div {
+        padding-top: 0px;
+        margin: 20px 50px;
+        border-radius: 10px;
+        background-color: white;
+        overflow: hidden;
+
+        > div {
+            padding: 30px 50px;
+            box-shadow: 0px 2px 10px grey;
+
+            > h1 {
+                padding-bottom: 10px;
+            }
+        }
+    }
+    p {
+        font-weight: 500;
+    }
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+    span {
+        display: block;
+        height: 1px;
+    }
+}
+.layout-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+
+    .layout-options {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .shifting-images-lottie, .shifting-frames-lottie {
+        width: 402px;
+        flex-shrink: 0;
+        
+        > div {
+            all: unset;
+            width: 100%;
+            height: 268px;
+        }
+    }
+    .shifting-images-lottie {
+        
+        > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 386px;
+            height: 252px;
+            margin: 6px;
+            border: 2px solid #505050;
+            border-radius: 10px;
+            background-color: black;
+        }
+    }
+    .shifting-frames-lottie {
+        /* background-color: red; */
+    }
+    .disabled {
+        * {
+            color: lightgray;
+            /* background-color: lightgray; */
+            /* fill: lightgray; */
+        }
+    }
+    label, p {
+        padding: 0px 15px;
+    }
+    label {
+        display: flex;
+        align-items: center;
+        padding-bottom: 25px;
+        font-weight: 500;
+        font-size: 20px;
+        margin-top: 25px;
+        color: var(--hover-clr);
+    }
+    input {
+        height: 18px;
+        width: 18px;
+        margin-right: 15px;
+        accent-color: var(--hover-clr);
+    }
+    button {
+        width: 400px;
+        padding: 10px;
+        margin-top: 50px;
+        border-style: none;
+        font-size: 18px;
+        background-color: var(--hover-clr);
+    }
+}

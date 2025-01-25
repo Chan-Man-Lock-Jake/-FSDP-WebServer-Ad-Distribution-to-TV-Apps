@@ -12,6 +12,8 @@ import AccountDetails from "./pages/AccountSettings/AccountDetails";
 import SystemAdminManagement from './SystemAdminManagement';
 import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
 import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
+import CreateAdvertisement from './pages/Advertisement/CreateAdvertisement';
+import CreateAdvertisementFixedLayoutOption from './pages/Advertisement/CreateAdvertisementFixedLayoutOption';
 
 import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
 import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
@@ -21,8 +23,11 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
-          <Route path="createadcampaign" element={<CreateAdCampaign/>} />
+          <Route path="create-ad-campaign" element={<CreateAdCampaign/>} />
+          <Route path="review-ad-campaign" element={<ReviewAdCampaign/>} />
           <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
+          <Route path="create-advertisement" element={<CreateAdvertisement/>} />
+          <Route path="create-advertisement-fixed-layouts" element={<CreateAdvertisementFixedLayoutOption/>} />
           <Route path="createtvgroup" element={<CreateTvGroup/>} />
           <Route path="viewtvgroup" element={<ViewTvGroup/>} />
         </Route>
