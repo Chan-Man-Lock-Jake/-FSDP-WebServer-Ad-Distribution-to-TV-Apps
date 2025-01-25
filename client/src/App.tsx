@@ -13,6 +13,8 @@ import SystemAdminManagement from './SystemAdminManagement';
 import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
 import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
 
+import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
+import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
 const App: React.FC = () => {
   return (
     <Router>
@@ -20,7 +22,9 @@ const App: React.FC = () => {
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
           <Route path="createadcampaign" element={<CreateAdCampaign/>} />
-          <Route path="view-advertisement" element={<ViewAdvertisement/>} /> 
+          <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
+          <Route path="createtvgroup" element={<CreateTvGroup/>} />
+          <Route path="viewtvgroup" element={<ViewTvGroup/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
