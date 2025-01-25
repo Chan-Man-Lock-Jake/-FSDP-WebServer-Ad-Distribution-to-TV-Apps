@@ -8,4 +8,6 @@ main{
     height: 100vh;
     overflow-y: auto;
     background-color: var(--bg-clr);
+    overflow-y: auto;
+    height: 100vh;
 }

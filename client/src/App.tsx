@@ -12,16 +12,22 @@ import AccountDetails from "./pages/AccountSettings/AccountDetails";
 import SystemAdminManagement from './SystemAdminManagement';
 import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
 
-const App: React.FC = () => {
-  const currentUserRole = "Admin"; // Replace with your actual user role logic
+// Routes addded by Charlotte
+import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
+import CreateAdvertisement from './pages/Advertisement/CreateAdvertisement';
+import CreateAdvertisementFixedLayoutOption from './pages/Advertisement/CreateAdvertisementFixedLayoutOption';
 
+const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
-          <Route path="createadcampaign" element={<CreateAdCampaign/>} />
-          <Route path="reviewadcampaign" element={<ReviewAdCampaign/>} />
+          <Route path="create-ad-campaign" element={<CreateAdCampaign/>} />
+          <Route path="review-ad-campaign" element={<ReviewAdCampaign/>} />
+          <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
+          <Route path="create-advertisement" element={<CreateAdvertisement/>} />
+          <Route path="create-advertisement-fixed-layouts" element={<CreateAdvertisementFixedLayoutOption/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
