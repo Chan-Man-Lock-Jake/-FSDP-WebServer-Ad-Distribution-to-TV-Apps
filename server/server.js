@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import multer from 'multer';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
 import  userRoutes  from './routes/userRoutes.js';
-//import  adminRoutes  from './routes/adminRoutes.js';
+import  adminRoutes  from './routes/adminRoutes.js';
 import fs from 'fs';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
@@ -39,6 +39,9 @@ app.use(session({
 
 // User route 
 app.use('/user', userRoutes);
+
+// Admin route 
+app.use('/admin', adminRoutes);
 
 // Create `__dirname` since it's not available in ES modules
 const __filename = fileURLToPath(import.meta.url);

@@ -11,12 +11,12 @@ import CreateAdCampaign from './pages/Campaign/CreateAdCampaign';
 import AccountDetails from "./pages/AccountSettings/AccountDetails";
 import SystemAdminManagement from './SystemAdminManagement';
 import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
-
-// Routes addded by Charlotte
 import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
 import CreateAdvertisement from './pages/Advertisement/CreateAdvertisement';
 import CreateAdvertisementFixedLayoutOption from './pages/Advertisement/CreateAdvertisementFixedLayoutOption';
 
+import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
+import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
 const App: React.FC = () => {
   return (
     <Router>
@@ -28,6 +28,8 @@ const App: React.FC = () => {
           <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
           <Route path="create-advertisement" element={<CreateAdvertisement/>} />
           <Route path="create-advertisement-fixed-layouts" element={<CreateAdvertisementFixedLayoutOption/>} />
+          <Route path="createtvgroup" element={<CreateTvGroup/>} />
+          <Route path="viewtvgroup" element={<ViewTvGroup/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />

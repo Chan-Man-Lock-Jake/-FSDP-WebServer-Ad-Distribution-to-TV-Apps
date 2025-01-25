@@ -8,31 +8,13 @@
 .content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsive grid */
-  gap: 20px; /* Space between cards */
-  padding: 20px; /* Space inside the grid */
-  margin: 0 auto; /* Center the grid horizontally */
-  justify-content: center; /* Center the cards horizontally */
-  box-sizing: border-box; /* Include padding and border in width calculation */
-  transition: margin-left 0.3s ease, margin-right 0.3s ease;
+  gap: 40px;
+  padding: 20px; 
+  margin: 0 auto; 
   width: 100%;
+  box-sizing: border-box; 
+  transition: margin-left 0.3s ease, margin-right 0.3s ease;
+  max-width: 1200px;
 }
 
-/*-----------------------------------*/
-.view-advertisements {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  box-sizing: border-box;
-}
 
-.content {
-  display: flex;
-  grid-template-columns: repeat(3, 1fr); /* Ensure exactly 3 cards per row */
-  gap: 60px; /* Space between cards */
-  padding: 20px; /* Space inside the grid */
-  margin: 0 auto; /* Center the grid horizontally */
-  justify-content: center; /* Center the cards horizontally */
-  box-sizing: border-box; /* Include padding and border in width calculation */
-  transition: margin-left 0.3s ease, margin-right 0.3s ease;
-  max-width: 1200px; /* Set a max width for proper alignment */
-}
