@@ -37,12 +37,12 @@
 .login-form-container h1 {
   font-size: 2rem;
   margin-bottom: 10px;
+  letter-spacing: 0px;
 }
 
 .login-form-container p {
   font-size: 1rem;
   color: #666;
-  margin-bottom: 20px;
 }
 
 .form-container {
@@ -65,14 +65,18 @@
 }
 
 /* Input Field Styling */
-.form-group input {
-  width: 100%; /* Make the input field fill the container */
-  max-width: none; /* Remove any maximum width restrictions */
+/* .form-group input {
+  width: 100%; 
+  max-width: none; 
   padding: 15px;
   font-size: 1rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 50px;
   box-sizing: border-box;
+} */
+
+#password {
+  width: 100%;
 }
 
 .forgot-password-link {

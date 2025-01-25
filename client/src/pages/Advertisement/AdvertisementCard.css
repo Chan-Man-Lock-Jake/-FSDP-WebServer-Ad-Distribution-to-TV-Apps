@@ -1,0 +1,112 @@
+.advertisement-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 10px; /* Maintain internal spacing */
+  width: 340px; /* Card width */
+  height: 250px; /* Card height */
+  margin-bottom: 30px;
+  margin-left: 0;
+  display: flex; /* Use Flexbox */
+  flex-direction: column; /* Arrange items vertically */
+  justify-content: space-between; /* Space elements evenly */
+  align-items: center; /* Center content horizontally by default */
+}
+
+.card-title {
+  font-family: Montserrat, sans-serif;
+  font-size: 23px;
+  font-weight: 600;
+  color: black;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.card-description {
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  color: #333333;
+  margin-bottom: 20px;
+  margin-left: 30px;
+  text-align: left; /* Align description to the left */
+  width: 95%; /* Ensure it spans the full width */
+}
+
+.card-status {
+  display: flex; /* Use Flexbox for alignment */
+  align-items: center; /* Align items vertically */
+  justify-content: flex-start; /* Align items to the left */
+  width: 100%; /* Take full card width */
+  margin-left: 30px;
+}
+
+.status-indicator {
+  position: relative; /* Enable relative positioning for pseudo-element */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16px; /* Adjusted size for better proportion */
+  width: 16px;
+  border: 2px solid #349B91; /* Green border for "Pushed" by default */
+  border-radius: 50%; /* Make it circular */
+  margin-right: 8px; /* Space between the circle and text */
+}
+
+.status-indicator.pushed {
+  border-color: #349B91; /* Green border for "Pushed" */
+}
+
+.status-indicator.not-pushed {
+  border-color: #9B9B9B; /* Gray border for "Not Pushed" */
+}
+
+/* Add the inner circle using the ::after pseudo-element */
+.status-indicator::after {
+  content: "";
+  position: absolute;
+  height: 8px; /* Inner circle size */
+  width: 8px;
+  background-color: transparent; /* Default transparent for "Not Pushed" */
+  border-radius: 50%; /* Inner circle shape */
+}
+
+.status-indicator.pushed::after {
+  background-color: #349B91; /* Green fill for "Pushed" */
+}
+
+.status-indicator.not-pushed::after {
+  background-color: #9B9B9B; /* Transparent inner circle for "Not Pushed" */
+}
+
+.status-text {
+  font-size: 18px;
+  font-family: Lato, sans-serif;
+  color: #9B9B9B; /* Default color for "Not Pushed" or other statuses */
+}
+
+.status-text.pushed {
+  color: #349B91; /* Green text color for "Pushed" */
+}
+
+.view-button {
+  background-color: #349B91;
+  color: #ffffff;
+  font-family: Lato, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: auto; /* Push button to the bottom */
+  width: 30%; 
+}
+
+.view-button:hover {
+  background-color: #20beae;
+}
+
+
+
+

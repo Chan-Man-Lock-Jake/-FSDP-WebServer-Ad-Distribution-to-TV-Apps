@@ -26,6 +26,7 @@
 }
 #navbar a{
     display: flex;
+    text-decoration: none;
     color: var(--text-clr);
     font-weight: 400;
     padding: .85em;
