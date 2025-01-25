@@ -11,8 +11,6 @@ import CreateAdCampaign from './pages/Campaign/CreateAdCampaign';
 import AccountDetails from "./pages/AccountSettings/AccountDetails";
 import SystemAdminManagement from './SystemAdminManagement';
 import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
-
-// Routes addded by Charlotte
 import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
 
 const App: React.FC = () => {
@@ -22,7 +20,7 @@ const App: React.FC = () => {
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
           <Route path="createadcampaign" element={<CreateAdCampaign/>} />
-          <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
+          <Route path="view-advertisement" element={<ViewAdvertisement/>} /> 
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />

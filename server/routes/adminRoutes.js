@@ -1,3 +1,15 @@
+import express from 'express';
+import { getAllAdInfoController } from '../controllers/adInfoController.js';
+const router = express.Router();
+
+router.get('/get-ad-info', getAllAdInfoController);
+
+export default router;
+
+
+
+
+
 // import express from 'express';
 // import { createBucketController, uploadFileController } from '../controllers/adContentController.js';
 // import { createCampaignController, deleteCampaignController } from "../controllers/adCampaignController.js";
