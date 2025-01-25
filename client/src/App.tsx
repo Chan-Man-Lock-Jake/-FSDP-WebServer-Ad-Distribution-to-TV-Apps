@@ -38,6 +38,8 @@ import PublicLayout from './pages/PublicLayout/PublicLayout';
 import Landing from './pages/Landing/Landing';
 import Dashboard from './pages/Dashboard/Dashboard';
 import CreateAdCampaign from './pages/Campaign/CreateAdCampaign';
+import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
+import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
 
 const App: React.FC = () => {
   return (
@@ -50,6 +52,8 @@ const App: React.FC = () => {
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
           <Route path="createadcampaign" element={<CreateAdCampaign/>} />
+          <Route path="createtvgroup" element={<CreateTvGroup/>} />
+          <Route path="viewtvgroup" element={<ViewTvGroup/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
