@@ -22,7 +22,6 @@ const AccountDetails: React.FC = () => {
         <div className="form-group">
           <label>Role</label>
           <input type="text" value={userRole} readOnly className="input-field" />
-          <span className="edit-icon">✏️</span>
         </div>
         <div className="form-group">
           <label>Name</label>
@@ -32,7 +31,6 @@ const AccountDetails: React.FC = () => {
             onChange={(e) => setName(e.target.value)}
             className="input-field"
           />
-          <span className="edit-icon">✏️</span>
         </div>
         <div className="form-group">
           <label>Email</label>
@@ -42,7 +40,6 @@ const AccountDetails: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             className="input-field"
           />
-          <span className="edit-icon">✏️</span>
         </div>
         <button className="reset-button" onClick={handleReset}>
           Reset Email and Password
