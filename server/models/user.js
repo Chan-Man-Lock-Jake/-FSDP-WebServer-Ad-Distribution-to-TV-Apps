@@ -1,11 +1,10 @@
 import { dynamoDB } from './dynamodb.js';
-import { s3 } from './s3.js'
 import { PutCommand, ScanCommand } from '@aws-sdk/lib-dynamodb';
-import { CreateBucketCommand, PutObjectCommand } from '@aws-sdk/client-s3'
+import bcrypt from 'bcrypt';
+
 
 // Create new user
 const createUser = async (user) => {
-    // Fetch the last UserId
     const fetchParams = {
         TableName: 'User',
         ProjectionExpression: 'UserId',
@@ -13,37 +12,34 @@ const createUser = async (user) => {
 
     try {
         const result = await dynamoDB.send(new ScanCommand(fetchParams));
-        let lastUserId = 'U00000'; // Default starting UserId if no users exist
+        let lastUserId = 'U00000';
 
         if (result.Items && result.Items.length > 0) {
-            // Sort UserIds in descending order to get the latest
             const sortedUsers = result.Items.sort((a, b) => b.UserId.localeCompare(a.UserId));
-            lastUserId = sortedUsers[0].UserId; // Get the last UserId
+            lastUserId = sortedUsers[0].UserId;
         }
 
-        // Increment the UserId
-        const userIdNumber = parseInt(lastUserId.slice(1), 10) + 1; // Extract numeric part and increment
-        const newUserId = `U${String(userIdNumber).padStart(5, '0')}`; // Format back to 'UXXXXX'
+        const userIdNumber = parseInt(lastUserId.slice(1), 10) + 1;
+        const newUserId = `U${String(userIdNumber).padStart(5, '0')}`;
 
-        // Define parameters for adding a new user
+        const hashedPassword = await bcrypt.hash(user.Password, 10);
+
         const params = {
             TableName: 'User',
             Item: {
-                UserId: newUserId, // Use the incremented UserId
+                UserId: newUserId,
                 Name: user.Name,
                 Email: user.Email,
-                Password: user.Password,
-                Role: user.Role || 'User', // Default role to 'User' if not provided
-                CreatedAt: new Date().toISOString(), // Store the current timestamp
+                Password: hashedPassword,
+                Role: 'Admin',
+                Status: 'Approved',
+                CreatedAt: new Date().toISOString(),
             },
         };
 
-        // Insert the new user into the database
         await dynamoDB.send(new PutCommand(params));
-        console.log('User added to database successfully.');
-
-        // Return a success message
-        return { message: 'User added successfully', UserId: newUserId };
+        console.log('User added successfully');
+        return { message: 'User created successfully', UserId: newUserId };
     } catch (error) {
         console.error('Error adding user:', error);
         throw new Error('Error adding user');
@@ -52,16 +48,11 @@ const createUser = async (user) => {
 
 // User login
 const userLogin = async (email, password) => {
-    if (!email || !password) {
-        throw new Error('Email and Password are required for login.');
-    }
-
     const params = {
         TableName: 'User',
-        FilterExpression: 'Email = :email AND Password = :password',
+        FilterExpression: 'Email = :email',
         ExpressionAttributeValues: {
             ':email': email,
-            ':password': password,
         },
     };
 
@@ -71,19 +62,19 @@ const userLogin = async (email, password) => {
         if (result.Items && result.Items.length > 0) {
             const foundUser = result.Items[0];
 
-            // Check if the user's status is approved
+            if (!(await bcrypt.compare(password, foundUser.Password))) {
+                return { success: false, message: 'Invalid email or password' };
+            }
+
             if (foundUser.Status !== 'Approved') {
-                return {
-                    success: false,
-                    message: 'Your account is not approved yet. Please contact support.',
-                };
+                return { success: false, message: 'Your account is not approved yet. Please contact support.' };
             }
 
             return {
                 success: true,
                 message: 'Login successful',
                 user: {
-                    UserID: foundUser.UserID,
+                    UserID: foundUser.UserId,
                     Name: foundUser.Name,
                     Role: foundUser.Role,
                 },
@@ -126,7 +117,3 @@ const createCampaign = async (campaign, req) => {
 };
 
 export { createUser, userLogin, createCampaign };
-
-
-
-

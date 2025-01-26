@@ -24,43 +24,32 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    const user = {
+        Email: email,
+        Name: name,
+        Password: password,
+    };
+
     try {
-      const response = await fetch("http://localhost:3000/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Email: email,
-          Password: password,
-        }),
-      });
+        const response = await fetch("http://localhost:3000/user/signup", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        setMessage("Login successful!");
-
-        // Redirect based on user role
-        switch (data.user.Role) {
-          case "Admin":
-            window.location.href = "/admin/dashboard";
-            break;
-          case "Content Creator":
-            window.location.href = "/creator/dashboard";
-            break;
-          default:
-            window.location.href = "/user/dashboard";
+        if (response.ok) {
+            setMessage("Signup successful!");
+        } else {
+            const errorData = await response.json();
+            setMessage(errorData.message || "Signup failed. Please try again.");
         }
-      } else {
-        const errorData = await response.json();
-        setMessage(errorData.message || "Login failed. Please try again.");
-      }
-    } catch (error: any) {
-      setMessage(
-        error.response?.data?.message || "An error occurred. Please try again."
-      );
+    } catch (error) {
+        setMessage("An error occurred. Please try again.");
     }
-  };
+};
+
 
   return (
     <section className="login-flow">
