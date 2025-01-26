@@ -124,7 +124,7 @@ const CreateAdCampaign: React.FC = () => {
                     </form>
                 </li>
             </ul>
-            <Link to='../reviewadcampaign' className='next-container'>
+            <Link to='../review-ad-campaign' className='next-container'>
                 <button id='next-button'>Next</button>
             </Link>
         </section>
