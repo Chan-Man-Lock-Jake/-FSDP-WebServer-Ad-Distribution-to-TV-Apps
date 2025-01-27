@@ -28,8 +28,8 @@ const App: React.FC = () => {
           <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
           <Route path="create-advertisement" element={<CreateAdvertisement/>} />
           <Route path="create-advertisement-fixed-layouts" element={<CreateAdvertisementFixedLayoutOption/>} />
-          <Route path="createtvgroup" element={<CreateTvGroup/>} />
-          <Route path="viewtvgroup" element={<ViewTvGroup/>} />
+          <Route path="view-tv-group" element={<ViewTvGroup/>} />
+          <Route path="create-tv-group" element={<CreateTvGroup/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
