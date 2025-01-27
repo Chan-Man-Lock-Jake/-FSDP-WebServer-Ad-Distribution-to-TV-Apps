@@ -39,7 +39,20 @@ const Login: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setMessage("Login successful!");
+          // Store user details in localStorage or state
+          localStorage.setItem("user", JSON.stringify(data.user));
 
+          // Redirect based on user role
+          switch (data.user.Role) {
+          case "Admin":
+            window.location.href = "/admin/dashboard";
+          break;
+          case "Content Creator":
+            window.location.href = "/creator/dashboard";
+            break;
+        default:
+          window.location.href = "/admin/dashboard";
+  }
         // Redirect based on user role
         switch (data.user.Role) {
           case "Admin":

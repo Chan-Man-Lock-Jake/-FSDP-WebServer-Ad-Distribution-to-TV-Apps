@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AccountDetails.css";
 import { useNavigate } from "react-router-dom";
 
 const AccountDetails: React.FC = () => {
-  const [email, setEmail] = useState("Email@gmail.com");
-  const [name, setName] = useState("Name goes here");
-  const [userRole, setUserRole] = useState("Role");
+  const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [userRole, setUserRole] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch user details from localStorage
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    setName(user.Name || "Name goes here");
+    setEmail(user.Email || "Email@gmail.com");
+    setUserRole(user.Role || "Role");
+  }, []);
 
   const handleReset = () => {
     console.log("Reset Email and Password clicked");
+    // Implement reset functionality here if needed
   };
 
   return (
@@ -28,7 +37,7 @@ const AccountDetails: React.FC = () => {
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            readOnly
             className="input-field"
           />
         </div>
@@ -37,7 +46,7 @@ const AccountDetails: React.FC = () => {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            readOnly
             className="input-field"
           />
         </div>
