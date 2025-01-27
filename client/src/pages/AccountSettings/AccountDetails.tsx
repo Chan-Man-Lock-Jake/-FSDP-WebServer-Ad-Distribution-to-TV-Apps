@@ -14,7 +14,7 @@ const AccountDetails: React.FC = () => {
 
   return (
     <div className="account-details-page">
-      <div className="back-link" onClick={() => navigate("/dashboard")}>
+      <div className="back-link" onClick={() => navigate("/admin/dashboard")}>
         ← Back
       </div>
       <h1 className="account-details-header">Account Details</h1>

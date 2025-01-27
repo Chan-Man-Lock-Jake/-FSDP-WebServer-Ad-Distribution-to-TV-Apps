@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Dashboard.css";
+import { Link } from "react-router-dom";
 import dogeAvatar from "../../assets/xiaohongshu doge.jpg";
 
 interface UserActivity {
@@ -70,8 +71,10 @@ const Dashboard: React.FC = () => {
           <p>Start an adventurous campaign with fascinating designs.</p>
         </div>
         <div className="header-avatar">
+        <Link to="/Account-Details"> {/* Replace /profile with your desired route */}
           <img src={dogeAvatar} alt="Suzy Avatar" />
-        </div>
+        </Link>
+      </div>
       </div>
 
       <div className="dashboard-content">
