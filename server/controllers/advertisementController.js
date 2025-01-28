@@ -75,9 +75,6 @@ const getAllFinalizedAdController = async (req, res) => {
     });
   }
 
-  const Company = req.session.user.Company;
-  const UserId = req.session.user.UserId;
-
   console.log("User Session Data:", { Company, UserId });
 
   if (!Company || !UserId) {

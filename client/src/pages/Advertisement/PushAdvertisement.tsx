@@ -47,33 +47,33 @@ const PushAdvertisement: React.FC = () => {
     input.click();
   };
 
-  useEffect(() => {
-    const fetchSessionAndAds = async () => {
-      try {
-        const sessionResponse = await fetch("http://localhost:3000/session", {
-          method: "GET",
-          credentials: "include",
-        });
+//   useEffect(() => {
+//     const fetchSessionAndAds = async () => {
+//       try {
+//         const sessionResponse = await fetch("http://localhost:3000/session", {
+//           method: "GET",
+//           credentials: "include",
+//         });
 
-        if (!sessionResponse.ok) {
-          throw new Error("Failed to retrieve session data.");
-        }
+//         if (!sessionResponse.ok) {
+//           throw new Error("Failed to retrieve session data.");
+//         }
 
-        const sessionData = await sessionResponse.json();
-        console.log("Session Data:", sessionData);
+//         const sessionData = await sessionResponse.json();
+//         console.log("Session Data:", sessionData);
 
-        if (sessionData.success) {
-          fetchFinalizedAds(); // Fetch ads only if session is valid
-        } else {
-          console.error("Session invalid or missing.");
-        }
-      } catch (error) {
-        console.error("Error fetching session:", error);
-      }
-    };
+//         if (sessionData.success) {
+//           fetchFinalizedAds(); // Fetch ads only if session is valid
+//         } else {
+//           console.error("Session invalid or missing.");
+//         }
+//       } catch (error) {
+//         console.error("Error fetching session:", error);
+//       }
+//     };
 
-    fetchSessionAndAds(); // Execute on component mount
-  }, []);
+//     fetchSessionAndAds(); // Execute on component mount
+//   }, []);
 
 
   const fetchFinalizedAds = async () => {

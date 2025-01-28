@@ -13,7 +13,6 @@ import { fileURLToPath } from 'url';
 import http from 'http';
 import { Server } from 'socket.io';
 import { getAllFinalizedAd } from './models/advertisement.js';
-import { userLogin } from './models/user.js';
 import cors from 'cors';
 
 
