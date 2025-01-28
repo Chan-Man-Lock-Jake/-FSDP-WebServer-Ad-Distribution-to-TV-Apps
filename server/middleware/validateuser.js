@@ -5,91 +5,96 @@ const validateUser = async (req, res, next) => {
     const user = req.body;
     const errors = [];
 
+    // Validate email
     if (!user.Email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.Email)) {
         errors.push('Email must be a valid email address.');
     }
 
+    // Validate password
     if (!user.Password || typeof user.Password !== 'string' || user.Password.length < 8) {
-        errors.push('Password is required, must be at least 8 characters long.');
+        errors.push('Password is required and must be at least 8 characters long.');
     }
 
-    // Check if company name already exists
-    if (user.CompanyName) {
+    // Validate if company name already exists 
+    if (user.Company) {
         try {
-            const companyNameParams = {
+            const companyParams = {
                 TableName: 'User',
-                FilterExpression: 'CompanyName = :companyName',
+                FilterExpression: 'Company = :company',
                 ExpressionAttributeValues: {
-                    ':companyName': user.CompanyName,
+                    ':company': user.Company,
                 },
             };
-            const companyNameResult = await dynamoDB.send(new ScanCommand(companyNameParams));
+            const companyResult = await dynamoDB.send(new ScanCommand(companyParams));
 
-            if (companyNameResult.Items && companyNameResult.Items.length > 0) {
-                errors.push(`CompanyName "${user.CompanyName}" already exists.`);
+            if (companyResult.Items && companyResult.Items.length > 0) {
+                errors.push(`Company "${user.Company}" already exists.`);
             }
         } catch (error) {
-            console.error('Error checking CompanyName existence:', error);
-            errors.push('Internal server error while checking CompanyName.');
+            console.error('Error checking company existence:', error);
+            errors.push('Internal server error while checking company.');
         }
     }
 
-
-    // Check if UserID already exists in the database
-    if (user.UserID) {
+    // Check if UserId already exists
+    if (user.UserId) {
         try {
             const userIdParams = {
                 TableName: 'User',
-                Key: { UserID: user.UserID },
+                Key: { UserId: user.UserId },
             };
             const userIdResult = await dynamoDB.send(new GetCommand(userIdParams));
 
             if (userIdResult.Item) {
-                errors.push(`UserID ${user.UserID} already exists.`);
+                errors.push(`UserId "${user.UserId}" already exists.`);
             }
         } catch (error) {
-            console.error('Error checking UserID existence:', error);
-            errors.push('Internal server error while checking UserID.');
+            console.error('Error checking UserId existence:', error);
+            errors.push('Internal server error while checking UserId.');
         }
     }
 
-    // Check if UserCtcNumber exists in the database
-    try {
-        const contactScanParams = {
-            TableName: 'User',
-            FilterExpression: 'UserCtcNumber = :contact',
-            ExpressionAttributeValues: {
-                ':contact': user.UserCtcNumber,
-            },
-        };
-        const contactScanResult = await dynamoDB.send(new ScanCommand(contactScanParams));
+    // Check if contact number exists
+    if (user.UserCtcNumber) {
+        try {
+            const contactParams = {
+                TableName: 'User',
+                FilterExpression: 'ContactNumber = :contact',
+                ExpressionAttributeValues: {
+                    ':contact': user.UserCtcNumber,
+                },
+            };
+            const contactResult = await dynamoDB.send(new ScanCommand(contactParams));
 
-        if (contactScanResult.Items && contactScanResult.Items.length > 0) {
-            errors.push(`Contact number ${user.UserCtcNumber} already exists.`);
+            if (contactResult.Items && contactResult.Items.length > 0) {
+                errors.push(`Contact number "${user.UserCtcNumber}" already exists.`);
+            }
+        } catch (error) {
+            console.error('Error checking contact number existence:', error);
+            errors.push('Internal server error while checking contact number.');
         }
-    } catch (error) {
-        console.error('Error checking contact number existence:', error);
     }
 
-    // Check if Email exists in the database
+    // Check if email already exists
     try {
-        const emailScanParams = {
+        const emailParams = {
             TableName: 'User',
             FilterExpression: 'Email = :email',
             ExpressionAttributeValues: {
                 ':email': user.Email,
             },
         };
-        const emailScanResult = await dynamoDB.send(new ScanCommand(emailScanParams));
+        const emailResult = await dynamoDB.send(new ScanCommand(emailParams));
 
-        if (emailScanResult.Items && emailScanResult.Items.length > 0) {
-            errors.push(`Email ${user.Email} already exists.`);
+        if (emailResult.Items && emailResult.Items.length > 0) {
+            errors.push(`Email "${user.Email}" already exists.`);
         }
     } catch (error) {
         console.error('Error checking email existence:', error);
+        errors.push('Internal server error while checking email.');
     }
 
-    // Log all errors if any exist
+    // If there are errors, respond with a 400 status and error details
     if (errors.length > 0) {
         console.error('Validation errors:', errors);
         return res.status(400).json({ message: 'Validation failed', errors });

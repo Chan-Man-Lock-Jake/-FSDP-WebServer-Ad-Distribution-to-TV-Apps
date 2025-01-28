@@ -15,9 +15,10 @@ import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
 import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
 import CreateAdvertisement from './pages/Advertisement/CreateAdvertisement';
 import CreateAdvertisementFixedLayoutOption from './pages/Advertisement/CreateAdvertisementFixedLayoutOption';
-
+import PushAdvertisement from './pages/Advertisement/PushAdvertisement';
 import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
 import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -27,8 +28,9 @@ const App: React.FC = () => {
           <Route path="view-ad-campaign" element={<ViewAdCampaign/>} />
           <Route path="create-ad-campaign" element={<CreateAdCampaign/>} />
           <Route path="review-ad-campaign" element={<ReviewAdCampaign/>} />
-          <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
+          <Route path="view-advertisement" element={<ViewAdvertisement/>} /> 
           <Route path="create-advertisement" element={<CreateAdvertisement/>} />
+          <Route path="push-ad-now" element={<PushAdvertisement/>} />
           <Route path="create-advertisement-fixed-layouts" element={<CreateAdvertisementFixedLayoutOption/>} />
           <Route path="view-tv-group" element={<ViewTvGroup/>} />
           <Route path="create-tv-group" element={<CreateTvGroup/>} />

@@ -79,8 +79,8 @@ const Navbar: React.FC = () => {
                     </button>
                     <ul className="sub-menu">
                         <div>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to={"./view-tv-group"}>View Existing Groups</Link></li>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to={"./create-tv-group"}>Create New Group</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="viewtvgroup">View Existing Groups</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="createtvgroup">Create New Group</Link></li>
                         </div>
                     </ul>
                 </li>
@@ -107,6 +107,7 @@ const Navbar: React.FC = () => {
                         <div>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="view-advertisement">View Advertisements</Link></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="create-advertisement">Create Advertisement</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="push-ad-now">Push Advertisement</Link></li>
                         </div>
                     </ul>
                 </li>
