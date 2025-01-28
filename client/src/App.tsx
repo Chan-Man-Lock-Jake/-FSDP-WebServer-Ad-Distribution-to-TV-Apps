@@ -14,6 +14,7 @@ import ReviewAdCampaign from './pages/Campaign/ReviewAdCampaign';
 import ViewAdvertisement from './pages/Advertisement/ViewAdvertisement';
 import CreateAdvertisement from './pages/Advertisement/CreateAdvertisement';
 import CreateAdvertisementFixedLayoutOption from './pages/Advertisement/CreateAdvertisementFixedLayoutOption';
+import AdvertisementEditor from './pages/Advertisement/CreateAdvertisementDynamicOption';
 import PushAdvertisement from './pages/Advertisement/PushAdvertisement';
 import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
 import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
@@ -30,6 +31,7 @@ const App: React.FC = () => {
           <Route path="create-advertisement" element={<CreateAdvertisement/>} />
           <Route path="push-ad-now" element={<PushAdvertisement/>} />
           <Route path="create-advertisement-fixed-layouts" element={<CreateAdvertisementFixedLayoutOption/>} />
+          <Route path="create-advertisement-dynamic" element={<AdvertisementEditor/>} />
           <Route path="createtvgroup" element={<CreateTvGroup/>} />
           <Route path="viewtvgroup" element={<ViewTvGroup/>} />
         </Route>
