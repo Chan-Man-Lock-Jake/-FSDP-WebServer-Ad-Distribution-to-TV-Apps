@@ -19,6 +19,8 @@ async function addCampaign(campaign) {
     }
 }
 
+
+
 // Delete campaign from the table by either CampaignID or CampaignName
 async function deleteCampaign({ CampaignID, CampaignName }) {
     const params = {

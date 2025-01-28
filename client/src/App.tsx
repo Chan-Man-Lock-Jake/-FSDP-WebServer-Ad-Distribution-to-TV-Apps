@@ -7,6 +7,7 @@ import Pricing from './pages/Pricing/Pricing';
 import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
+import ViewAdCampaign from './pages/Campaign/ViewAdCampaign';
 import CreateAdCampaign from './pages/Campaign/CreateAdCampaign';
 import AccountDetails from "./pages/AccountSettings/AccountDetails";
 import SystemAdminManagement from './SystemAdminManagement';
@@ -23,6 +24,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
+          <Route path="view-ad-campaign" element={<ViewAdCampaign/>} />
           <Route path="create-ad-campaign" element={<CreateAdCampaign/>} />
           <Route path="review-ad-campaign" element={<ReviewAdCampaign/>} />
           <Route path="view-advertisement" element={<ViewAdvertisement/>} /> {/* Added route for ViewAdvertisement */}
