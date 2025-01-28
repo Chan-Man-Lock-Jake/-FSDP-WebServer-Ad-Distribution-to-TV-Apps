@@ -27,6 +27,8 @@ const port = process.env.PORT || 3000;
 app.use(
   cors({
     origin: "http://localhost:5173", // Allow requests from your frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, // Allow sending cookies or authorization headers
   })
 );
@@ -56,20 +58,24 @@ app.get("/session", (req, res) => {
 
 
 // finalised ad
-app.get("/admin/get-all-finalized-ad", (req, res) => {
-  console.log("Incoming Cookies:", req.headers.cookie); // Log incoming cookies
-  console.log("Session Data:", req.session); // Log session data
+// app.get("/admin/get-all-finalized-ad", (req, res) => {
+//   // console.log("Incoming Cookies:", req.headers.cookie); // Log incoming cookies
+//   // console.log("Session Data:", req.session); // Log session data
+//   console.log(req.session.user);
 
-  if (!req.session.user) {
-    return res.status(401).json({ success: false, message: "Unauthorized" });
-  }
+//   if (!req.session.user) {
+//     console.log("Hello");
+//     console.log(req.session.user);
 
-  const { Company, UserId } = req.session.user;
+//     return res.status(401).json({ success: false, message: "Unauthorized" });
+//   }
 
-  getAllFinalizedAd(Company, UserId)
-    .then((ads) => res.status(200).json({ success: true, data: ads }))
-    .catch((err) => res.status(500).json({ success: false, message: err.message }));
-});
+//   const { Company, UserId } = req.session.user;
+
+//   getAllFinalizedAd(Company, UserId)
+//     .then((ads) => res.status(200).json({ success: true, data: ads }))
+//     .catch((err) => res.status(500).json({ success: false, message: err.message }));
+// });
 
 
 app.use((req, res, next) => {

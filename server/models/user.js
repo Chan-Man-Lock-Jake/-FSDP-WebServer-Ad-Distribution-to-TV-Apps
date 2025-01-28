@@ -140,7 +140,6 @@ const userLogin = async (req, email, password) => {
         CreatedAt: foundUser.CreatedAt,
       };
 
-      console.log("User session:", req.session.user);
 
       return {
         success: true,

@@ -66,18 +66,16 @@ const getFinalizedAdController = async (req, res) => {
 
 // Retrieve all finalized advertisements
 const getAllFinalizedAdController = async (req, res) => {
-  console.log("Session Data:", req.session);
-
   if (!req.session.user) {
+    console.log("HERE");
+    console.log(req.session.user);
     return res.status(401).json({
       success: false,
       message: "Unauthorized. Please log in.",
     });
   }
 
-  console.log("User Session Data:", { Company, UserId });
-
-  if (!Company || !UserId) {
+  if (!req.session.user.Company || !req.session.user.UserId) {
     return res.status(400).json({
       success: false,
       message: "Company and UserId are required in session.",
@@ -85,7 +83,7 @@ const getAllFinalizedAdController = async (req, res) => {
   }
 
   try {
-    const finalizedAds = await getAllFinalizedAd(Company, UserId);
+    const finalizedAds = await getAllFinalizedAd(req.session.user.Company, req.session.user.UserId);
     res.status(200).json({ success: true, data: finalizedAds });
   } catch (error) {
     console.error("Error in getAllFinalizedAdController:", error);

@@ -85,11 +85,11 @@ const PushAdvertisement: React.FC = () => {
           credentials: "include", // Ensure cookies are sent with the request
         }
       );
-
+      
       if (!response.ok) {
         throw new Error("Failed to fetch finalized ads.");
       }
-
+      
       const data = await response.json();
 
       if (data.success && data.data) {
@@ -106,6 +106,7 @@ const PushAdvertisement: React.FC = () => {
 
 
   useEffect(() => {
+    console.log("Initialized");
     fetchFinalizedAds(); // Fetch ads on component mount
   }, []);
 
