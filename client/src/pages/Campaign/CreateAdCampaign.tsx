@@ -7,6 +7,95 @@ import "react-calendar/dist/Calendar.css";
 const CreateAdCampaign: React.FC = () => {
     return (
         <section id='create-campaign-flow'>
+            {/* <div></div>
+            <form id='create-campaign-form'>
+                <ul>
+                    <li>
+                        <div>
+                            <h1>Campaign Description</h1>
+                            <p>Come up with a name and objective for your campaign!</p>
+                        </div>
+                        <div className='campaign-description'>
+                            <div>
+                            <h2>Campaign Name</h2>
+                            <input type="text" placeholder='e.g. Christmas Specials Chicken Burger' />
+                            <h2>Campaign Objective</h2>
+                            <textarea placeholder='e.g. Brand awareness/Increase sale profits/To persuade/To inform' name="" id=""></textarea>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h1>Demographics</h1>
+                            <p>Select your demographics based on the options provided.</p>
+                        </div>
+                        <div className='campaign-demographic'>
+                            <div>
+                                <div>
+                                    <a className='additional-options'>Gender</a>
+                                    <div>
+                                    <select className='select-gender'>
+                                        <option label='select option'></option>
+                                        <option>M</option>
+                                        <option>F</option>
+                                    </select>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="red"><path d="M200-440v-80h560v80H200Z"/></svg>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a className='additional-options'>Age Range</a>
+                                    <div>
+                                    <input placeholder='e.g. 15-20'/>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="red"><path d="M200-440v-80h560v80H200Z"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <select className='add-option'>
+                                <option label='Add Option'></option>
+                                <option>Gender</option>
+                                <option>Age Range</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h1>Performance Measurement</h1>
+                            <p>Select the type of performance metrics you would like to use for your campaign.</p>                       
+                        </div>
+                        <div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h1>Advertisement</h1>
+                            <p>Select an advertisement you would like to use from either your local storage or your existing ones on the platform.</p>     
+                        </div>
+                        <div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h1>Schedule Date</h1>
+                            <p>Select a date to launch your campaign.</p>                        
+                        </div>
+                        <div className='campaign-schedule-date'>
+                            <Calendar />
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h1>Schedule Time Slot</h1>
+                            <p>Scheduled time slot for your advertisement.</p>  
+                        </div>
+                        <div>
+
+                        </div>
+                    </li>
+                </ul>
+            </form> */}
+            {/* <div className='create-campaign-progress-bar'>View Existing Campaign</div> */}
             <ul>
                 <li className='Campaign-Description-Section'>
                     <div>

@@ -1,7 +1,75 @@
 import { dynamoDB } from './dynamodb.js';
-import { PutCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
+import { PutCommand, ScanCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
 
 const TABLE_NAME = 'AdCampaign'; // DynamoDB table
+
+async function createAdCampaign(adCampaignDetails) {
+    const params = {
+        TableName: TABLE_NAME,
+        Item: {
+            CampaignId: `CMP${Math.floor(1000000 + Math.random() * 9000000)}`, // Generate a unique ID for the campaign
+            CampaignName:           adCampaignDetails.name,
+            CampaignObjective:      adCampaignDetails.objective         || '',
+            CampaignDemographic:    adCampaignDetails.demographic       || '',
+            CampaignAgeRange:       adCampaignDetails.ageRange          || '',
+            CampaignPolls:          adCampaignDetails.polls             || '',
+            CampaignShareRate:      adCampaignDetails.shareRate         || '',
+            CampaignInteractionRate:adCampaignDetails.interactionRate   || '',
+            CampaignAdvertisement:  adCampaignDetails.advertisement,
+            CampaignDate:           adCampaignDetails.date,
+            CampaignStartTime:      adCampaignDetails.startTime,
+            CampaignDuration:       adCampaignDetails.duration,
+            CampaignInterval:       adCampaignDetails.interval,
+            CampaignCreationDate:   new Date().toISOString(),
+            CampaignAuthor:         adCampaignDetails.author,
+        }
+    }
+    try {
+        await dynamoDB.send(new PutCommand(params));
+        return { message: 'New AdCampaign created successfully' };
+    } catch (error) {
+        console.error('Error creating a new AdCampaign:', error);
+        throw new Error('Error creating a new AdCampaign');
+    }
+}
+
+async function getAllAdCampaign() {
+    const params = {
+        TableName: TABLE_NAME,
+        // ProjectionExpression: '#adID, #title, #description, #status, #type, #editedBy',
+        // ExpressionAttributeNames: {
+        // '#adID': 'AdId',          // Map AdID
+        // '#title': 'Title',        // Map Title
+        // '#description': 'Description', // Map Description
+        // '#status': 'Status',      // Map Status (reserved keyword)
+        // '#type': 'Type',          // Map Type
+        // '#editedBy': 'EditedBy',  // Map EditedBy
+        // },
+    }
+    try {
+        const { Items } = await dynamoDB.send(new ScanCommand(params));
+        return Items.map((item) => ({
+            id:             item.CampaignId,
+            name:           item.CampaignName,
+            objective:      item.CampaignObjective,
+            demographic:    item.CampaignDemographic,
+            ageRange:       item.CampaignAgeRange,
+            polls:          item.CampaignPolls,
+            shareRate:      item.CampaignShareRate,
+            interactionRate:item.CampaignInteractionRate,
+            advertisement:  item.CampaignAdvertisement,
+            date:           item.CampaignDate,
+            startTime:      item.CampaignStartTime,
+            duration:       item.CampaignDuration,
+            interval:       item.CampaignInterval,
+            creationDate:   item.CampaignCreationDate,
+            author:         item.CampaignAuthor,
+        }));
+    } catch (error) {
+        console.error('Error getting all AdCampaign:', error);
+        throw new Error('Error getting all AdCampaign');
+    }
+}
 
 // Add ad campaign to table
 async function addCampaign(campaign) {
@@ -19,7 +87,33 @@ async function addCampaign(campaign) {
     }
 }
 
+const createCampaign = async (campaign, req) => {
+    if (!req.session || !req.session.user) {
+        throw new Error('User not logged in or session expired');
+    }
 
+    const params = {
+        TableName: 'AdCampaign',
+        Item: {
+            CampaignID: `CMP${Math.floor(1000000 + Math.random() * 9000000)}`, // Generate a unique ID for the campaign
+            CampaignAud: campaign.CampaignAud,
+            PerformanceMetrics: campaign.PerformanceMetrics,
+            CampaignStatus: campaign.CampaignStatus,
+            CreatedAt: new Date().toISOString(), // Store the current timestamp
+            CreatedBy: req.session.user.UserID // Reference the user ID from the session
+            // Find a way to store schedule
+        },
+    };
+
+    try {
+        await dynamoDB.send(new PutCommand(params));
+        console.log(`Campaign created successfully by user: ${req.session.user.UserID}`);
+        return { message: 'Campaign created successfully' };
+    } catch (error) {
+        console.error('Error creating campaign:', error);
+        throw new Error('Error creating campaign');
+    }
+};
 
 // Delete campaign from the table by either CampaignID or CampaignName
 async function deleteCampaign({ CampaignID, CampaignName }) {
@@ -43,4 +137,4 @@ async function deleteCampaign({ CampaignID, CampaignName }) {
     }
 }
 
-export { addCampaign, deleteCampaign };
+export { createAdCampaign, getAllAdCampaign };

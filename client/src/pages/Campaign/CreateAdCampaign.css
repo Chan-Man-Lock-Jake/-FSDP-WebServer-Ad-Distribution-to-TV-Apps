@@ -1,3 +1,127 @@
+/* #create-campaign-flow {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+#create-campaign-form {
+  margin: 50px;
+
+  p {
+    font-size: 18px;
+  }
+  h1 {
+    font-size: 40px;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 50px;
+    border-radius: 20px;
+    background-color: white;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  input, textarea, .additional-options, .select-gender {
+    display: flex;
+    padding: 10px;
+    text-indent: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  textarea {
+    height: 250px
+  }
+  li > div:first-child {
+    width: 290px;
+    margin-right: 50px
+  }
+  li > div:last-child {
+    flex-grow: 1;
+    align-items: center;
+    > div {
+      max-width: 540px;
+    }
+  }
+}
+.campaign-description {
+  input, textarea {
+    all: unset;
+    display: flex;
+    width: 520px;
+  }
+}
+.campaign-demographic {
+  .select-gender {
+    width: 177.6px;
+  }
+  .add-option {
+    all: unset;
+  }
+  div {
+    display: flex;
+  }
+  > div { 
+    flex-direction: column;
+    > div {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}
+.campaign-schedule-date {
+  margin: 20px 0px;
+
+  abbr{
+    text-decoration: none;
+  }
+  .react-calendar {
+    all: unset;
+    max-width: 500px;
+
+    button {
+      all: unset;
+    }
+  }
+  .react-calendar__navigation {
+    button{
+      padding: 10px;
+    }
+  }
+  .react-calendar__viewContainer {
+    button{
+      padding: 10px 0;
+    }
+  }
+  .react-calendar__navigation, .react-calendar__viewContainer{
+    color: black;
+    .react-calendar__tile--active{
+      color: white;
+      background-color: var(--base-clr);
+    }
+    button{
+      border-radius: 5px;
+      text-align: center;
+    }
+    button:hover{
+      background-color: var(--hover-clr);
+      border: none;
+    }
+  }
+} */
 :root {
   --base-clr: #2a4e50;
   --base-clr-2: #375a5c;
@@ -17,7 +141,7 @@ p {
   letter-spacing: 0px;
 }
 section {
-  /* zoom: 1.2;  */
+  zoom: 1.2; 
 
   padding: 0;
   width: 100%;

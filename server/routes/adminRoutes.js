@@ -1,8 +1,11 @@
 import express from 'express';
 import { getAllAdInfoController } from '../controllers/adInfoController.js';
+import { createAdCampaignController, getAllAdCampaignController } from '../controllers/adCampaignController.js';
 const router = express.Router();
 
 router.get('/get-ad-info', getAllAdInfoController);
+router.post('/create-campaign', createAdCampaignController);
+router.get('/get-all-ad-campaign', getAllAdCampaignController);
 
 export default router;
 

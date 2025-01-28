@@ -2,54 +2,49 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 type AdCampaignCardProps = {
-  title: string;
-  description: string;
-  status?: "Pushed" | "Not Pushed" | "Scheduled"; // Optional for Drafts
-  type: "Finalized" | "Draft";
+  image: string;
+  name: string;
+  created_on: string;
+  created_by: string;
   onView: () => void;
 };
 
 const AdCampaignCard: React.FC<AdCampaignCardProps> = ({
-  title,
-  description,
-  status,
-  type,
-  onView,
+  image,
+  name,
+  created_on,
+  created_by,
 }) => {
-  const navigate = useNavigate();
 
-  const handleViewClick = () => {
-    // Navigate to CreateAdvertisement page
-    navigate("/create-advertisement");
-  };
+  // const fetchAllCampaigns = async () => {
+  //   try {
+  //     setLoading(true);
+  //     const response = await fetch("http://localhost:3000/admin/get-ad-info");
+  //     if (!response.ok) {
+  //       throw new Error(`Failed to fetch: ${response.statusText}`);
+  //     }
+  //     const data = await response.json();
+
+  //     const formattedAds = data.map((item: any) => ({
+  //       title: item.Title,
+  //       description: item.Description,
+  //       status: item.Type === "Finalized" ? item.Status : undefined, // Only add status for Finalized
+  //       type: item.Type,
+  //     }));
+
+  //   } catch (error) {
+  //     setError("Failed to load advertisements. Please try again.");
+  //     console.error("Error fetching advertisements:", error);
+  //   }
+  // };
 
   return (
     <li>
-        <div><img src={}/></div>
-        <h2>Christmas Specials Chicken Burger</h2>
-        <h3>Created on:</h3>
-        <h3>Created by:</h3>
+        <div><img src={image}/></div>
+        <h2>{name}</h2>
+        <h3>Created on: {created_on}</h3>
+        <h3>Created by: {created_by}</h3>
     </li>
-    // <div className="advertisement-card">
-    //   <h3 className="card-title">{title}</h3>
-    //   <p className="card-description">{description}</p>
-    //   {type === "Finalized" && status && (
-    //     <div className="card-status">
-    //       <span
-    //         className={`status-indicator ${status.replace(/\s+/g, "-").toLowerCase()}`}
-    //       />
-    //       <span
-    //         className={`status-text ${status.replace(/\s+/g, "-").toLowerCase()}`}
-    //       >
-    //         {status}
-    //       </span>
-    //     </div>
-    //   )}
-
-    //   <button className="view-button" onClick={handleViewClick}>
-    //     View
-    //   </button>
-    // </div>
   );
 };
 
