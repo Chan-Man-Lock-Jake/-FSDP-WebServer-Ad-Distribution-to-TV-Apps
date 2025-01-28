@@ -19,6 +19,18 @@
   font-size: 36px;
   margin: 10px 0; 
   padding-left: 35px; 
+  margin-bottom: 0;
+  font-family: Lato, sans-serif;
+}
+
+.header-description {
+  color: #8D8888;
+  font-size: 20px;
+  margin: 0; 
+  padding-left: 35px; 
+  margin-top: 5px;
+  margin-bottom: 20px;
+  font-family: Lato, sans-serif;
 }
 
 .header-controls {
@@ -76,6 +88,7 @@
   appearance: none; /* Remove the native dropdown styling */
   outline: none; 
   margin-top: 30px;
+  margin-right: 565px;
 }
 
 /* Styling for dropdown options */
@@ -92,3 +105,4 @@
   background-color: #e0dfdf; 
   color: #000; 
 }
+

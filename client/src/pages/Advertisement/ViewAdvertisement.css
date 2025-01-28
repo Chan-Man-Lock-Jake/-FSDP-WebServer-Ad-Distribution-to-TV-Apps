@@ -2,10 +2,9 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  box-sizing: border-box;
 }
 
-.content {
+.view-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsive grid */
   gap: 40px;

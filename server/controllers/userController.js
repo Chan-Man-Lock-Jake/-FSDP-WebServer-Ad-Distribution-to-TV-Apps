@@ -2,36 +2,23 @@ import { createUser, userLogin, createCampaign } from '../models/user.js';
 
 // User Login Controller
 const userLoginController = async (req, res) => {
-    const { Email, Password } = req.body;
+  const { email, password } = req.body;
 
-    if (!Email || !Password) {
-        return res.status(400).json({ message: 'Email and Password are required.' });
+  if (!email || !password) {
+    return res.status(400).json({ success: false, message: "Email and password are required" });
+  }
+
+  try {
+    const result = await userLogin(req, email, password);
+    if (result.success) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(401).json(result);
     }
-
-    try {
-        const loginResponse = await userLogin(Email, Password);
-
-        if (loginResponse.success) {
-            req.session.user = {
-                UserID: loginResponse.user.UserID,
-                Name: loginResponse.user.Name,
-                Role: loginResponse.user.Role,
-            };
-            console.log("Session ID:", req.session.id);
-
-            res.status(200).json({
-                success: true,
-                message: loginResponse.message,
-                user: req.session.user,
-                sessionId: req.session.id,
-            });
-        } else {
-            res.status(401).json({ message: loginResponse.message });
-        }
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ message: 'Login failed due to a server error.' });
-    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    return res.status(500).json({ success: false, message: "Login failed" });
+  }
 };
 
 // Create User Controller
@@ -41,8 +28,11 @@ const createUserController = async (req, res) => {
         const response = await createUser(user);
         res.status(201).json(response);
     } catch (error) {
-        console.error('Error creating user:', error);
-        res.status(500).json({ message: 'Error creating user' });
+        console.error('Error creating user:', error.message);
+        res.status(500).json({
+            message: 'Error creating user',
+            error: error.message, 
+        });
     }
 };
 

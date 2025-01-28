@@ -6,6 +6,7 @@ const SignUp: React.FC = () => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    const [company, setCompany] = useState("");
     const [message, setMessage] = useState<string | null>(null);
 
     const ErrorPopup = () => {
@@ -33,7 +34,7 @@ const SignUp: React.FC = () => {
                     Email: email,
                     Name: name,
                     Password: password,
-                    Role: "Admin", // Auto-assigning the role as Admin
+                    Company: company,
                 }),
             });
 
@@ -65,6 +66,8 @@ const SignUp: React.FC = () => {
                     <input onChange={(e) => setName(e.target.value)} type="text" name="Name" id="name" />
                     <label htmlFor="password">Password</label>
                     <input onChange={(e) => setPassword(e.target.value)} type="password" name="Password" id="password" />
+                    <label htmlFor="password">Company Name</label>
+                    <input onChange={(e) => setCompany(e.target.value)} type="text" name="Company" id="company" />
                     <button type="submit">Sign Up</button>
                     <p>Already have an account? <a href='/login'>Log In</a></p>
                 </form>

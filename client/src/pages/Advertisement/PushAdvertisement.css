@@ -1,0 +1,310 @@
+.push-advertisement {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.push-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.advertisement-container {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 25px auto;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.advertisement-container p {
+  font-size: 20px;
+  text-align: center;
+  color: #333;
+  margin: 0;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: row; /* Buttons in the same row */
+  justify-content: center;
+  gap: 70px; /* Space between buttons */
+  width: 100%; /* Stretch to fit the container */
+}
+
+.local-storage-upload {
+  display: flex;
+  flex-direction: column; /* Stack input and button */
+  gap: 10px;
+  align-items: center;
+}
+
+.storage-button {
+  padding: 10px 20px;
+  background-color: white;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  border: solid 1px #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.storage-button:hover {
+  background-color: #fcdede;
+}
+
+.storage-button.selected {
+  background-color: #f56a79;
+  color: white;
+}
+
+.push-bttn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.push-button {
+  padding: 10px 20px;
+  background-color: #f56a79;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 150px;
+}
+
+.cancel-button {
+  padding: 10px 20px;
+  background-color: white;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 150px;
+}
+
+.push-button:hover {
+  background-color: #f56a79;
+}
+
+.dropdown-container {
+  width: 80%;
+  max-width: 362px;
+  position: relative;
+  margin-right: 25px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none; /* Removes the default focus outline */
+  font-family: Lato, sans-serif;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+.dropdown {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 5px;
+  max-height: 200px; /* Set a maximum height */
+  overflow-y: auto; /* Enable scrolling when content overflows */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  width: 382px;
+  border-radius: 10px;
+}
+
+.dropdown-item {
+  padding: 10px;
+  font-size: 15px;
+  font-family: Lato, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover,
+.close-popup:hover,
+.dropdown-item.selected {
+  background-color: #fcdede;
+  color: black;
+}
+
+.error-message {
+  color: #d94a5c;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 60%;
+  max-width: 800px;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.popup-buttons {
+    display: flex; /* Align buttons in a row */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 20px; /* Space between the buttons */
+    margin-top: 20px;
+}
+
+.popup-title {
+    font-size: 30px;
+    text-align: center;
+    color: #333;
+    font-family: Lato, sans-serif;
+    font-weight: 700;
+}
+
+.popup-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.popup-text {
+    font-size: 18px;
+    color: #333;
+    font-family: Lato, sans-serif;
+    padding: 10px;
+}
+
+.popup-link {
+    font-size: 18px;
+    color: #f56a79;
+    font-family: Lato, sans-serif;
+    cursor: pointer;
+}
+
+.popup-ad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 250px; /* Increased size for larger ads */
+}
+
+.popup-image {
+  width: 250px; /* Increased the width */
+  height: 250px; /* Increased the height */
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ad-name {
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+}
+
+.close-popup {
+  background-color: white;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: Lato, sans-serif;
+  color: #333;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 20px auto; /* Center the button */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 200px;
+}
+
+.close-popup:hover {
+  background-color: #fcdede;
+}
+
+.selected-ads-container {
+  margin-top: 20px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 25px auto;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 80%;
+}
+
+.selected-image {
+  width: 450px; /* Adjust selected image size */
+  height: 450px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10px auto;
+}
+
+.selected-ad-title {
+  text-align: center;
+  color: black;
+  margin: 0;
+  font-size: 27px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.selected-items {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Lato, sans-serif;
+  font-weight: 600;
+}
