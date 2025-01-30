@@ -1,28 +1,13 @@
 import { createAdCampaign, getAllAdCampaign } from "../models/adCampaign.js";
 
 const createAdCampaignController = async (req, res) => {
-    const {
-        name,
-        objective,
-        demographic,
-        ageRange,
-        polls,
-        shareRate,
-        interactionRate,
-        advertisement,
-        date,
-        startTime,
-        duration,
-        interval,
-        author,
-    } = req.body;
     try {
         const response = await createAdCampaign(req.body);
-        if (response.success) {
-            res.status(201).json(response);
-        } else {
-            res.status(401).json({ message: response.message });
-        }
+        res.status(201).json(response);
+        // if (response.success) {
+        // } else {
+        //     res.status(401).json({ message: response.message });
+        // }
     } catch (error) {
         console.error('Error during AdCampaign creation:', error);
         res.status(500).json({ message: 'Login failed while creatig an ad.' });
@@ -31,14 +16,8 @@ const createAdCampaignController = async (req, res) => {
 
 const getAllAdCampaignController = async (req, res) => {
     try {
-        const response = await getAllAdCampaign();
-        // console.log(response);
-        if (response.success) {
-            res.status(200).json(response);
-        } else {
-            res.status(401).json({ message: response.message });
-            console.log("ITWORKS");
-        }
+        const allAdCampaigns = await getAllAdCampaign();
+        res.status(200).json({ success: true, data: allAdCampaigns });
     } catch (error) {
         console.error('Error retrieving AdCampaign:', error);
         res.status(500).json({ message: 'Login failed while retrieving an ad.' });

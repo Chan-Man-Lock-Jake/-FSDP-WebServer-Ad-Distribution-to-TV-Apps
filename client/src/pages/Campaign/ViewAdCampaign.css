@@ -1,11 +1,12 @@
 .view-ad-campaign {
     display: flex;
     flex-direction: column;
+    width: 100%;
     
     > div {
         display: flex;
         flex-direction: column;
-        align-self: center;
+        /* align-self: center; */
         justify-content: center;
         width: 100%;
 

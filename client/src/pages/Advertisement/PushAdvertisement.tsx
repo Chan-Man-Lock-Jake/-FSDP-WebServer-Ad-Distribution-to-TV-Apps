@@ -3,6 +3,7 @@ import "./PushAdvertisement.css";
 import AdvertisementHeader from "./AdvertisementHeader";
 import { useNavigate } from "react-router-dom";
 
+// Replace with actual TV groups from database 
 const tvGroups = [
   "TV Group 1",
   "TV Group 2",
@@ -26,6 +27,7 @@ const PushAdvertisement: React.FC = () => {
   } | null>(null);
   const navigate = useNavigate();
 
+  // Function to handle storage selection
   const handleStorageSelection = async () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -47,35 +49,7 @@ const PushAdvertisement: React.FC = () => {
     input.click();
   };
 
-//   useEffect(() => {
-//     const fetchSessionAndAds = async () => {
-//       try {
-//         const sessionResponse = await fetch("http://localhost:3000/session", {
-//           method: "GET",
-//           credentials: "include",
-//         });
-
-//         if (!sessionResponse.ok) {
-//           throw new Error("Failed to retrieve session data.");
-//         }
-
-//         const sessionData = await sessionResponse.json();
-//         console.log("Session Data:", sessionData);
-
-//         if (sessionData.success) {
-//           fetchFinalizedAds(); // Fetch ads only if session is valid
-//         } else {
-//           console.error("Session invalid or missing.");
-//         }
-//       } catch (error) {
-//         console.error("Error fetching session:", error);
-//       }
-//     };
-
-//     fetchSessionAndAds(); // Execute on component mount
-//   }, []);
-
-
+  // Function to fetch finalized ads from the server
   const fetchFinalizedAds = async () => {
     try {
       const response = await fetch(
@@ -110,6 +84,7 @@ const PushAdvertisement: React.FC = () => {
     fetchFinalizedAds(); // Fetch ads on component mount
   }, []);
 
+  // Function to handle search input change for TV groups
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -159,6 +134,7 @@ const PushAdvertisement: React.FC = () => {
     return videoExtensions.includes(extension || "");
   };
 
+  // Function to handle pushing the advertisement to web socket 
   const handleConfirmPush = async () => {
     try {
       const response = await fetch(

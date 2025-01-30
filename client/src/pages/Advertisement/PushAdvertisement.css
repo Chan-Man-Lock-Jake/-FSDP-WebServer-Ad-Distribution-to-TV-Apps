@@ -107,6 +107,10 @@
   width: 150px;
 }
 
+.cancel-button:hover {
+  background-color: #fcdede;
+}
+
 .push-button:hover {
   background-color: #f56a79;
 }

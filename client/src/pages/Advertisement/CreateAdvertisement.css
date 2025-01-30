@@ -1,5 +1,6 @@
 .create-advertisements {
-
+    width: 100%;
+    
     > div {
         padding-top: 0px;
         margin: 20px 50px;

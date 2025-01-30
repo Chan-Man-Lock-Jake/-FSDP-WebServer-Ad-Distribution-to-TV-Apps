@@ -4,27 +4,29 @@ import { PutCommand, ScanCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
 const TABLE_NAME = 'AdCampaign'; // DynamoDB table
 
 async function createAdCampaign(adCampaignDetails) {
-    const params = {
-        TableName: TABLE_NAME,
-        Item: {
-            CampaignId: `CMP${Math.floor(1000000 + Math.random() * 9000000)}`, // Generate a unique ID for the campaign
-            CampaignName:           adCampaignDetails.name,
-            CampaignObjective:      adCampaignDetails.objective         || '',
-            CampaignDemographic:    adCampaignDetails.demographic       || '',
-            CampaignAgeRange:       adCampaignDetails.ageRange          || '',
-            CampaignPolls:          adCampaignDetails.polls             || '',
-            CampaignShareRate:      adCampaignDetails.shareRate         || '',
-            CampaignInteractionRate:adCampaignDetails.interactionRate   || '',
-            CampaignAdvertisement:  adCampaignDetails.advertisement,
-            CampaignDate:           adCampaignDetails.date,
-            CampaignStartTime:      adCampaignDetails.startTime,
-            CampaignDuration:       adCampaignDetails.duration,
-            CampaignInterval:       adCampaignDetails.interval,
-            CampaignCreationDate:   new Date().toISOString(),
-            CampaignAuthor:         adCampaignDetails.author,
-        }
-    }
     try {
+        const params = {
+            TableName: TABLE_NAME,
+            Item: {
+                CampaignId: `CMP${Math.floor(1000000 + Math.random() * 9000000)}`, // Generate a unique ID for the campaign
+                Name:           adCampaignDetails.name,
+                Objective:      adCampaignDetails.objective         || '',
+                Demographic:    adCampaignDetails.demographic       || '',
+                AgeRange:       adCampaignDetails.ageRange          || '',
+                Polls:          adCampaignDetails.polls             || '',
+                ShareRate:      adCampaignDetails.shareRate         || '',
+                InteractionRate:adCampaignDetails.interactionRate   || '',
+                Advertisement:  adCampaignDetails.advertisement,
+                Date:           adCampaignDetails.date,
+                StartTime:      adCampaignDetails.startTime,
+                EndTime:        adCampaignDetails.endTime,
+                Duration:       adCampaignDetails.duration,
+                Interval:       adCampaignDetails.interval,
+                CreationDate:   new Date().toISOString(),
+                Author:         adCampaignDetails.author,
+            }
+        };
+
         await dynamoDB.send(new PutCommand(params));
         return { message: 'New AdCampaign created successfully' };
     } catch (error) {
@@ -36,35 +38,27 @@ async function createAdCampaign(adCampaignDetails) {
 async function getAllAdCampaign() {
     const params = {
         TableName: TABLE_NAME,
-        // ProjectionExpression: '#adID, #title, #description, #status, #type, #editedBy',
-        // ExpressionAttributeNames: {
-        // '#adID': 'AdId',          // Map AdID
-        // '#title': 'Title',        // Map Title
-        // '#description': 'Description', // Map Description
-        // '#status': 'Status',      // Map Status (reserved keyword)
-        // '#type': 'Type',          // Map Type
-        // '#editedBy': 'EditedBy',  // Map EditedBy
-        // },
     }
     try {
         const { Items } = await dynamoDB.send(new ScanCommand(params));
-        return Items.map((item) => ({
-            id:             item.CampaignId,
-            name:           item.CampaignName,
-            objective:      item.CampaignObjective,
-            demographic:    item.CampaignDemographic,
-            ageRange:       item.CampaignAgeRange,
-            polls:          item.CampaignPolls,
-            shareRate:      item.CampaignShareRate,
-            interactionRate:item.CampaignInteractionRate,
-            advertisement:  item.CampaignAdvertisement,
-            date:           item.CampaignDate,
-            startTime:      item.CampaignStartTime,
-            duration:       item.CampaignDuration,
-            interval:       item.CampaignInterval,
-            creationDate:   item.CampaignCreationDate,
-            author:         item.CampaignAuthor,
-        }));
+        // return Items.map((item) => ({
+        //     id:             item.CampaignId,
+        //     name:           item.CampaignName,
+        //     objective:      item.CampaignObjective,
+        //     demographic:    item.CampaignDemographic,
+        //     ageRange:       item.CampaignAgeRange,
+        //     polls:          item.CampaignPolls,
+        //     shareRate:      item.CampaignShareRate,
+        //     interactionRate:item.CampaignInteractionRate,
+        //     advertisement:  item.CampaignAdvertisement,
+        //     date:           item.CampaignDate,
+        //     startTime:      item.CampaignStartTime,
+        //     duration:       item.CampaignDuration,
+        //     interval:       item.CampaignInterval,
+        //     creationDate:   item.CampaignCreationDate,
+        //     author:         item.CampaignAuthor,
+        // }));
+        return Items;
     } catch (error) {
         console.error('Error getting all AdCampaign:', error);
         throw new Error('Error getting all AdCampaign');
