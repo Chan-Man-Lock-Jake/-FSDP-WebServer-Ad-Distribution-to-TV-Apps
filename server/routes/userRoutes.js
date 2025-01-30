@@ -3,8 +3,8 @@ import { createCampaignController, createUserController, userLoginController } f
 import { validateUser } from '../middleware/validateUser.js';
 const router = express.Router();
 
-router.post('/signup', createUserController); // Correct function name
-router.post('/login', userLoginController); // Correct function name
-router.post('/create-campaign', createCampaignController); // Correct function name
+router.post('/signup', createUserController); // User signup route
+router.post('/login', userLoginController);  // User login route
+router.post('/create-campaign', createCampaignController); 
 export default router;
 

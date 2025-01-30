@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AdvertisementHeader.css";
 
 type AdvertisementButtonProps = {
@@ -17,6 +18,8 @@ const AdvertisementButton: React.FC<AdvertisementButtonProps> = ({
     "Not Pushed"
   );
 
+  const navigate = useNavigate();
+
   const handleTabClick = (type: "Finalized" | "Draft") => {
     setSelectedTab(type);
     onTypeChange(type);
@@ -27,6 +30,10 @@ const AdvertisementButton: React.FC<AdvertisementButtonProps> = ({
   ) => {
     setState(newState);
     onStateChange(newState);
+  };
+
+  const handlePushAdNow = () => {
+    navigate("/admin/push-ad-now"); 
   };
 
   return (
@@ -46,19 +53,24 @@ const AdvertisementButton: React.FC<AdvertisementButtonProps> = ({
         </button>
       </div>
       {selectedTab === "Finalized" && (
-        <select
-          className="state-dropdown"
-          value={state}
-          onChange={(e) =>
-            handleStateChange(
-              e.target.value as "Pushed" | "Not Pushed" | "Scheduled"
-            )
-          }
-        >
-          <option value="Not Pushed">Not Pushed</option>
-          <option value="Scheduled">Scheduled</option>
-          <option value="Pushed">Pushed</option>
-        </select>
+        <div className="finalized-controls">
+          <select
+            className="state-dropdown"
+            value={state}
+            onChange={(e) =>
+              handleStateChange(
+                e.target.value as "Pushed" | "Not Pushed" | "Scheduled"
+              )
+            }
+          >
+            <option value="Not Pushed">Status: Not Pushed</option>
+            <option value="Scheduled">Status: Scheduled</option>
+            <option value="Pushed">Status: Pushed</option>
+          </select>
+          <button className="tab" onClick={handlePushAdNow}>
+            Push Ad Now
+          </button>
+        </div>
       )}
     </div>
   );

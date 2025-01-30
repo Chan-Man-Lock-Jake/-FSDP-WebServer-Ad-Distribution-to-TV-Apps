@@ -1,8 +1,15 @@
 import express from 'express';
+import multer from 'multer';
 import { getAllAdInfoController } from '../controllers/adInfoController.js';
+import { uploadFinalizedAdController, getFinalizedAdController, getAllFinalizedAdController } from '../controllers/advertisementController.js';
+
 const router = express.Router();
+const upload = multer(); 
 
 router.get('/get-ad-info', getAllAdInfoController);
+router.post('/upload-finalized-ad', upload.single('file'), uploadFinalizedAdController);
+router.get('/get-finalized-ad', getFinalizedAdController);
+router.get('/get-all-finalized-ad', getAllFinalizedAdController);
 
 export default router;
 
