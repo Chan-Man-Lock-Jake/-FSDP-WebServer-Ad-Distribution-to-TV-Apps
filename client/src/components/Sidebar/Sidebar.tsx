@@ -81,6 +81,7 @@ const Navbar: React.FC = () => {
                         <div>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="viewtvgroup">View Existing Groups</Link></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="createtvgroup">Create New Group</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="jointvgroup">Join TV Group</Link></li>
                         </div>
                     </ul>
                 </li>
