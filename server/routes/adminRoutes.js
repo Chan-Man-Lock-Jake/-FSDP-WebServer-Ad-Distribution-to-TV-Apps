@@ -9,6 +9,8 @@ const router = express.Router();
 const upload = multer(); 
 
 router.get('/get-ad-info', getAllAdInfoController);
+router.get('/get-tv-grp-card-info', getTvGroupCardInfoController);
+router.get('/get-tv-grp-info', getTvGroupInfoController);
 
 export default router;
 
