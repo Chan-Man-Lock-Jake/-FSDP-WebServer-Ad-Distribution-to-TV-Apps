@@ -4,11 +4,10 @@ import AdvertisementButton from "./AdvertisementButton";
 import AdvertisementCard from "./AdvertisementCard";
 import "./ViewAdvertisement.css";
 
-// Define the type for Advertisement data
 type Advertisement = {
   title: string;
   description: string;
-  status?: "Pushed" | "Not Pushed" | "Scheduled"; // Optional for Drafts
+  status?: "Pushed" | "Not Pushed" | "Scheduled"; 
   type: "Finalized" | "Draft";
 };
 
@@ -70,7 +69,9 @@ const ViewAdvertisement: React.FC = () => {
 
   return (
     <div className="view-advertisements">
-      <AdvertisementHeader />
+      <div>
+        <AdvertisementHeader title="View Advertisements" description="" />
+      </div>
       <AdvertisementButton
         onStateChange={handleStateChange}
         onTypeChange={handleTypeChange}
@@ -80,7 +81,7 @@ const ViewAdvertisement: React.FC = () => {
       ) : loading ? (
         <p>Loading advertisements...</p>
       ) : (
-        <div className="content">
+        <div className="view-content">
           {filteredAds.length > 0 ? (
             filteredAds.map((ad, index) => (
               <AdvertisementCard

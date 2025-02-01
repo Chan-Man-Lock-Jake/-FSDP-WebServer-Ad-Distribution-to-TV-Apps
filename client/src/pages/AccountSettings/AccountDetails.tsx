@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AccountDetails.css";
 import { useNavigate } from "react-router-dom";
 
 const AccountDetails: React.FC = () => {
-  const [email, setEmail] = useState("Email@gmail.com");
-  const [name, setName] = useState("Name goes here");
-  const [userRole, setUserRole] = useState("Role");
+  const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [userRole, setUserRole] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch user details from localStorage
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    setName(user.Name || "Name goes here");
+    setEmail(user.Email || "Email@gmail.com");
+    setUserRole(user.Role || "Role");
+  }, []);
 
   const handleReset = () => {
     console.log("Reset Email and Password clicked");
+    // Implement reset functionality here if needed
   };
 
   return (
     <div className="account-details-page">
-      <div className="back-link" onClick={() => navigate("/dashboard")}>
+      <div className="back-link" onClick={() => navigate("/admin/dashboard")}>
         ← Back
       </div>
       <h1 className="account-details-header">Account Details</h1>
@@ -22,27 +31,24 @@ const AccountDetails: React.FC = () => {
         <div className="form-group">
           <label>Role</label>
           <input type="text" value={userRole} readOnly className="input-field" />
-          <span className="edit-icon">✏️</span>
         </div>
         <div className="form-group">
           <label>Name</label>
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            readOnly
             className="input-field"
           />
-          <span className="edit-icon">✏️</span>
         </div>
         <div className="form-group">
           <label>Email</label>
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            readOnly
             className="input-field"
           />
-          <span className="edit-icon">✏️</span>
         </div>
         <button className="reset-button" onClick={handleReset}>
           Reset Email and Password

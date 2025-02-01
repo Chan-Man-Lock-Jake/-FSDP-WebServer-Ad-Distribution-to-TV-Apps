@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Dashboard.css";
+import { Link } from "react-router-dom";
 import dogeAvatar from "../../assets/xiaohongshu doge.jpg";
 
 interface UserActivity {
@@ -20,6 +21,13 @@ const Dashboard: React.FC = () => {
   const [userActivity, setUserActivity] = useState<UserActivity[] | null>(null);
   const [activeCampaigns, setActiveCampaigns] = useState<ActiveCampaign[] | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [userName, setUserName] = useState<string>("");
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    setUserName(user.Name || "User"); // Default to "User" if no name is found
+  }, []);
+
 
   const getDaysInMonth = (year: number, month: number): Date[] => {
     const date = new Date(year, month, 1);
@@ -66,12 +74,14 @@ const Dashboard: React.FC = () => {
     <div className="dashboard-container">
       <div className="dashboard-header">
         <div className="header-text">
-          <h1>Hello, Suzy!</h1>
+        <h1>Hello, {userName.split(" ")[0]}!</h1>
           <p>Start an adventurous campaign with fascinating designs.</p>
         </div>
         <div className="header-avatar">
+        <Link to="/Account-Details"> {/* Replace /profile with your desired route */}
           <img src={dogeAvatar} alt="Suzy Avatar" />
-        </div>
+        </Link>
+      </div>
       </div>
 
       <div className="dashboard-content">

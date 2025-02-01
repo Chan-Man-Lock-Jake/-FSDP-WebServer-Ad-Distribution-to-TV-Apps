@@ -1,60 +1,45 @@
 import { createUser, userLogin, createCampaign } from '../models/user.js';
 
-// Create user
+// User Login Controller
+const userLoginController = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ success: false, message: "Email and password are required" });
+  }
+
+  try {
+    const result = await userLogin(req, email, password);
+    if (result.success) {
+      return res.status(200).json(result);
+    } else {
+      return res.status(401).json(result);
+    }
+  } catch (error) {
+    console.error("Error during login:", error);
+    return res.status(500).json({ success: false, message: "Login failed" });
+  }
+};
+
+// Create User Controller
 const createUserController = async (req, res) => {
     try {
-        const newUser = req.body; 
-        const response = await createUser(newUser);
+        const user = req.body;
+        const response = await createUser(user);
         res.status(201).json(response);
     } catch (error) {
-        console.error('Error adding user:', error);
-        res.status(500).json({ message: 'Error adding user' });
+        console.error('Error creating user:', error.message);
+        res.status(500).json({
+            message: 'Error creating user',
+            error: error.message, 
+        });
     }
 };
 
-// User Login
-const userLoginController = async (req, res) => {
-    console.log("Request Body:", req.body);
-    const { Email, Password } = req.body || {};
-
-    if (!Email || !Password) {
-        return res.status(400).json({ message: 'Email and Password are required.' });
-    }
-
-    try {
-        const loginResponse = await userLogin(Email, Password);
-
-        if (loginResponse.success) {
-            // Save user info in the session
-            req.session.user = {
-                UserID: loginResponse.user.UserID,
-                Name: loginResponse.user.Name,
-                Role: loginResponse.user.Role,
-            };
-
-            // Log the session ID
-            console.log("Session ID:", req.session.id);
-
-            res.status(200).json({
-                success: true,
-                message: loginResponse.message,
-                user: req.session.user,
-                sessionId: req.session.id, // Include session ID in response
-            });
-        } else {
-            res.status(401).json(loginResponse);
-        }
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ message: 'Login failed' });
-    }
-};
-
+// Campaign Creation Controller
 const createCampaignController = async (req, res) => {
     try {
         const campaign = req.body;
-
-        // Call createCampaign function, passing the campaign and request object
         const response = await createCampaign(campaign, req);
         res.status(201).json(response);
     } catch (error) {
