@@ -1,26 +1,69 @@
 import React from "react";
-import "./ViewTvGroup.css";
+import { useState } from "react";
+import "./ViewTvGroup.css"
 
-const ViewTvGroupFilter: React.FC = () => {
+type FilterCat = {
+    onFilterChange: (
+    filters: {
+        region?: "North" | "South" | "East" | "West" | "Nil";
+        status?: "Online" | "Offline" | "Removed";
+    }) => void;
+}
+
+const ViewTvGroupFilter: React.FC<FilterCat> = ({ onFilterChange }) => {
+    const [activeRegion, setActiveRegion] = useState<"North" | "South" | "East" | "West" | "Nil"| null>(null);
+    const [activeStatus, setActiveStatus] = useState<"Online" | "Offline" | "Removed" | null>(null);
+
+    const handleRegionClick = (region: "North" | "South" | "East" | "West" | "Nil") => {
+        const newRegion = activeRegion === region ? null: region;
+        setActiveRegion(newRegion);
+        onFilterChange({ region: newRegion || undefined, status: activeStatus || undefined });
+    };
+
+    const handleStatusClick = (status: "Online" | "Offline" | "Removed") => {
+        const newStatus = activeStatus === status ? null: status;
+        setActiveStatus(newStatus);
+        onFilterChange({ region: activeRegion || undefined, status: newStatus || undefined });
+    };
+
+    const resetFilters = () => {
+        setActiveRegion(null);
+        setActiveStatus(null);
+        onFilterChange({});
+    };
+
     return (
-    <div className="view-tv-grp-filter">
-        <div className="location-filter">
-            <p id="filter-cat">By Location:</p>
-            <button>North</button>
-            <button>South</button>
-            <button>East</button>
-            <button>West</button>
-        </div>
-        
-        <div className="status-filter">
-            <div className="status-btns">
-                <button>Online</button>
-                <button>Offline</button>
-                <button>Removed</button>
+        <div className="view-tv-grp-filter">
+            <div className="region-filter">
+                <p id="filter-cat">By Region</p>
+                {["North", "South", "East", "West", "Nil"].map((region) => 
+                (<button 
+                key={region} 
+                className={activeRegion === region ? "active" : ""}
+                onClick={() => handleRegionClick(region as "North" | "South" | "East" | "West" | "Nil")}>
+                    {region}
+                </button>
+            ))}
             </div>
+
+            <div className="reset-filter">
+                <button onClick={resetFilters}>Reset Filters</button>
+            </div>
+
+            <div className="status-filter">
+                <div className="status-btns">
+                    {["Online", "Offline", "Removed"].map((status) => (
+                        <button key={status}
+                        className={activeStatus === status ? "active" : ""}
+                        onClick={() => handleStatusClick(status as "Online" | "Offline" | "Removed")}>
+                            {status}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
         </div>
-    </div>
-    )
+    );
 };
 
 export default ViewTvGroupFilter;
