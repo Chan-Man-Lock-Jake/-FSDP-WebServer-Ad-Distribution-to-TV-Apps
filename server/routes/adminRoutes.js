@@ -1,8 +1,13 @@
 import express from 'express';
 import { getAllAdInfoController } from '../controllers/adInfoController.js';
+import { getTvGroupCardInfoController } from '../controllers/tvGroupInfoController.js';
+import { getTvGroupInfoController } from '../controllers/tvGroupInfoController.js';
 const router = express.Router();
 
 router.get('/get-ad-info', getAllAdInfoController);
+
+router.get('/get-tv-grp-card-info', getTvGroupCardInfoController)
+router.get('/get-tv-grp-info/:id', getTvGroupInfoController)
 
 export default router;
 
