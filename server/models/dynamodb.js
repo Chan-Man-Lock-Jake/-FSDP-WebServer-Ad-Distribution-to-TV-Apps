@@ -1,5 +1,6 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBStreamsClient } from '@aws-sdk/client-dynamodb-streams';
 import dotenv from 'dotenv';
 
 // Loading environment variables from .env 
@@ -19,7 +20,17 @@ const dynamoDBClient = new DynamoDBClient({
   },
 });
 
+// Initialize DynamoDB Streams Client
+const dynamoDbStreamsClient = new DynamoDBStreamsClient({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  },
+});
+
 // Handles marshaling and unmarshaling
 const dynamoDB = DynamoDBDocumentClient.from(dynamoDBClient);
+// const dynamoDBStreams = DynamoDBDocumentClient.from(dynamoDbStreamsClient);
 
-export { dynamoDB };
+export { dynamoDB, dynamoDBClient, dynamoDbStreamsClient };

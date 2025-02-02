@@ -163,32 +163,4 @@ const userLogin = async (req, email, password) => {
   }
 };
 
-const createCampaign = async (campaign, req) => {
-    if (!req.session || !req.session.user) {
-        throw new Error('User not logged in or session expired');
-    }
-
-    const params = {
-        TableName: 'AdCampaign',
-        Item: {
-            CampaignID: `CMP${Math.floor(1000000 + Math.random() * 9000000)}`, // Generate a unique ID for the campaign
-            CampaignAud: campaign.CampaignAud,
-            PerformanceMetrics: campaign.PerformanceMetrics,
-            CampaignStatus: campaign.CampaignStatus,
-            CreatedAt: new Date().toISOString(), // Store the current timestamp
-            CreatedBy: req.session.user.UserID // Reference the user ID from the session
-            // Find a way to store schedule
-        },
-    };
-
-    try {
-        await dynamoDB.send(new PutCommand(params));
-        console.log(`Campaign created successfully by user: ${req.session.user.UserID}`);
-        return { message: 'Campaign created successfully' };
-    } catch (error) {
-        console.error('Error creating campaign:', error);
-        throw new Error('Error creating campaign');
-    }
-};
-
-export { createUser, userLogin, createCampaign };
+export { createUser, userLogin };
