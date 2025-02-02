@@ -52,16 +52,22 @@ app.use(express.json());
         
 const listenToDynamoDbStreams = async () => {
   try {
-    const TABLE_NAME = 'AdCampaign';
+    const TABLE_NAME = "AdCampaign";
 
-    const describeTableCommand = new DescribeTableCommand({TableName: TABLE_NAME});
+    // Get the table details to extract the latest stream ARN
+    const describeTableCommand = new DescribeTableCommand({ TableName: TABLE_NAME });
     const data = await dynamoDBClient.send(describeTableCommand);
     const streamArn = data.Table.LatestStreamArn;
 
-    const describeStreamCommand = new DescribeStreamCommand({ StreamArn: streamArn, Limit: 10 });
+    // Describe the stream to get its shards
+    const describeStreamCommand = new DescribeStreamCommand({
+      StreamArn: streamArn,
+      Limit: 10,
+    });
     const streamData = await dynamoDbStreamsClient.send(describeStreamCommand);
     const shards = streamData.StreamDescription.Shards;
 
+    // For each shard, get a shard iterator and start polling
     for (const shard of shards) {
       const getShardIteratorCommand = new GetShardIteratorCommand({
         StreamArn: streamArn,
@@ -77,7 +83,7 @@ const listenToDynamoDbStreams = async () => {
     }
   } catch (error) {
     console.error(
-      `[BACKEND] Error setting up DynamoDB Streams listener for table ${TABLE_NAME}:`,
+      `[BACKEND] Error setting up DynamoDB Streams listener for table ${"AdCampaign"}:`,
       error
     );
   }
@@ -93,26 +99,30 @@ const pollStream = async (shardIterator, tableName) => {
       const recordsData = await dynamoDbStreamsClient.send(getRecordsCommand);
       const records = recordsData.Records;
 
-      // const affectedCampaignIds = new Set();
-
       if (records && records.length > 0) {
         for (const record of records) {
+          // Handle INSERT and MODIFY events
           if (record.eventName === "INSERT" || record.eventName === "MODIFY") {
             const updatedItem = unmarshall(record.dynamodb.NewImage);
-            // affectedCampaignIds.add(updatedItem.CampaignId);
             console.log("AD ID", updatedItem.CampaignId);
+
+            // Fetch campaign data (replace with your real function)
             let campaignData = await getAllAdCampaign();
             for (let i = 0; i < campaignData.length; i++) {
               if (updatedItem.CampaignId === campaignData[i].CampaignId) {
-                console.log(campaignData[i].CampaignId, campaignData[i].Advertisement, campaignData[i].TvGroup)
-
-                wss.to(campaignData[i].TvGroup).emit('display_ad', campaignData[i].Advertisement);
-                // wss.emit('display_ad', { room: campaignData[i].TvGroup, ad: campaignData[i].Advertisement })
+                console.log(
+                  campaignData[i].CampaignId,
+                  campaignData[i].Advertisement,
+                  campaignData[i].TvGroup
+                );
+                // Emit ad to all clients in the TV group room
+                wss.to(campaignData[i].TvGroup).emit("display_ad", campaignData[i].Advertisement);
               }
-            };
-          } else if (record.eventName === "REMOVE") {
-            // Handle removal events if necessary
-            // For example, if an ad is deleted, you might need to update layouts that used it
+            }
+          }
+          // Optionally, handle "REMOVE" events here
+          else if (record.eventName === "REMOVE") {
+            // For example, you might need to remove an ad from the display.
           }
         }
       }
@@ -120,30 +130,42 @@ const pollStream = async (shardIterator, tableName) => {
       // Update shardIterator for the next poll
       shardIterator = recordsData.NextShardIterator;
 
-      // Wait before polling again
+      // Wait before polling again (adjust the delay as needed)
       await new Promise((resolve) => setTimeout(resolve, 5000));
     } catch (error) {
-      console.error(`[BACKEND] Error polling DynamoDB Stream for table ${tableName}:`, error);
+      console.error(
+        `[BACKEND] Error polling DynamoDB Stream for table ${tableName}:`,
+        error
+      );
       break; // Exit the polling loop on error
     }
   }
 };
 
-listenToDynamoDbStreams();
+(async () => {
+  try {
+    // Start listening to layout update streams
+    await listenToDynamoDbStreams();
+    console.log("[LAYOUT] DynamoDB stream listener for layouts initialized.");
+  } catch (error) {
+    console.error("[LAYOUT] Error initializing DynamoDB stream listener for layouts:", error);
+  }
+}
+)();
 
 // Set up the S3 client
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  },
-});
+// const s3Client = new S3Client({
+//   region: process.env.AWS_REGION,
+//   credentials: {
+//     accessKeyId: process.env.ACCESS_KEY_ID,
+//     secretAccessKey: process.env.SECRET_ACCESS_KEY,
+//   },
+// });
 
-// Function to generate the URL of the uploaded S3 object
-const getS3Url = (s3Key) => {
-  return `https://flowers.co.s3.amazonaws.com/${s3Key}`;  // Adjust if your S3 bucket URL differs
-};
+// // Function to generate the URL of the uploaded S3 object
+// const getS3Url = (s3Key) => {
+//   return `https://flowers.co.s3.amazonaws.com/${s3Key}`;  // Adjust if your S3 bucket URL differs
+// };
 
 // WebSocket server configuration
 
@@ -159,6 +181,7 @@ wss.on("connection", (ws) => {
     // Handle displaying an ad
     ws.on("display_ad", ({ room, ad }) => {
         wss.to(room).emit("display_ad", ad); // Send ad to all in the room
+        console.log("Advertisement pushed!");
     });
 
     ws.on("force_push_ad", ({ tv, ad }) => {
