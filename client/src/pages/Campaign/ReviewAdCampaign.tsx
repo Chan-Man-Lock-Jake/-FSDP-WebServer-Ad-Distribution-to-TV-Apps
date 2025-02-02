@@ -42,9 +42,9 @@ const ReviewAdCampaign: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className='next-container'>
+            {/* <div className='next-container'>
                 <button id='next-button'>Push</button>
-            </div>
+            </div> */}
         </section>
     );
 }
