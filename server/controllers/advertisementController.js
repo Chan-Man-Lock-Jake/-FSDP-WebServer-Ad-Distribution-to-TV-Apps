@@ -3,38 +3,30 @@ import {uploadFinalizedAd, getFinalizedAd, getAllFinalizedAd} from '../models/ad
 // Upload finalized advertisement controller
 const uploadFinalizedAdController = async (req, res) => {
   try {
-    // Sanitize keys in req.body
-    const sanitizedBody = {};
-    Object.keys(req.body).forEach((key) => {
-      sanitizedBody[key.trim()] = req.body[key];
-    });
+    // For testing purposes, you can log the user object.
+    console.log("User from session or authentication:", req.user || req.session?.user);
+    // Retrieve fileName from the request body.
+    const fileName = req.body.fileName?.trim();
+    console.log("File Name:", fileName);
 
-    const companyName = sanitizedBody.companyName?.trim();
-    const userId = sanitizedBody.userId?.trim();
-    const fileName = sanitizedBody.fileName?.trim();
-
-    console.log("Sanitized Body:", sanitizedBody);
-
-    if (!companyName || !userId || !fileName) {
-      return res.status(400).json({ message: "Missing required fields: companyName, userId, or fileName" });
+    if (!fileName) {
+      return res.status(400).json({ message: "Missing required field: fileName" });
     }
-
     if (!req.file) {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const user = {
-      Company: companyName,
-      UserId: userId,
-    };
-
     const fileContent = req.file.buffer;
 
-    const response = await uploadFinalizedAd(user, fileName, fileContent);
+    const response = await uploadFinalizedAd(req, fileName, fileContent);
+    console.log("Successfully uploaded advertisement");
     res.status(201).json(response);
   } catch (error) {
     console.error("Error uploading advertisement:", error);
-    res.status(500).json({ message: "Error uploading advertisement", error: error.message });
+    res.status(500).json({
+      message: "Error uploading advertisement",
+      error: error.message,
+    });
   }
 };
 
@@ -67,7 +59,6 @@ const getFinalizedAdController = async (req, res) => {
 // Retrieve all finalized advertisements
 const getAllFinalizedAdController = async (req, res) => {
   if (!req.session.user) {
-    console.log("HERE");
     console.log(req.session.user);
     return res.status(401).json({
       success: false,
@@ -78,7 +69,7 @@ const getAllFinalizedAdController = async (req, res) => {
   if (!req.session.user.Company || !req.session.user.UserId) {
     return res.status(400).json({
       success: false,
-      message: "Company and UserId are required in session.",
+      message: "Company and UserId are not included in the session.",
     });
   }
 
@@ -93,12 +84,6 @@ const getAllFinalizedAdController = async (req, res) => {
     });
   }
 };
-
-
-
-
-
-
 
 export { uploadFinalizedAdController, getFinalizedAdController, getAllFinalizedAdController };
 

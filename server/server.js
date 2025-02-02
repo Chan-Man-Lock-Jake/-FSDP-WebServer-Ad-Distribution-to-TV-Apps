@@ -3,6 +3,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3';
+import { DynamoDBStreamsClient, DescribeStreamCommand, GetShardIteratorCommand, GetRecordsCommand } from "@aws-sdk/client-dynamodb-streams";
+import { DynamoDBClient, DescribeTableCommand } from "@aws-sdk/client-dynamodb";
+import { ScanCommand } from '@aws-sdk/lib-dynamodb';
+import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { dynamoDBClient, dynamoDbStreamsClient } from './models/dynamodb.js';
 import  userRoutes  from './routes/userRoutes.js';
 import  adminRoutes  from './routes/adminRoutes.js';
 import fs from 'fs';
@@ -14,24 +19,229 @@ import http from 'http';
 import { Server } from 'socket.io';
 import { getAllFinalizedAd } from './models/advertisement.js';
 import cors from 'cors';
-
+import { getAllAdCampaign } from './models/adCampaign.js';
 
 dotenv.config();
 
+// Express server
 const app = express();
-app.use(express.json()); // Middleware to parse JSON requests
-const port = process.env.PORT || 3000;
+// HTTP server using Express
+const server = http.createServer(app);
+// WebSocket server using HTTP server
+// const wss = new Server({ server });
+const wss = new Server( server, {
+  cors: {
+    origin: `http://localhost:5173`,
+    methods: ['GET', 'POST']
+  },
+});
+// Server PORT
+const PORT = 3000;
+// Server HOST
+const HOST = 'localhost';
+
+// CORS middleware configuration
+app.use(cors({
+  origin: "http://localhost:5173",           // Allow requests from your frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow CRUD
+  credentials: true,                         // Allow sending cookies or authorization headers
+}));
+
+// Middleware to parse JSON requests
+app.use(express.json()); 
+        
+const listenToDynamoDbStreams = async () => {
+  try {
+    const TABLE_NAME = "AdCampaign";
+
+    // Get the table details to extract the latest stream ARN
+    const describeTableCommand = new DescribeTableCommand({ TableName: TABLE_NAME });
+    const data = await dynamoDBClient.send(describeTableCommand);
+    const streamArn = data.Table.LatestStreamArn;
+
+    // Describe the stream to get its shards
+    const describeStreamCommand = new DescribeStreamCommand({
+      StreamArn: streamArn,
+      Limit: 10,
+    });
+    const streamData = await dynamoDbStreamsClient.send(describeStreamCommand);
+    const shards = streamData.StreamDescription.Shards;
+
+    // For each shard, get a shard iterator and start polling
+    for (const shard of shards) {
+      const getShardIteratorCommand = new GetShardIteratorCommand({
+        StreamArn: streamArn,
+        ShardId: shard.ShardId,
+        ShardIteratorType: "LATEST",
+      });
+      const shardIteratorResponse = await dynamoDbStreamsClient.send(getShardIteratorCommand);
+      let shardIterator = shardIteratorResponse.ShardIterator;
+
+      if (shardIterator) {
+        pollStream(shardIterator, TABLE_NAME);
+      }
+    }
+  } catch (error) {
+    console.error(
+      `[BACKEND] Error setting up DynamoDB Streams listener for table ${"AdCampaign"}:`,
+      error
+    );
+  }
+};
+
+const pollStream = async (shardIterator, tableName) => {
+  while (shardIterator) {
+    try {
+      const getRecordsCommand = new GetRecordsCommand({
+        ShardIterator: shardIterator,
+        Limit: 100,
+      });
+      const recordsData = await dynamoDbStreamsClient.send(getRecordsCommand);
+      const records = recordsData.Records;
+
+      if (records && records.length > 0) {
+        for (const record of records) {
+          // Handle INSERT and MODIFY events
+          if (record.eventName === "INSERT" || record.eventName === "MODIFY") {
+            const updatedItem = unmarshall(record.dynamodb.NewImage);
+            console.log("AD ID", updatedItem.CampaignId);
+
+            // Fetch campaign data (replace with your real function)
+            let campaignData = await getAllAdCampaign();
+            for (let i = 0; i < campaignData.length; i++) {
+              if (updatedItem.CampaignId === campaignData[i].CampaignId) {
+                console.log(
+                  campaignData[i].CampaignId,
+                  campaignData[i].Advertisement,
+                  campaignData[i].TvGroup
+                );
+                // Emit ad to all clients in the TV group room
+                wss.to(campaignData[i].TvGroup).emit("display_ad", campaignData[i].Advertisement);
+              }
+            }
+          }
+          // Optionally, handle "REMOVE" events here
+          else if (record.eventName === "REMOVE") {
+            // For example, you might need to remove an ad from the display.
+          }
+        }
+      }
+
+      // Update shardIterator for the next poll
+      shardIterator = recordsData.NextShardIterator;
+
+      // Wait before polling again (adjust the delay as needed)
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    } catch (error) {
+      console.error(
+        `[BACKEND] Error polling DynamoDB Stream for table ${tableName}:`,
+        error
+      );
+      break; // Exit the polling loop on error
+    }
+  }
+};
+
+(async () => {
+  try {
+    // Start listening to layout update streams
+    await listenToDynamoDbStreams();
+    console.log("[LAYOUT] DynamoDB stream listener for layouts initialized.");
+  } catch (error) {
+    console.error("[LAYOUT] Error initializing DynamoDB stream listener for layouts:", error);
+  }
+}
+)();
+
+// Set up the S3 client
+// const s3Client = new S3Client({
+//   region: process.env.AWS_REGION,
+//   credentials: {
+//     accessKeyId: process.env.ACCESS_KEY_ID,
+//     secretAccessKey: process.env.SECRET_ACCESS_KEY,
+//   },
+// });
+
+// // Function to generate the URL of the uploaded S3 object
+// const getS3Url = (s3Key) => {
+//   return `https://flowers.co.s3.amazonaws.com/${s3Key}`;  // Adjust if your S3 bucket URL differs
+// };
+
+// WebSocket server configuration
+
+wss.on("connection", (ws) => {
+    console.log(`User connected: ${ws.id}`);
+
+    // Handle joining room
+    ws.on("joinRoom", (room) => {
+        ws.join(room);
+        console.log(`User ${ws.id} joined room: ${room}`);
+    });
+
+    // Handle displaying an ad
+    ws.on("display_ad", ({ room, ad }) => {
+        wss.to(room).emit("display_ad", ad); // Send ad to all in the room
+        console.log("Advertisement pushed!");
+    });
+
+    ws.on("force_push_ad", ({ tv, ad }) => {
+      console.log(tv, ad);
+      wss.to(tv).emit("get_ad", { tv, ad } );
+    })
+
+    // socket.emit("force_push_ad", data); // Join room
+
+    // Handle leaving room
+    ws.on("leaveRoom", (room) => {
+        ws.leave(room);
+        console.log(`User ${ws.id} left room: ${room}`);
+    });
+
+    ws.on("disconnect", () => {
+        console.log(`User disconnected: ${ws.id}`);
+    });
+});
 
 
-// Update CORS configuration
-app.use(
-  cors({
-    origin: "http://localhost:5173", // Allow requests from your frontend
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    // allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, // Allow sending cookies or authorization headers
-  })
-);
+// wss.on("connection", (ws) => {
+//   console.log("New WebSocket connection.");
+
+//   ws.on("joinRoom", (data) => { 
+//     ws.join(data);
+//     console.log(`Request to join room: ${data}`);
+//     console.log(ws);
+//   });
+// })
+
+// wsserver.on('connection', (socket) => {
+//   console.log(`User connected: ${socket.id}`);
+
+//   socket.on("joinRoom", (data) => {
+//     socket.join(data);
+//     console.log(`Request to join room: ${data}`);
+//     console.log(socket.rooms);
+//   });
+
+//   socket.on("leaveRoom", (room) => {
+//     socket.leave(room);
+//     console.log(`User left room: ${room}`);
+//   });
+
+//   socket.on('push_ad', (data) => {
+//     console.log("Ad pushed");
+//     console.log(`Request to push to room: ${data.room}`)
+//     socket.to(data.room).emit('display_ad', data.message);
+//   });
+
+//   socket.on('push_clear_ad', () => {
+//     console.log("Ad cleared");
+//     socket.broadcast.emit('clear_ad');
+//   });
+
+//   socket.on('disconnect', () => {
+//     console.log(`User disconnected: ${socket.id}`);
+//   });
+// });
 
 // Session middleware
 app.use(
@@ -40,13 +250,12 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: false, // Set to true if using HTTPS
-      httpOnly: true, // Prevent client-side access to cookies
+      secure: false,               // Set to true if using HTTPS
+      httpOnly: true,              // Prevent client-side access to cookies
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })
 );
-
 
 // Middleware to check if user is logged in
 app.get("/session", (req, res) => {
@@ -55,28 +264,6 @@ app.get("/session", (req, res) => {
   }
   res.status(200).json({ success: true, data: req.session.user });
 });
-
-
-// finalised ad
-// app.get("/admin/get-all-finalized-ad", (req, res) => {
-//   // console.log("Incoming Cookies:", req.headers.cookie); // Log incoming cookies
-//   // console.log("Session Data:", req.session); // Log session data
-//   console.log(req.session.user);
-
-//   if (!req.session.user) {
-//     console.log("Hello");
-//     console.log(req.session.user);
-
-//     return res.status(401).json({ success: false, message: "Unauthorized" });
-//   }
-
-//   const { Company, UserId } = req.session.user;
-
-//   getAllFinalizedAd(Company, UserId)
-//     .then((ads) => res.status(200).json({ success: true, data: ads }))
-//     .catch((err) => res.status(500).json({ success: false, message: err.message }));
-// });
-
 
 app.use((req, res, next) => {
   console.log("Incoming Cookies:", req.headers.cookie);
@@ -89,7 +276,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
 // User route 
 app.use('/user', userRoutes);
 
@@ -100,11 +286,8 @@ app.use('/admin', adminRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-var HOST = '' || 'localhost';
-
 app.use(bodyParser.json({ limit: '50mb' })); // Increase JSON size limit for large payloads (50MB example)
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // For URL-encoded form data
-
 
 // Serve static files
 const uploadDir = path.join(process.cwd(), 'uploads');
@@ -201,23 +384,6 @@ app.post("/saveCanvasImage", (req, res) => {
   });
 });
 
-// Set up the S3 client
-const s3Client = new S3Client({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-  },
-});
-
-// Middleware to handle CORS and parsing JSON data
-app.use(cors());
-
-// Function to generate the URL of the uploaded S3 object
-const getS3Url = (s3Key) => {
-  return `https://flowers.co.s3.amazonaws.com/${s3Key}`;  // Adjust if your S3 bucket URL differs
-};
-
 // Endpoint to handle image and video uploads
 app.post('/upload', upload.array('file'), (req, res) => {
   if (req.files) {
@@ -272,45 +438,7 @@ app.get('/retrieve-ad/:folder/:fileName', async (req, res) => {
   }
 });
 
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: `http://${HOST}:5173`,
-    methods: ['GET', 'POST']
-  },
-});
-
-io.on('connection', (socket) => {
-  console.log(`User connected: ${socket.id}`);
-
-  socket.on("joinRoom", (data) => {
-    socket.join(data);
-    console.log(`Request to join room: ${data}`);
-    console.log(socket.rooms);
-  });
-
-  socket.on("leaveRoom", (room) => {
-    socket.leave(room);
-    console.log(`User left room: ${room}`);
-  });
-
-  socket.on('push_ad', (data) => {
-    console.log("Ad pushed");
-    console.log(`Request to push to room: ${data.room}`)
-    socket.to(data.room).emit('display_ad', data.message);
-  });
-
-  socket.on('push_clear_ad', () => {
-    console.log("Ad cleared");
-    socket.broadcast.emit('clear_ad');
-  });
-
-  socket.on('disconnect', () => {
-    console.log(`User disconnected: ${socket.id}`);
-  });
-});
-
 // Start the server
-server.listen(port, () => {
-  console.log(`Server is running on http://${HOST}:${port}`);
+server.listen(PORT, () => {
+  console.log(`Server is running on http://${HOST}:${PORT}`);
 });

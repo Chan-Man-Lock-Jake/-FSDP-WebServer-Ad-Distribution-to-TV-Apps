@@ -3,31 +3,129 @@ import "./PushAdvertisement.css";
 import AdvertisementHeader from "./AdvertisementHeader";
 import { useNavigate } from "react-router-dom";
 
-// Replace with actual TV groups from database 
-const tvGroups = [
-  "TV Group 1",
-  "TV Group 2",
-  "TV Group 3",
-  "TV Group 4",
-  "TV Group 5",
-];
-
 const PushAdvertisement: React.FC = () => {
+  // State for TV group names.
+  const [tvGroups, setTvGroups] = useState<string[]>([]);
   const [searchInput, setSearchInput] = useState<string>("");
-  const [filteredTvGroups, setFilteredTvGroups] = useState<string[]>(tvGroups);
+  const [filteredTvGroups, setFilteredTvGroups] = useState<string[]>([]);
   const [selectedTvGroup, setSelectedTvGroup] = useState<string | null>(null);
   const [dropdownVisible, setDropdownVisible] = useState<boolean>(false);
+
+  // Popup and confirmation states (for selecting an advertisement, etc.)
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
   const [confirmationVisible, setConfirmationVisible] =
     useState<boolean>(false);
+
+  // State for finalized advertisements (images or videos)
   const [images, setImages] = useState<{ url: string; fileName: string }[]>([]);
   const [selectedAdvertisement, setSelectedAdvertisement] = useState<{
     tvGroup: string;
     advertisement: { url: string; fileName: string };
   } | null>(null);
+
+  // New state for advertisement details (from the popup form)
+  const [adName, setAdName] = useState("");
+  const [adPurpose, setAdPurpose] = useState("");
+  const [saveAs, setSaveAs] = useState("finalized");
+
   const navigate = useNavigate();
 
-  // Function to handle storage selection
+  // Function to fetch TV group names from the API.
+  const fetchTvGroups = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/admin/get-tv-grp-card-info",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch TV groups: ${response.statusText}`);
+      }
+      const data = await response.json();
+      // Map the returned TV group objects to an array of TV group names.
+      const groupNames = data.map((group: any) => group.TvGroupName);
+      setTvGroups(groupNames);
+      setFilteredTvGroups(groupNames);
+    } catch (error) {
+      console.error("Error fetching TV groups:", error);
+    }
+  };
+
+  // Function to fetch finalized ads from the server.
+  const fetchFinalizedAds = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/admin/get-all-finalized-ad",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch finalized ads.");
+      }
+
+      const data = await response.json();
+
+      if (data.success && data.data) {
+        console.log("Fetched Ads:", data.data);
+        setImages(data.data);
+      } else {
+        console.error("No finalized ads found.");
+        setImages([]);
+      }
+    } catch (error) {
+      console.error("Error fetching finalized ads:", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Component Initialized");
+    fetchTvGroups(); // Fetch TV groups on mount
+    fetchFinalizedAds(); // Fetch finalized ads on mount
+  }, []);
+
+  // Handle search input changes.
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setSearchInput(value);
+    setFilteredTvGroups(
+      tvGroups.filter((group) =>
+        group.toLowerCase().includes(value.toLowerCase())
+      )
+    );
+    setDropdownVisible(true);
+  };
+
+  // When the search input gains focus, display all TV groups if the input is empty.
+  const handleSearchInputFocus = () => {
+    if (!searchInput) {
+      setFilteredTvGroups(tvGroups);
+    }
+    setDropdownVisible(true);
+  };
+
+  // Handle TV group selection.
+  const handleTvGroupSelect = (group: string) => {
+    setSelectedTvGroup(group);
+    setSearchInput(group);
+    setDropdownVisible(false);
+
+    // If an advertisement is already selected, update its TV group.
+    if (selectedAdvertisement) {
+      setSelectedAdvertisement((prev) => ({
+        ...prev!,
+        tvGroup: group,
+      }));
+    }
+  };
+
+  // Open file dialog for local storage selection.
   const handleStorageSelection = async () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -49,70 +147,7 @@ const PushAdvertisement: React.FC = () => {
     input.click();
   };
 
-  // Function to fetch finalized ads from the server
-  const fetchFinalizedAds = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3000/admin/get-all-finalized-ad",
-        {
-          method: "GET",
-          credentials: "include", // Ensure cookies are sent with the request
-        }
-      );
-      
-      if (!response.ok) {
-        throw new Error("Failed to fetch finalized ads.");
-      }
-      
-      const data = await response.json();
-
-      if (data.success && data.data) {
-        console.log("Fetched Ads:", data.data);
-        setImages(data.data); // Update the state with fetched ads
-      } else {
-        console.error("No finalized ads found.");
-        setImages([]);
-      }
-    } catch (error) {
-      console.error("Error fetching finalized ads:", error);
-    }
-  };
-
-
-  useEffect(() => {
-    console.log("Initialized");
-    fetchFinalizedAds(); // Fetch ads on component mount
-  }, []);
-
-  // Function to handle search input change for TV groups
-  const handleSearchInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value;
-    setSearchInput(value);
-
-    setFilteredTvGroups(
-      tvGroups.filter((group) =>
-        group.toLowerCase().includes(value.toLowerCase())
-      )
-    );
-    setDropdownVisible(value !== "");
-  };
-
-  const handleTvGroupSelect = (group: string) => {
-    setSelectedTvGroup(group);
-    setSearchInput(group);
-    setDropdownVisible(false);
-
-    // Update the selected advertisement's TV group if already selected
-    if (selectedAdvertisement) {
-      setSelectedAdvertisement((prev) => ({
-        ...prev!,
-        tvGroup: group,
-      }));
-    }
-  };
-
+  // Handle advertisement click from Platform Storage.
   const handleAdvertisementClick = (advertisement: {
     url: string;
     fileName: string;
@@ -128,13 +163,14 @@ const PushAdvertisement: React.FC = () => {
     setIsPopupVisible(false);
   };
 
+  // Helper function to check if a file is a video.
   const isVideoFile = (fileName: string) => {
     const videoExtensions = ["mp4", "mov", "avi", "mkv", "webm"];
     const extension = fileName.split(".").pop()?.toLowerCase();
     return videoExtensions.includes(extension || "");
   };
 
-  // Function to handle pushing the advertisement to web socket 
+  // Handle pushing the advertisement via web socket.
   const handleConfirmPush = async () => {
     try {
       const response = await fetch(
@@ -175,12 +211,51 @@ const PushAdvertisement: React.FC = () => {
     }
   };
 
+  // Handle the click on the "Push" button.
   const handlePushClick = () => {
     if (!selectedAdvertisement) {
       alert("Please select an advertisement first!");
       return;
     }
     setConfirmationVisible(true);
+  };
+
+  // Handle saving advertisement info (using adName for file naming, etc.).
+  const handleConfirmSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Build the advertisement info from the form state.
+    const adInfo = {
+      AdId: "", // Optionally, call generateNewAdId() if needed.
+      Title: adName,
+      Description: adPurpose,
+      Status: saveAs,
+      Type: "advertisement",
+      EditedBy: "Admin", // Replace with actual user info if available.
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/admin/upload-ad-info",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(adInfo),
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const result = await response.json();
+      console.log("Ad info upload result:", result);
+      alert("Advertisement details saved successfully!");
+    } catch (error: any) {
+      console.error("Error uploading ad info:", error);
+      alert(`Error uploading ad info: ${error.message}`);
+    }
+    setIsPopupVisible(false);
   };
 
   return (
@@ -199,6 +274,7 @@ const PushAdvertisement: React.FC = () => {
               placeholder="Search for a TV Group"
               value={searchInput}
               onChange={handleSearchInputChange}
+              onFocus={handleSearchInputFocus}
               className="search-input"
             />
             {dropdownVisible && (
@@ -227,10 +303,7 @@ const PushAdvertisement: React.FC = () => {
             </button>
             <button
               className="storage-button"
-              onClick={() => {
-                setIsPopupVisible(true);
-                fetchFinalizedAds();
-              }}
+              onClick={() => setIsPopupVisible(true)}
             >
               Platform Storage
             </button>

@@ -1,0 +1,54 @@
+.notification-sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Hide sidebar by default */
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1001; /* Ensure it's above other elements */
+  }
+  
+  .notification-sidebar.open {
+    right: 0; /* Show sidebar */
+  }
+  
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .notification-list {
+    padding: 20px;
+  }
+  
+  .notification-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .notification-item.unread {
+    background-color: #f0f0f0;
+  }
+  
+  .notification-item.read {
+    background-color: #fff;
+  }
+  
+  .notification-item:hover {
+    background-color: #e0e0e0;
+  }

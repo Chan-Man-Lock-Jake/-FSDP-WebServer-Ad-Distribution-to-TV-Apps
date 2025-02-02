@@ -79,7 +79,7 @@
 
 .push-button {
   padding: 10px 20px;
-  background-color: #f56a79;
+  background-color: #349B91;
   border-radius: 15px;
   font-size: 18px;
   font-weight: bold;
@@ -231,12 +231,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 250px; /* Increased size for larger ads */
 }
 
 .popup-image {
-  width: 250px; /* Increased the width */
-  height: 250px; /* Increased the height */
+  width: 550px; /* Increased the width */
+  height: 550px; /* Increased the height */
   object-fit: cover;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

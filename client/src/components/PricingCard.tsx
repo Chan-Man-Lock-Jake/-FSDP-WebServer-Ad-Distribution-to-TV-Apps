@@ -13,10 +13,12 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, price, benefits }) => 
       <p className="pricing-plan-price">
         <span className="price-amount">{price}</span> / month
       </p>
-      <button className="btn btn-outline-dark w-100 my-3">Sign Up</button>
+      <button className="btn btn-primary w-100 my-3 py-2 fw-bold">Get Started</button>
       <ul className="benefits-list">
         {benefits.map((benefit, index) => (
-          <li key={index}>✔ {benefit}</li>
+          <li key={index}>
+            <span>✔</span> {benefit}
+          </li>
         ))}
       </ul>
     </div>

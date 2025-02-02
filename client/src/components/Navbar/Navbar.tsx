@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
                     <ul className='mini-navbar'>
                         <li><a><span>Features</span></a></li>
                         <li><a><span>Company</span></a></li>
-                        <li><a><span>Pricing</span></a></li>
+                        <li><a><Link to="/pricing"><span>Pricing</span></Link></a></li>
                     </ul>
                 </li>
                 <li>

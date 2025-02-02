@@ -1,16 +1,16 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const HOST = process.env.HOST || 'localhost'; // Default to localhost if not set
+const HOST = process.env.HOST || 'localhost';
 
 export default defineConfig({
   plugins: [react()],
   server: {
     host: HOST,
-    port: 5173, // Vite dev server port
+    port: 5173,
     proxy: {
       '/api': {
-        target: `http://${HOST}:3000`, // URL for your Express backend
+        target: `http://${HOST}:3000`, // Your Express backend
         changeOrigin: true,
         onError(err, req, res) {
           console.error(`[Proxy Error] Failed to connect to target: ${err.message}`);
@@ -19,6 +19,14 @@ export default defineConfig({
         },
       },
     },
+  },
+  // <-- Add this section to skip certain packages from Vite's optimize step
+  optimizeDeps: {
+    exclude: [
+      '@ffmpeg/ffmpeg', 
+      '@ffmpeg/util'
+      // Add others here if needed
+    ]
   },
   build: {
     outDir: 'dist',
