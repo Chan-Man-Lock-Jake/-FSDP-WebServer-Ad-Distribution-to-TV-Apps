@@ -1,12 +1,12 @@
 import React from "react";
 import "./CreateTvGroup.css";
 
-const CreateTvGroupHeader1: React.FC = () => {
+const CreateTvGroupHeader2: React.FC = () => {
     return (
         <div className="create-tv-group-header">
             <ul className="create-tv-group-header-text">
-                <li className="active"><img src="../../../src/assets/highlightedicon1.jpg" alt="select tv icon" className="icon" />Select TV</li>
-                <li><img src="../../../src/assets/icon2.jpg" alt="new group icon" className="icon" />New Group</li>
+                <li><img src="../../../src/assets/icon1.jpg" alt="select tv icon" className="icon" />Select TV</li>
+                <li className="active"><img src="../../../src/assets/highlightedicon2.jpg" alt="new group icon" className="icon" />New Group</li>
                 <li><img src="../../../src/assets/icon3.jpg" alt="review group details icon" className="icon" />Review Group Details</li>
                 <li><img src="../../../src/assets/icon4.jpg" alt="confirmation icon" className="icon" />Confirmation</li>
                 <div className="icons">
@@ -19,4 +19,4 @@ const CreateTvGroupHeader1: React.FC = () => {
 
 };
 
-export default CreateTvGroupHeader1;
+export default CreateTvGroupHeader2;

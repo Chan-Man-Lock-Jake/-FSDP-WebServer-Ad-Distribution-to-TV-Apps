@@ -1,5 +1,10 @@
 {
   "dependencies": {
-    "bcrypt": "^5.1.1"
+    "@aws-sdk/lib-dynamodb": "^3.738.0",
+    "@aws-sdk/s3-request-presigner": "^3.740.0",
+    "bcrypt": "^5.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-konva": "^18.2.10"
   }
 }

@@ -18,6 +18,8 @@ import AdvertisementEditor from './pages/Advertisement/CreateAdvertisementDynami
 import PushAdvertisement from './pages/Advertisement/PushAdvertisement';
 import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
 import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
+import SelectTV from './pages/TvGroup/SelectTV';
+import SubmitTvGroupDetail from './pages/TvGroup/SubmitTvGroupDetail';
 
 const App: React.FC = () => {
   return (
@@ -34,6 +36,8 @@ const App: React.FC = () => {
           <Route path="create-advertisement-dynamic" element={<AdvertisementEditor/>} />
           <Route path="createtvgroup" element={<CreateTvGroup/>} />
           <Route path="viewtvgroup" element={<ViewTvGroup/>} />
+          <Route path="select-tvs/:outletId" element={<SelectTV/>} />
+          <Route path="submit-group-details" element={<SubmitTvGroupDetail/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
