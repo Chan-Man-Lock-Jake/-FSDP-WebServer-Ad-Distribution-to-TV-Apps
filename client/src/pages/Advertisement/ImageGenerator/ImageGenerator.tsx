@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import "./ImageGenerator.css";
-import default_image from "../ImageGeneratorAssets/suave_logo.png";
+import default_image from "../ImageGeneratorAssets/suave_logo.svg";
 
 const ImageGenerator: React.FC = () => {
   const [image_url, setImage_url] = useState("/");
@@ -120,7 +120,7 @@ const ImageGenerator: React.FC = () => {
   return (
     <div className="ai-image-generator">
       <div className="image-generator-header">
-        AI Image generator
+        <h1>AI Image generator</h1>
         <div className="img-loading">
           <div className="image">
             <img
@@ -130,7 +130,7 @@ const ImageGenerator: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="seach-box">
+      <div className="ai-search-box">
         <input
           type="text"
           ref={inputRef}
@@ -146,7 +146,7 @@ const ImageGenerator: React.FC = () => {
           className="upload-finalized-ad-btn"
           onClick={handleUploadFinalizedAd}
         >
-          Upload Finalized Ad
+          Upload as Ad
         </button>
       </div>
     </div>
@@ -154,3 +154,4 @@ const ImageGenerator: React.FC = () => {
 };
 
 export default ImageGenerator;
+
