@@ -1,5 +1,4 @@
-import {getTvGroupCardInfo} from "../models/tvGroupInfo.js";
-import {getTvGroupInfo} from "../models/tvGroupInfo.js";
+import {getTvGroupCardInfo, getTvGroupInfo, getAllOutlets, getOutletsNTvsById} from "../models/tvGroupInfo.js";
 
 
 const getTvGroupCardInfoController = async (req, res) => {
@@ -27,6 +26,32 @@ const getTvGroupInfoController = async (req, res) => {
     }
 }
 
-export { getTvGroupCardInfoController };
-export { getTvGroupInfoController };
+// get outlets
+const getAllOutletsController = async (req, res) => {
+    try {
+        const outlets = await getAllOutlets();
+        res.status(200).json(outlets);
+    } catch (error) {
+        console.error('Error retrieving outlets:', error);
+        res.status(500).json({ message: 'Error retrieving outlets' });
+    }
+}
+
+// get tvs for an outlet
+const getOutletsNTvsByIdController = async (req, res) => {
+    try{
+        const { outletId } = req.params;
+
+        if (!outletId) {
+            return res.status(400).json({message: 'OutletId is required'});
+        }
+        const outletData = await getOutletsNTvsById(outletId);
+        res.status(200).json(outletData);
+    } catch (error){
+        console.error("Error in getting outlet info:", error);
+        res.status(500).json({message:"Error in retrieving outlet info"});
+    }
+}
+
+export { getTvGroupCardInfoController, getTvGroupInfoController, getAllOutletsController, getOutletsNTvsByIdController};
 

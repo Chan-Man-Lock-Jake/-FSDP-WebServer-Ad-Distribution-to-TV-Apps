@@ -39,7 +39,7 @@
 
     // state to store current filters
     const [filters, setFilters] = useState<{
-        region?: "North" | "South" | "East" | "West" | "Nil";
+        region?: "North" | "South" | "East" | "West" | "Central";
         status?: "Online" | "Offline" | "Removed";
     }>({});
 
@@ -114,7 +114,7 @@
 
     // func to handle filter changes
     const handleFilterChange = (newFilters: {
-        region?: "North" | "South" | "East" | "West" | "Nil";
+        region?: "North" | "South" | "East" | "West" | "Central";
         status?: "Online" | "Offline" | "Removed";
     }) => {
         setFilters(newFilters);

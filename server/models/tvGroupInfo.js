@@ -1,5 +1,7 @@
+import { ExpressionType } from '@aws-sdk/client-s3';
 import { dynamoDB } from './dynamodb.js';
 import { ScanCommand, QueryCommand } from '@aws-sdk/lib-dynamodb';
+import { compare } from 'bcrypt';
 
 async function getTvGroupCardInfo(){
     const params = {
@@ -104,7 +106,7 @@ async function getTvGroupInfo(TvGroupId){
     
 
         const tagResult = await dynamoDB.send(new QueryCommand(tagParams));
-        console.log('tagResult.Items:', tagResult.Items);
+        //console.log('tagResult.Items:', tagResult.Items);
 
 
         // parse the tags
@@ -125,7 +127,6 @@ async function getTvGroupInfo(TvGroupId){
         }) || [];
 
 
-        // return Items[0]; // returns the first matched item
         return {
             TvGroupId: item.TvGroupId,
             TvGroupName: item.TvGroupName,
@@ -151,11 +152,69 @@ async function getTvGroupInfo(TvGroupId){
     }
 }
 
+// fetch all outlets
+async function getAllOutlets(){
+    const params = {
+        TableName: 'TvOutlet',
+        ProjectionExpression: 'OutletId, Company, OutletName, TotalTv'
+    };
+
+    try {
+        const { Items } = await dynamoDB.send(new ScanCommand(params));
+
+        // group by outletId to ensure only unique outlets are returned
+        const uniqueOutlets = Object.values(
+            Items.reduce((acc, item) => {
+                if (!acc[item.OutletId]) {
+                    acc[item.OutletId] = {
+                        OutletId: item.OutletId,
+                        Company: item.Company,
+                        OutletName: item.OutletName,
+                        TotalTv: item.TotalTv
+                    };
+                }
+                return acc;
+            }, {}), 
+        );
+        return uniqueOutlets;
+    } catch (error) {
+        console.error('Error retrieving outlets:', error)
+        throw error;
+    }
+}
+
+async function getOutletsNTvsById(OutletId){
+    const params = {
+        TableName: 'TvOutlet',
+        KeyConditionExpression: '#outletId = :outletId',
+        ExpressionAttributeNames: {
+            '#outletId': 'OutletId',
+        },
+        ExpressionAttributeValues: {
+            ':outletId': OutletId,
+        }
+    };
+
+    try {
+        const { Items } = await dynamoDB.send(new QueryCommand(params));
+
+        //const item = Items[0]
+
+        return Items.map((item) => ({
+            TvId: item.TvId,
+            TvName: item.TvName,
+            TvDimension: item.TvDimension,
+        }));
+    } catch (error) {
+        console.error('Error retrieving outlet data:', error)
+        throw error;
+    }
+}
+
 async function createNewTvGroup(){
     const params = {
         TableName: 'TvGroup'
     }
 }
 
-export {getTvGroupCardInfo};
-export {getTvGroupInfo};
+export {getTvGroupCardInfo, getTvGroupInfo, getAllOutlets, getOutletsNTvsById};
