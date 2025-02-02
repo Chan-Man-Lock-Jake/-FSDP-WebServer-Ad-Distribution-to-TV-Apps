@@ -2,66 +2,136 @@
 
 /* Section styles */
 .pricing-section {
-    padding: 4rem 2rem;
+  padding: 2rem 2rem 4rem 2rem; /* Reduced top padding */
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pricing-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem; /* Reduced margin below the title */
+  color: #2d3436;
+  margin-top: 0; /* Ensure no extra margin above the title */
+}
+
+.pricing-subtitle {
+  font-size: 1.25rem;
+  color: #636e72;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* Container for pricing cards */
+.pricing-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pricing-card {
+  flex: 1;
+  max-width: 400px;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Plan title */
+.pricing-plan-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin-bottom: 1rem;
+}
+
+/* Plan price */
+.pricing-plan-price {
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+  color: #636e72;
+}
+
+.price-amount {
+  font-weight: 800;
+  font-size: 3rem;
+  color: #2d3436;
+}
+
+/* Benefits list styling */
+.benefits-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.benefits-list li {
+  font-size: 1.05rem;
+  padding: 0.75rem 0;
+  color: #57606f;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Button styling */
+.btn-primary {
+  background: #2A4E50;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px #2A4E50;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .pricing-section {
+    padding: 2rem 1rem;
+    min-height: auto;
   }
-  
-  .pricing-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-  }
-  
-  .pricing-subtitle {
-    font-size: 1.25rem;
-    color: #777;
-    margin-bottom: 3rem;
-  }
-  
-  /* Container for pricing cards */
+
   .pricing-cards-container {
-    gap: 3rem; /* Space between the cards */
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 1.5rem;
   }
-  
+
   .pricing-card {
-    flex: 1 1 300px; /* Each card will take up a minimum width of 300px */
-    max-width: 350px; /* Maximum width for the card */
-    background-color: #f5f5f5; /* Light grey background */
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    max-width: 100%;
+    width: 100%;
+    padding: 1.5rem;
   }
-  
-  /* Plan title */
-  .pricing-plan-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  /* Plan price */
-  .pricing-plan-price {
+
+  .pricing-title {
     font-size: 2rem;
-    margin: 1rem 0;
   }
-  
-  .price-amount {
-    font-weight: bold;
-    font-size: 2.5rem;
-  }
-  
-  /* Benefits list styling */
-  .benefits-list {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .benefits-list li {
+
+  .pricing-subtitle {
     font-size: 1rem;
-    padding: 0.5rem 0;
   }
-  
-  /* Button styling */
-  .btn-outline-dark {
-    border-radius: 25px;
-  }
-  
+}

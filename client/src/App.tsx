@@ -29,6 +29,7 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/admin" element={<PrivateLayout />}>
+          <Route path="generate-ad" element={<ImageGenerator />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="view-ad-campaign" element={<ViewAdCampaign />} />
           <Route path="create-ad-campaign" element={<CreateAdCampaign />} />
@@ -62,7 +63,6 @@ const App: React.FC = () => {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="account-details" element={<AccountDetails />} />
-          <Route path="ai-image" element={<ImageGenerator />} />
         </Route>
         {/* Catch-All Route */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />

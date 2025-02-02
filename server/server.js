@@ -20,6 +20,7 @@ import { Server } from 'socket.io';
 import { getAllFinalizedAd } from './models/advertisement.js';
 import cors from 'cors';
 import { getAllAdCampaign } from './models/adCampaign.js';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
@@ -168,6 +169,34 @@ const pollStream = async (shardIterator, tableName) => {
 // };
 
 // WebSocket server configuration
+
+// Proxy endpoint: GET /proxy-image?url=...
+app.get("/proxy-image", async (req, res) => {
+  try {
+    const imageUrl = req.query.url;
+    if (!imageUrl) {
+      return res.status(400).send("Missing url parameter");
+    }
+
+    // Fetch the image from the external URL
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      return res.status(500).send("Error fetching image from external source");
+    }
+
+    // Get the content type from the external response
+    const contentType = response.headers.get("content-type");
+    res.set("Content-Type", contentType);
+    // Set CORS header (adjust as necessary)
+    res.set("Access-Control-Allow-Origin", "*");
+
+    // Pipe the response body to the client
+    response.body.pipe(res);
+  } catch (error) {
+    console.error("Proxy error:", error.message);
+    res.status(500).send("Error: " + error.message);
+  }
+});
 
 wss.on("connection", (ws) => {
     console.log(`User connected: ${ws.id}`);

@@ -5,7 +5,6 @@ import BlankSpace from '../../components/BlankSpace';
 const Pricing: React.FC = () => {
   return (
     <div>
-      <BlankSpace />
       <PricingSection />
     </div>
   );
