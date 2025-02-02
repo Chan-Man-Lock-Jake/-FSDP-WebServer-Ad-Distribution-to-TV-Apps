@@ -1,44 +1,52 @@
 import { dynamoDB } from './dynamodb.js';
-import { PutCommand, DeleteCommand } from '@aws-sdk/lib-dynamodb';
+import { PutCommand, ScanCommand, DeleteCommand, QueryCommand } from '@aws-sdk/lib-dynamodb';
 
 const TABLE_NAME = 'AdCampaign'; // DynamoDB table
 
-// Add ad campaign to table
-async function addCampaign(campaign) {
-    const params = {
-        TableName: TABLE_NAME,
-        Item: campaign,
-    };
-
+async function createAdCampaign(adCampaignDetails, user) {
     try {
+        const params = {
+            TableName: TABLE_NAME,
+            Item: {
+                CampaignId: `CMP${Math.floor(1000000 + Math.random() * 9000000)}`, // Generate a unique ID for the campaign
+                Name:           adCampaignDetails.name,
+                Objective:      adCampaignDetails.objective         || '',
+                Demographic:    adCampaignDetails.demographic       || '',
+                AgeRange:       adCampaignDetails.ageRange          || '',
+                Polls:          adCampaignDetails.polls             || '',
+                ShareRate:      adCampaignDetails.shareRate         || '',
+                InteractionRate:adCampaignDetails.interactionRate   || '',
+                Advertisement:  adCampaignDetails.advertisement,
+                Date:           adCampaignDetails.date,
+                StartTime:      adCampaignDetails.startTime,
+                EndTime:        adCampaignDetails.endTime,
+                Duration:       adCampaignDetails.duration,
+                Interval:       adCampaignDetails.interval,
+                CreationDate:   new Date().toISOString(),
+                Author:         user.name,
+                TvGroup:        adCampaignDetails.tvGroup           || '',
+                Company:        user.company,
+            }
+        };
         await dynamoDB.send(new PutCommand(params));
-        return { message: "Ad Campaign added successfully" };
+        return { message: 'New AdCampaign created successfully' };
     } catch (error) {
-        console.error('Error adding Ad Campaign:', error);
-        throw error;
+        console.error('Error creating a new AdCampaign:', error);
+        throw new Error('Error creating a new AdCampaign');
     }
 }
 
-// Delete campaign from the table by either CampaignID or CampaignName
-async function deleteCampaign({ CampaignID, CampaignName }) {
+async function getAllAdCampaign() {
     const params = {
         TableName: TABLE_NAME,
-        Key: {}
-    };
-
-    if (CampaignID) {
-        params.Key.CampaignID = CampaignID;
-    } else if (CampaignName) {
-        params.Key.CampaignName = CampaignName;
     }
-
     try {
-        await dynamoDB.send(new DeleteCommand(params));
-        return { message: "Ad Campaign deleted successfully" };
+        const { Items } = await dynamoDB.send(new ScanCommand(params));
+        return Items;
     } catch (error) {
-        console.error('Error deleting Ad Campaign:', error);
-        throw error;
+        console.error('Error getting all AdCampaign:', error);
+        throw new Error('Error getting all AdCampaign');
     }
 }
 
-export { addCampaign, deleteCampaign };
+export { createAdCampaign, getAllAdCampaign };

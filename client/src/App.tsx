@@ -7,6 +7,7 @@ import Pricing from './pages/Pricing/Pricing';
 import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
+import ViewAdCampaign from './pages/Campaign/ViewAdCampaign';
 import CreateAdCampaign from './pages/Campaign/CreateAdCampaign';
 import AccountDetails from "./pages/AccountSettings/AccountDetails";
 import SystemAdminManagement from './SystemAdminManagement';
@@ -18,6 +19,8 @@ import AdvertisementEditor from './pages/Advertisement/CreateAdvertisementDynami
 import PushAdvertisement from './pages/Advertisement/PushAdvertisement';
 import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
 import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
+import ViewTvAd from './pages/TvGroup/ViewTvAd';
+import UserDashboard from './pages/Accounts/ViewAccounts';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +28,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/admin" element={<PrivateLayout />}>
           <Route path="dashboard" element={<Dashboard/>} />
+          <Route path="view-ad-campaign" element={<ViewAdCampaign/>} />
           <Route path="create-ad-campaign" element={<CreateAdCampaign/>} />
           <Route path="review-ad-campaign" element={<ReviewAdCampaign/>} />
           <Route path="view-advertisement" element={<ViewAdvertisement/>} /> 
@@ -34,6 +38,8 @@ const App: React.FC = () => {
           <Route path="create-advertisement-dynamic" element={<AdvertisementEditor/>} />
           <Route path="createtvgroup" element={<CreateTvGroup/>} />
           <Route path="viewtvgroup" element={<ViewTvGroup/>} />
+          <Route path="jointvgroup" element={<ViewTvAd/>} />
+          <Route path="view-account" element={<UserDashboard/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
