@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useRef } from 'react';
 import Calendar from "react-calendar";
 import { Link } from 'react-router-dom';
 import './CreateAdCampaign.css';
@@ -132,6 +133,14 @@ const CreateAdCampaign: React.FC = () => {
         setIsPopupVisible(false);
     };
 
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleLocalStorageClick = () => {
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    };
+
     const isVideoFile = (fileName: string) => {
         const videoExtensions = ["mp4", "mov", "avi", "mkv", "webm"];
         const extension = fileName.split(".").pop()?.toLowerCase();
@@ -158,6 +167,8 @@ const CreateAdCampaign: React.FC = () => {
             console.error("Error creating new campaign: ", error);
         }
     }
+
+    
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -258,7 +269,7 @@ const CreateAdCampaign: React.FC = () => {
                             <div>
                                 <span>Upload From</span>
                                 <div>
-                                    <a>Local Storage</a>
+                                    <a onClick={() => {handleLocalStorageClick();}}>Local Storage</a>
                                     <a onClick={() => {setIsPopupVisible(true); fetchFinalizedAds();}}>Platform Storage</a>
                                 </div>
                             </div>
