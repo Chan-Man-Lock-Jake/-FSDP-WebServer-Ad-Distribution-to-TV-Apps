@@ -82,7 +82,6 @@
   border-radius: 50%; 
 }
 
-
 .status-text {
   font-size: 18px;
   font-family: Lato, sans-serif;
@@ -92,7 +91,6 @@
 .status-text.pushed {
   color: #349B91;
 }
-
 
 .view-button {
   background-color: #349B91;

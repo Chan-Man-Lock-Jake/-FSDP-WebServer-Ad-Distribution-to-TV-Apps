@@ -131,10 +131,6 @@ const Canvas: React.FC = () => {
         if (media.type === "image" && media.url) {
           return new Promise<void>((resolve) => {
             const img = new Image();
-            img.src = media.url;
-            img.crossOrigin = "anonymous";
-            img.onload = resolve;
-            img.onerror = resolve;
           });
         }
         return Promise.resolve();

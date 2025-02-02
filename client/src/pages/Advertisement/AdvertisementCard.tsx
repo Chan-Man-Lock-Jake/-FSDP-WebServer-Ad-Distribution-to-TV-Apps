@@ -15,7 +15,6 @@ const AdvertisementCard: React.FC<AdvertisementCardProps> = ({
   description,
   status,
   type,
-  onView,
 }) => {
   const navigate = useNavigate();
 

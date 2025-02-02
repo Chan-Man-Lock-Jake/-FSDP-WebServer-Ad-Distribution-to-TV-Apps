@@ -192,11 +192,11 @@ const PushAdvertisement: React.FC = () => {
 
       <div className="push-content">
         <div className="advertisement-container">
-          <p>Select TV Group to push advertisement to</p>
+          <p>Select Ad Campaign to push advertisement to</p>
           <div className="dropdown-container">
             <input
               type="text"
-              placeholder="Search for a TV Group"
+              placeholder="Search for an Ad Campaign"
               value={searchInput}
               onChange={handleSearchInputChange}
               className="search-input"

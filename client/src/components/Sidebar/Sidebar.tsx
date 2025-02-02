@@ -106,7 +106,7 @@ const Navbar: React.FC = () => {
                     <ul className="sub-menu">
                         <div>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="view-advertisement">View Advertisements</Link></li>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="create-advertisement">Create Advertisement</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="create-advertisement">Customize Advertisement</Link></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="push-ad-now">Push Advertisement</Link></li>
                         </div>
                     </ul>
