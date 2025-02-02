@@ -22,6 +22,7 @@ import ViewTvGroup from "./pages/TvGroup/ViewTvGroup";
 import ResizableDraggableMedia from "./pages/Advertisement/VideoDrag";
 import ViewTvAd from "./pages/TvGroup/ViewTvAd";
 import UserDashboard from "./pages/Accounts/ViewAccounts";
+import ImageGenerator from "./pages/Advertisement/ImageGenerator/ImageGenerator";
 
 const App: React.FC = () => {
   return (
@@ -61,6 +62,7 @@ const App: React.FC = () => {
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="account-details" element={<AccountDetails />} />
+          <Route path="ai-image" element={<ImageGenerator />} />
         </Route>
         {/* Catch-All Route */}
         <Route path="*" element={<div>404 - Page Not Found</div>} />
