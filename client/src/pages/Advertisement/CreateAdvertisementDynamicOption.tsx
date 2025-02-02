@@ -1,45 +1,78 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   Stage,
   Layer,
   Text,
   Image as KonvaImage,
   Transformer,
+  Rect,
 } from "react-konva";
 import useImage from "use-image";
-import "./CreateAdvertisementDynamicOption.css";
+
+const TV_WIDTH = 900;
+const TV_HEIGHT = 500;
 
 const AdvertisementEditor: React.FC = () => {
   const stageRef = useRef<any>(null);
-  const textRef = useRef<any>(null);
-  const imageRef = useRef<any>(null);
   const trRef = useRef<any>(null);
+  const [selectedShapeId, setSelectedShapeId] = useState<string | null>(null);
+  const [editingText, setEditingText] = useState<{
+    id: string;
+    text: string;
+  } | null>(null);
 
   const [backgroundColor, setBackgroundColor] = useState<string>("#ffffff");
-  const [text, setText] = useState<string>("Your Advertisement Text");
-  const [isBold, setIsBold] = useState<boolean>(false);
-  const [isItalic, setIsItalic] = useState<boolean>(false);
   const [imageURL, setImageURL] = useState<string | null>(null);
-  const [selectedShape, setSelectedShape] = useState<string | null>(null);
-
-  const [textProps, setTextProps] = useState({
-    x: 100,
-    y: 200,
-    fontSize: 28,
-    width: 200,
-  });
-
-  const [imageProps, setImageProps] = useState({
-    x: 50,
-    y: 50,
-    width: 200,
-    height: 200,
-  });
-
-  // Load image dynamically
   const [loadedImage] = useImage(imageURL || "");
 
-  // Handle image upload
+  const [texts, setTexts] = useState<
+    { id: string; text: string; x: number; y: number; fontSize: number }[]
+  >([]);
+
+  const [imageProps, setImageProps] = useState({
+    id: "image",
+    x: 50,
+    y: 50,
+    width: 250,
+    height: 250,
+  });
+
+  const addNewText = () => {
+    const newText = {
+      id: `text-${texts.length + 1}`,
+      text: "New Text",
+      x: 100,
+      y: 100,
+      fontSize: 24,
+    };
+    setTexts([...texts, newText]);
+  };
+
+  const handleSelect = (id: string) => {
+    setSelectedShapeId(id);
+    setEditingText(null);
+    const selectedNode =
+      id === "image"
+        ? stageRef.current.findOne("#uploaded-image")
+        : stageRef.current.findOne(`#${id}`);
+
+    if (trRef.current && selectedNode) {
+      trRef.current.nodes([selectedNode]);
+      trRef.current.getLayer()?.batchDraw();
+    }
+  };
+
+  const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (editingText) {
+      setEditingText({ ...editingText, text: event.target.value });
+      setTexts((prevTexts) =>
+        prevTexts.map((txt) =>
+          txt.id === editingText.id ? { ...txt, text: event.target.value } : txt
+        )
+      );
+    }
+  };
+
   const handleStorageSelection = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -54,167 +87,94 @@ const AdvertisementEditor: React.FC = () => {
     input.click();
   };
 
-  // Toggle text bold and italic
-  const toggleBold = () => setIsBold(!isBold);
-  const toggleItalic = () => setIsItalic(!isItalic);
+  useEffect(() => {
+    if (editingText) {
+      const textNode = stageRef.current?.findOne(`#${editingText.id}`);
+      if (textNode) {
+        const stageBox = stageRef.current.container().getBoundingClientRect();
+        const textPosition = textNode.getAbsolutePosition();
 
-  // Change background color
-  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setBackgroundColor(event.target.value);
-  };
-
-  // Handle object selection
-  const handleSelect = (shape: string) => {
-    setSelectedShape(shape);
-    if (trRef.current) {
-      trRef.current.nodes([
-        shape === "image" ? imageRef.current : textRef.current,
-      ]);
-      trRef.current.getLayer()?.batchDraw();
+        const textarea =
+          document.querySelector<HTMLTextAreaElement>("#editing-textarea");
+        if (textarea) {
+          textarea.style.top = `${textPosition.y + stageBox.top}px`;
+          textarea.style.left = `${textPosition.x + stageBox.left}px`;
+          textarea.style.fontSize = `${textNode.fontSize()}px`;
+          textarea.style.width = `${textNode.width()}px`;
+          textarea.style.height = `${textNode.height()}px`;
+        }
+      }
     }
-  };
-
-  // Handle text dragging
-  const handleTextDragMove = (e: any) => {
-    setTextProps({ ...textProps, x: e.target.x(), y: e.target.y() });
-  };
-
-  // Handle text resizing
-  const handleTextTransform = () => {
-    const node = textRef.current;
-    const scaleX = node.scaleX();
-    const scaleY = node.scaleY();
-    setTextProps({
-      ...textProps,
-      fontSize: textProps.fontSize * scaleX,
-      width: textProps.width * scaleX,
-    });
-    node.scaleX(1);
-    node.scaleY(1);
-  };
-
-  // Handle image dragging
-  const handleImageDragMove = (e: any) => {
-    setImageProps({ ...imageProps, x: e.target.x(), y: e.target.y() });
-  };
-
-  // Handle image resizing
-  const handleImageTransform = () => {
-    const node = imageRef.current;
-    const scaleX = node.scaleX();
-    const scaleY = node.scaleY();
-    setImageProps({
-      ...imageProps,
-      width: imageProps.width * scaleX,
-      height: imageProps.height * scaleY,
-    });
-    node.scaleX(1);
-    node.scaleY(1);
-  };
-
-  // Handle save (export canvas as an image)
-  const handleSave = () => {
-    const stage = stageRef.current;
-    const dataURL = stage.toDataURL(); // Export the canvas as an image
-    console.log("Canvas exported as:", dataURL);
-    alert("Advertisement saved successfully!");
-  };
+  }, [editingText]);
 
   return (
-    <div className="editor-container">
-      <p className="tv-title">Advertisement Editor</p>
+    <div>
+      <p>Advertisement Editor</p>
+
       <Stage
         ref={stageRef}
-        width={850}
-        height={500}
-        style={{
-          border: "10px solid black",
-          borderRadius: "10px",
-          backgroundColor: backgroundColor,
-          margin: "20px auto",
-        }}
+        width={TV_WIDTH}
+        height={TV_HEIGHT}
+        style={{ backgroundColor }}
       >
         <Layer>
-          {/* Render uploaded image */}
+          <Rect width={TV_WIDTH} height={TV_HEIGHT} fill={backgroundColor} />
+
           {imageURL && (
-            <>
-              <KonvaImage
-                ref={imageRef}
-                image={loadedImage}
-                x={imageProps.x}
-                y={imageProps.y}
-                width={imageProps.width}
-                height={imageProps.height}
-                draggable
-                onClick={() => handleSelect("image")}
-                onTap={() => handleSelect("image")}
-                onDragMove={handleImageDragMove}
-                onTransformEnd={handleImageTransform}
-              />
-              {selectedShape === "image" && <Transformer ref={trRef} />}
-            </>
+            <KonvaImage
+              id="uploaded-image"
+              image={loadedImage}
+              x={imageProps.x}
+              y={imageProps.y}
+              width={imageProps.width}
+              height={imageProps.height}
+              draggable
+              onClick={() => handleSelect("image")}
+              onTap={() => handleSelect("image")}
+            />
           )}
 
-          {/* Render Text */}
-          <Text
-            ref={textRef}
-            text={text}
-            x={textProps.x}
-            y={textProps.y}
-            fontSize={textProps.fontSize}
-            width={textProps.width}
-            fontStyle={`${isBold ? "bold" : ""} ${isItalic ? "italic" : ""}`}
-            fill="black"
-            draggable
-            onClick={() => handleSelect("text")}
-            onTap={() => handleSelect("text")}
-            onDragMove={handleTextDragMove}
-            onTransformEnd={handleTextTransform}
-          />
-          {selectedShape === "text" && <Transformer ref={trRef} />}
+          {texts.map((txt) => (
+            <Text
+              key={txt.id}
+              id={txt.id}
+              text={txt.text}
+              x={txt.x}
+              y={txt.y}
+              fontSize={txt.fontSize}
+              fill="black"
+              draggable
+              onClick={() => handleSelect(txt.id)}
+              onTap={() => handleSelect(txt.id)}
+              onDblClick={() => setEditingText(txt)}
+            />
+          ))}
+          <Transformer ref={trRef} />
         </Layer>
       </Stage>
 
-      <div className="controls">
-        <button className="control-button" onClick={handleStorageSelection}>
-          Upload Image
-        </button>
-
-        <label>
-          <input
-            type="color"
-            onChange={handleColorChange}
-            style={{ display: "none" }}
-          />
-          <button className="control-button">Background Colour</button>
-        </label>
-
-        <button
-          className={`control-button ${isBold ? "active" : ""}`}
-          onClick={toggleBold}
-        >
-          B
-        </button>
-
-        <button
-          className={`control-button ${isItalic ? "active" : ""}`}
-          onClick={toggleItalic}
-        >
-          I
-        </button>
-      </div>
-
-      <div className="text-input">
-        <input
-          type="text"
-          placeholder="Enter Advertisement Text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+      {editingText && (
+        <textarea
+          id="editing-textarea"
+          value={editingText.text}
+          onChange={handleTextChange}
+          style={{
+            position: "absolute",
+            zIndex: 2,
+            background: "white",
+            border: "1px solid black",
+            resize: "none",
+          }}
         />
-      </div>
+      )}
 
-      <div className="save-button">
-        <button onClick={handleSave}>Save</button>
+      <div>
+        <button onClick={handleStorageSelection}>Upload Image</button>
+        <button onClick={addNewText}>Add Text</button>
+        <input
+          type="color"
+          onChange={(e) => setBackgroundColor(e.target.value)}
+        />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@
   justify-content: center;
   gap: 20px;
   padding: 20px;
+  width: 100%;
 }
 
 .tv-title {
@@ -15,28 +16,20 @@
   font-weight: bold;
 }
 
-/* .tv-screen-dynamic {
-  width: 900px;
-  height: 500px;
+.stage-container {
   border: 10px solid black;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background-size: cover;
   background-position: center;
-} */
-
-.screen-text {
-  font-size: 24px;
-  color: black;
-  text-align: center;
-  word-break: break-word;
+  margin: 20px auto;
+  overflow: hidden;
 }
 
 .controls {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
 }
 
 .control-button {
@@ -47,6 +40,11 @@
   cursor: pointer;
   font-size: 16px;
   color: black;
+  transition: all 0.2s ease-in-out;
+}
+
+.control-button:hover {
+  background-color: #f0f0f0;
 }
 
 .control-button.active {
@@ -59,6 +57,7 @@
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  text-align: center;
 }
 
 .save-button button {
@@ -69,6 +68,7 @@
   background-color: #007bff;
   color: white;
   cursor: pointer;
+  transition: background 0.2s ease-in-out;
 }
 
 .save-button button:hover {

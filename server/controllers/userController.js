@@ -1,4 +1,4 @@
-import { createUser, userLogin, createCampaign } from '../models/user.js';
+import { createUser, userLogin } from '../models/user.js';
 
 // User Login Controller
 const userLoginController = async (req, res) => {
@@ -48,4 +48,4 @@ const createCampaignController = async (req, res) => {
     }
 };
 
-export { createUserController, userLoginController, createCampaignController };
+export { createUserController, userLoginController };

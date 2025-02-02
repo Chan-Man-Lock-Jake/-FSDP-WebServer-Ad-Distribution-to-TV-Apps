@@ -15,7 +15,6 @@ const AdvertisementCard: React.FC<AdvertisementCardProps> = ({
   description,
   status,
   type,
-  onView,
 }) => {
   const navigate = useNavigate();
 
@@ -31,7 +30,7 @@ const AdvertisementCard: React.FC<AdvertisementCardProps> = ({
       {type === "Finalized" && status && (
         <div className="card-status">
           <span
-            className={`status-indicator ${status.replace(/\s+/g, "-").toLowerCase()}`}
+            className={`ad-status-indicator ${status.replace(/\s+/g, "-").toLowerCase()}`}
           />
           <span
             className={`status-text ${status.replace(/\s+/g, "-").toLowerCase()}`}

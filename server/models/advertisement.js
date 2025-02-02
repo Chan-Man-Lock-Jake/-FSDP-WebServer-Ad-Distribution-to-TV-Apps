@@ -1,5 +1,5 @@
 import { s3 } from "./s3.js";
-import { ListObjectsV2Command, GetObjectCommand } from "@aws-sdk/client-s3";
+import { ListObjectsV2Command, GetObjectCommand, HeadBucketCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 // Retrieve all finalized advertisements
@@ -72,24 +72,25 @@ const getFinalizedAd = async (user, fileName) => {
 };
 
 // Upload finalized advertisement 
-async function uploadFinalizedAd(user, fileName, fileContent) {
+async function uploadFinalizedAd(req, fileName, fileContent) {
   try {
+    // Retrieve user data from the session or authenticated request.
+    // For testing, if no user exists, we force a test user.
+    const user = req.user || req.session?.user || "";
     if (!user || !user.Company || !user.UserId) {
       throw new Error("Invalid user object: Missing Company or UserId");
     }
-
     if (!fileName) {
       throw new Error("FileName is required");
     }
-
     if (!fileContent) {
       throw new Error("FileContent is required");
     }
 
-    // Reconstruct the bucket name using the company name and user ID
+    // Construct the bucket name. For example, "amazon-u00017"
     const bucketName = `${user.Company.toLowerCase().replace(/[^a-z0-9-]/g, "-")}-${user.UserId.toLowerCase()}`;
 
-    // Verify if the bucket exists
+    // Verify if the bucket exists.
     try {
       await s3.send(new HeadBucketCommand({ Bucket: bucketName }));
       console.log(`Bucket ${bucketName} exists`);
@@ -98,10 +99,10 @@ async function uploadFinalizedAd(user, fileName, fileContent) {
       throw new Error(`Bucket ${bucketName} does not exist`);
     }
 
-    // Define the key (file path) for the finalized advertisement folder
+    // Define the key (file path) for the finalized advertisement folder.
     const key = `finalized-advertisement/${fileName}`;
 
-    // Upload the file to the finalized advertisement folder
+    // Upload the file.
     const data = await s3.send(
       new PutObjectCommand({
         Bucket: bucketName,
@@ -119,7 +120,7 @@ async function uploadFinalizedAd(user, fileName, fileContent) {
     console.error("Error uploading file:", error.message);
     throw new Error(`Error uploading file: ${error.message}`);
   }
-};
+}
 
 // Upload advertisement to socket
 async function uploadToSocket(TvGroupId, advertisementLink) {

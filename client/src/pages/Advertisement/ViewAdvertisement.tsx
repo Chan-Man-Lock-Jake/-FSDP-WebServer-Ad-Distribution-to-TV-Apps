@@ -7,7 +7,7 @@ import "./ViewAdvertisement.css";
 type Advertisement = {
   title: string;
   description: string;
-  status?: "Pushed" | "Not Pushed" | "Scheduled"; 
+  status?: "Pushed" | "Not Pushed" | "Scheduled";
   type: "Finalized" | "Draft";
 };
 
@@ -26,7 +26,9 @@ const ViewAdvertisement: React.FC = () => {
   const fetchAdvertisements = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/admin/get-ad-info");
+      const response = await fetch("http://localhost:3000/admin/get-ad-info", {
+        credentials: "include",
+      });
       if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.statusText}`);
       }

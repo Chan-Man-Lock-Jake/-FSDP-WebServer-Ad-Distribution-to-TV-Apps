@@ -44,7 +44,7 @@
   margin-left: 30px;
 }
 
-.status-indicator {
+.ad-status-indicator {
   position: relative;
   display: flex;
   justify-content: center;
@@ -56,32 +56,31 @@
   margin-right: 8px; 
 }
 
-.status-indicator.pushed {
+.ad-status-indicator.pushed {
   border-color: #349B91; 
 }
 
-.status-indicator.pushed::after {
+.ad-status-indicator.pushed::after {
   background-color: #349B91; 
 }
 
-.status-indicator.not-pushed {
+.ad-status-indicator.not-pushed {
   border-color: #9B9B9B; 
 }
 
-.status-indicator.not-pushed::after,
-.status-indicator.scheduled::after {
+.ad-status-indicator.not-pushed::after,
+.ad-status-indicator.scheduled::after {
   background-color: #9B9B9B; 
 }
 
 /* Inner circle for all indicators */
-.status-indicator::after {
+.ad-status-indicator::after {
   content: "";
   position: absolute;
   height: 8px; 
   width: 8px;
   border-radius: 50%; 
 }
-
 
 .status-text {
   font-size: 18px;
@@ -92,7 +91,6 @@
 .status-text.pushed {
   color: #349B91;
 }
-
 
 .view-button {
   background-color: #349B91;
