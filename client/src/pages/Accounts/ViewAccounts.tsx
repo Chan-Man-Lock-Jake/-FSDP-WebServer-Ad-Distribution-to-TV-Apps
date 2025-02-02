@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import "./ViewAccounts.css";
-
+import './ViewAccounts.css'; 
 interface User {
   name: string;
   email: string;
@@ -35,45 +34,43 @@ const UserDashboard: React.FC = () => {
   const TabButton: React.FC<TabButtonProps> = ({ value, label }) => (
     <button 
       onClick={() => setActiveTab(value)}
-      className={`px-4 py-2 rounded ${activeTab === value ? 'bg-teal-600 text-white' : 'bg-white'}`}
+      className={`tab-button ${activeTab === value ? 'active' : ''}`}
     >
       {label}
     </button>
   );
 
   const UserCard: React.FC<UserCardProps> = ({ user }) => (
-    <div className="flex gap-4">
-      <div className="w-1/4">
-        <div className="bg-teal-600 text-white px-4 py-2 rounded">
-          {user.name}
-        </div>
+    <div className="user-card">
+      <div className="user-card-header">
+        {user.name}
       </div>
-      <div className="w-3/4 bg-white rounded p-6">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+      <div className="user-card-body">
+        <div className="user-info">
           <div>
-            <h3 className="font-medium mb-1">Name</h3>
+            <h3>Name</h3>
             <p>{user.name}</p>
           </div>
           <div>
-            <h3 className="font-medium mb-1">Email</h3>
+            <h3>Email</h3>
             <p>{user.email}</p>
           </div>
           <div>
-            <h3 className="font-medium mb-1">Contact No</h3>
+            <h3>Contact No</h3>
             <p>{user.contactNo}</p>
           </div>
           <div>
-            <h3 className="font-medium mb-1">Projects</h3>
+            <h3>Projects</h3>
             {user.projects.map((project, index) => (
               <p key={index}>{project}</p>
             ))}
           </div>
           <div>
-            <h3 className="font-medium mb-1">Date Joined</h3>
+            <h3>Date Joined</h3>
             <p>{user.dateJoined}</p>
           </div>
           <div>
-            <h3 className="font-medium mb-1">Last Login</h3>
+            <h3>Last Login</h3>
             <p>{user.lastLogin}</p>
           </div>
         </div>
@@ -82,21 +79,19 @@ const UserDashboard: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="p-4">
-        <div className="bg-rose-50 rounded-lg shadow">
-          <div className="p-4">
-            <div className="flex gap-2 mb-6">
-              <TabButton value="admins" label="Admins" />
-              <TabButton value="operators" label="Operators" />
-              <TabButton value="content-creators" label="Content Creators" />
-            </div>
-            <div className="h-screen">
-              {users.map((user, index) => (
-                <UserCard key={index} user={user} />
-              ))}
-            </div>
+    <div className="dashboard-container">
+      <div className="dashboard-content">
+        <div className="dashboard-header">
+          <div className="tab-buttons">
+            <TabButton value="admins" label="Admins" />
+            <TabButton value="operators" label="Operators" />
+            <TabButton value="content-creators" label="Content Creators" />
           </div>
+        </div>
+        <div className="user-list">
+          {users.map((user, index) => (
+            <UserCard key={index} user={user} />
+          ))}
         </div>
       </div>
     </div>

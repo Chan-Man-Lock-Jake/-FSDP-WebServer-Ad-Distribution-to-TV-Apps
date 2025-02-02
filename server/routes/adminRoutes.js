@@ -3,6 +3,8 @@ import multer from 'multer';
 import { getAllAdInfoController } from '../controllers/adInfoController.js';
 import { uploadFinalizedAdController, getFinalizedAdController, getAllFinalizedAdController } from '../controllers/advertisementController.js';
 import { createAdCampaignController, getAllAdCampaignController } from '../controllers/adCampaignController.js';
+import { getTvGroupCardInfoController } from '../controllers/tvGroupInfoController.js';
+import { getTvGroupInfoController } from '../controllers/tvGroupInfoController.js';
 const router = express.Router();
 const upload = multer(); 
 
@@ -12,6 +14,8 @@ router.get('/get-finalized-ad', getFinalizedAdController);
 router.get('/get-all-finalized-ad', getAllFinalizedAdController);
 router.post('/create-campaign', createAdCampaignController);
 router.get('/get-all-ad-campaign', getAllAdCampaignController);
+router.get('/get-tv-grp-card-info', getTvGroupCardInfoController);
+router.get('/get-tv-grp-info', getTvGroupInfoController);
 
 
 export default router;
