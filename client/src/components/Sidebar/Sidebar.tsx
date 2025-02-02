@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
                         <div>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="view-advertisement">View Advertisements</Link></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="create-advertisement">Customize Advertisement</Link></li>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="push-ad-now">Push Advertisement</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="generate-ad">Generate Advertisement</Link></li>
                         </div>
                     </ul>
                 </li>

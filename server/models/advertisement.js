@@ -120,7 +120,7 @@ async function uploadFinalizedAd(req, fileName, fileContent) {
     console.error("Error uploading file:", error.message);
     throw new Error(`Error uploading file: ${error.message}`);
   }
-}
+};
 
 // Upload advertisement to socket
 async function uploadToSocket(TvGroupId, advertisementLink) {
