@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./ViewAccounts.css";
 
 interface User {
   name: string;

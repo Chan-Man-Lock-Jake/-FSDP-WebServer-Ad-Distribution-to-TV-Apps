@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import './CreateAdCampaign.css';
 import "react-calendar/dist/Calendar.css";
 
+import { io } from 'socket.io-client';
+const socket = io('http://localhost:3000');
+
 const CreateAdCampaign: React.FC = () => {
     const [calDate, setCalDate] = useState<(Date | null) | [(Date | null), (Date | null)]>(new Date());
     const [images, setImages] = useState<{ url: string; fileName: string }[]>([]);
@@ -26,7 +29,9 @@ const CreateAdCampaign: React.FC = () => {
         endTime: "",
         duration: "",
         interval: "",
-        author: "",
+        // author: "",
+        tvGroup: "",
+        // company: "",
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -157,7 +162,16 @@ const CreateAdCampaign: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         createNewCampaign();
-        window.location.href="./review-ad-campaign";
+        const data = {
+          tv: createAdCampaignFormData.tvGroup,
+          ad: createAdCampaignFormData.advertisement
+        }
+        console.log(data);
+        socket.emit("force_push_ad", data);
+        // socket.to(createAdCampaignFormData.tvGroup).emit('display_ad', createAdCampaignFormData.advertisement);
+
+        window.location.href="./view-ad-campaign";
+        // window.location.href="./review-ad-campaign";
         // console.log("Form Data Submitted:", createAdCampaignFormData);
     };
 
@@ -318,6 +332,21 @@ const CreateAdCampaign: React.FC = () => {
         </div>
       )}
                     <li>
+                      <div>
+                          <h1>TV Group</h1>
+                          <p>Select a TV Group to assign the advertisement to.</p>     
+                      </div>
+                      <div className='campaign-tv-group'>
+                          <div>
+                              <span>Select TV Group</span>
+                              <input name="tvGroup" type="text" placeholder='TV Group' value={createAdCampaignFormData.tvGroup} onChange={handleChange}/>
+                              {/* <select>
+                                <option></option>
+                              </select> */}
+                          </div>
+                      </div>
+                    </li>
+                    <li>
                         <div>
                             <h1>Schedule Date</h1>
                             <p>Select a date to launch your campaign.</p>                        
@@ -350,7 +379,7 @@ const CreateAdCampaign: React.FC = () => {
                     </li>
                 </ul>
                 <a className='next-container'>
-                <button type="submit" id='next-button'>Next</button>
+                <button type="submit" id='next-button'>Create</button>
                 </a>
             </form>
         </section>

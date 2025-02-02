@@ -19,6 +19,8 @@ import AdvertisementEditor from './pages/Advertisement/CreateAdvertisementDynami
 import PushAdvertisement from './pages/Advertisement/PushAdvertisement';
 import CreateTvGroup from './pages/TvGroup/CreateTvGroup'; 
 import ViewTvGroup from './pages/TvGroup/ViewTvGroup'; 
+import ViewTvAd from './pages/TvGroup/ViewTvAd';
+import UserDashboard from './pages/Accounts/ViewAccounts';
 
 const App: React.FC = () => {
   return (
@@ -36,6 +38,8 @@ const App: React.FC = () => {
           <Route path="create-advertisement-dynamic" element={<AdvertisementEditor/>} />
           <Route path="createtvgroup" element={<CreateTvGroup/>} />
           <Route path="viewtvgroup" element={<ViewTvGroup/>} />
+          <Route path="jointvgroup" element={<ViewTvAd/>} />
+          <Route path="view-account" element={<UserDashboard/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />
