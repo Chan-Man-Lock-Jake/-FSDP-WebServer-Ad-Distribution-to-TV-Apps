@@ -23,6 +23,8 @@ import ResizableDraggableMedia from "./pages/Advertisement/VideoDrag";
 import ViewTvAd from "./pages/TvGroup/ViewTvAd";
 import UserDashboard from "./pages/Accounts/ViewAccounts";
 import ImageGenerator from "./pages/Advertisement/ImageGenerator/ImageGenerator";
+import SelectTV from './pages/TvGroup/SelectTV';
+import SubmitTvGroupDetail from './pages/TvGroup/SubmitTvGroupDetail';
 
 const App: React.FC = () => {
   return (
@@ -55,6 +57,8 @@ const App: React.FC = () => {
           <Route path="view-account" element={<UserDashboard />} />
           <Route path="createtvgroup" element={<CreateTvGroup />} />
           <Route path="viewtvgroup" element={<ViewTvGroup />} />
+          <Route path="select-tvs/:outletId" element={<SelectTV/>} />
+          <Route path="submit-group-details" element={<SubmitTvGroupDetail/>} />
         </Route>
         <Route path="/" element={<PublicLayout />}>
           <Route index element={<Landing />} />

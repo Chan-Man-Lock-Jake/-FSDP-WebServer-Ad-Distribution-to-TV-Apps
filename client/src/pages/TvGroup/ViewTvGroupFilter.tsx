@@ -5,16 +5,16 @@ import "./ViewTvGroup.css"
 type FilterCat = {
     onFilterChange: (
     filters: {
-        region?: "North" | "South" | "East" | "West" | "Nil";
+        region?: "North" | "South" | "East" | "West" | "Central";
         status?: "Online" | "Offline" | "Removed";
     }) => void;
 }
 
 const ViewTvGroupFilter: React.FC<FilterCat> = ({ onFilterChange }) => {
-    const [activeRegion, setActiveRegion] = useState<"North" | "South" | "East" | "West" | "Nil"| null>(null);
+    const [activeRegion, setActiveRegion] = useState<"North" | "South" | "East" | "West" | "Central"| null>(null);
     const [activeStatus, setActiveStatus] = useState<"Online" | "Offline" | "Removed" | null>(null);
 
-    const handleRegionClick = (region: "North" | "South" | "East" | "West" | "Nil") => {
+    const handleRegionClick = (region: "North" | "South" | "East" | "West" | "Central") => {
         const newRegion = activeRegion === region ? null: region;
         setActiveRegion(newRegion);
         onFilterChange({ region: newRegion || undefined, status: activeStatus || undefined });
@@ -36,11 +36,11 @@ const ViewTvGroupFilter: React.FC<FilterCat> = ({ onFilterChange }) => {
         <div className="view-tv-grp-filter">
             <div className="region-filter">
                 <p id="filter-cat">By Region</p>
-                {["North", "South", "East", "West", "Nil"].map((region) => 
+                {["North", "South", "East", "West", "Central"].map((region) => 
                 (<button 
                 key={region} 
                 className={activeRegion === region ? "active" : ""}
-                onClick={() => handleRegionClick(region as "North" | "South" | "East" | "West" | "Nil")}>
+                onClick={() => handleRegionClick(region as "North" | "South" | "East" | "West" | "Central")}>
                     {region}
                 </button>
             ))}
