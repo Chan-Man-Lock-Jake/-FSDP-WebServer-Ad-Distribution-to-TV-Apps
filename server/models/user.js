@@ -163,4 +163,92 @@ const userLogin = async (req, email, password) => {
   }
 };
 
-export { createUser, userLogin };
+const createUserByAdmin = async (userData, adminUser) => {
+  // Verify admin privileges
+  if (!adminUser || adminUser.Role !== 'Admin') {
+      throw new Error('Unauthorized: Only admins can create users');
+  }
+
+  let newUserId;
+  let bucketName;
+
+  try {
+      // Fetch existing users to determine the last UserId
+      const fetchParams = {
+          TableName: 'User',
+          ProjectionExpression: 'UserId',
+      };
+      const result = await dynamoDB.send(new ScanCommand(fetchParams));
+
+      let lastUserId = 'U00000';
+      if (result.Items && result.Items.length > 0) {
+          const sortedUsers = result.Items.sort((a, b) => b.UserId.localeCompare(a.UserId));
+          lastUserId = sortedUsers[0].UserId;
+      }
+
+      const userIdNumber = parseInt(lastUserId.slice(1), 10) + 1;
+      newUserId = `U${String(userIdNumber).padStart(5, '0')}`;
+
+      // Create S3 bucket
+      bucketName = `${userData.company.toLowerCase().replace(/[^a-z0-9-]/g, '-')}-${newUserId.toLowerCase()}`;
+      
+      await s3.send(
+          new CreateBucketCommand({
+              Bucket: bucketName,
+          })
+      );
+
+      // Create folders
+      const folders = ['finalized-advertisement/', 'draft-advertisement/'];
+      for (const folder of folders) {
+          await s3.send(
+              new PutObjectCommand({
+                  Bucket: bucketName,
+                  Key: folder,
+              })
+          );
+      }
+
+      const hashedPassword = await bcrypt.hash(userData.password, 10);
+
+      const params = {
+          TableName: 'User',
+          Item: {
+              UserId: newUserId,
+              Name: userData.name,
+              Email: userData.email,
+              Password: hashedPassword,
+              Role: userData.role,
+              Contact: userData.contact,
+              Status: 'Approved',
+              Company: userData.company,
+              CreatedAt: new Date().toISOString(),
+          },
+      };
+
+      await dynamoDB.send(new PutCommand(params));
+
+      return {
+          success: true,
+          message: `User created successfully`,
+          userId: newUserId,
+          bucketName: bucketName
+      };
+  } catch (error) {
+      if (bucketName) {
+          try {
+              await s3.send(
+                  new DeleteBucketCommand({
+                      Bucket: bucketName,
+                  })
+              );
+          } catch (cleanupError) {
+              console.error(`Failed to delete bucket during rollback: ${cleanupError.message}`);
+          }
+      }
+      throw new Error(error.message || 'Error creating user');
+  }
+};
+
+
+export { createUser, userLogin , createUserByAdmin };
