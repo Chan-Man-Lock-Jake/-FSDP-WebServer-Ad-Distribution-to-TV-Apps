@@ -1,8 +1,14 @@
 import express from 'express';
-import { createUserController, userLoginController } from '../controllers/userController.js';
+import { 
+    createUserController, 
+    userLoginController,
+    createUserByAdminController
+} from '../controllers/userController.js';
 import { validateUser } from '../middleware/validateUser.js';
 const router = express.Router();
 
-router.post('/signup', createUserController); // Correct function name
-router.post('/login', userLoginController); // Correct function name
+router.post('/signup', createUserController); // User signup route
+router.post('/login', userLoginController);  // User login route
+router.post('/admin/create-user', createUserByAdminController); // New admin route
+
 export default router;

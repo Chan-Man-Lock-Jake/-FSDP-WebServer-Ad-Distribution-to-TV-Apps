@@ -1,4 +1,4 @@
-import { createUser, userLogin } from '../models/user.js';
+import { createUser, userLogin, createUserByAdmin} from '../models/user.js';
 
 // User Login Controller
 const userLoginController = async (req, res) => {
@@ -36,4 +36,24 @@ const createUserController = async (req, res) => {
     }
 };
 
-export { createUserController, userLoginController };
+const createUserByAdminController = async (req, res) => {
+  try {
+      if (!req.session || !req.session.user) {
+          return res.status(401).json({
+              success: false,
+              message: 'Not authenticated'
+          });
+      }
+
+      const response = await createUserByAdmin(req.body, req.session.user);
+      res.status(201).json(response);
+  } catch (error) {
+      console.error('Error in admin creating user:', error.message);
+      res.status(500).json({
+          success: false,
+          message: error.message || 'Error creating user'
+      });
+  }
+};
+
+export { createUserController, userLoginController , createUserByAdminController};
