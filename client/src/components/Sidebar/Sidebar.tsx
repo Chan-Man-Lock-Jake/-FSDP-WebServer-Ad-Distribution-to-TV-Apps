@@ -73,28 +73,28 @@ const Navbar: React.FC = () => {
                 </li>
                 <li>
                     <button onClick={(event) => toggleSubmenu(event.currentTarget)} className="dropdown-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-320h80q0-33-23.5-56.5T200-400v80Zm142 0h58q0-83-58.5-141.5T200-520v58q59 0 100.5 41.5T342-320Zm120 0h58q0-66-25-124.5t-68.5-102Q383-590 324.5-615T200-640v58q109 0 185.5 76.5T462-320ZM320-120v-80H160q-33 0-56.5-23.5T80-280v-480q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v480q0 33-23.5 56.5T800-200H640v80H320ZM160-280h640v-480H160v480Zm0 0v-480 480Z"/></svg>
-                        <span>TV Groups</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z"/></svg>
-                    </button>
-                    <ul className="sub-menu">
-                        <div>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="viewtvgroup">View Existing Groups</Link></li>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="createtvgroup">Create New Group</Link></li>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="jointvgroup">View TV Ad</Link></li>
-                        </div>
-                    </ul>
-                </li>
-                <li>
-                    <button onClick={(event) => toggleSubmenu(event.currentTarget)} className="dropdown-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M468-240q-96-5-162-74t-66-166q0-100 70-170t170-70q97 0 166 66t74 162l-84-25q-13-54-56-88.5T480-640q-66 0-113 47t-47 113q0 57 34.5 100t88.5 56l25 84Zm48 158q-9 2-18 2h-18q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480v18q0 9-2 18l-78-24v-12q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93h12l24 78Zm305 22L650-231 600-80 480-480l400 120-151 50 171 171-79 79Z"/></svg>
                         <span>Ad Campaigns</span>
                         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z"/></svg>
                     </button>
                     <ul className="sub-menu">
                         <div>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to={"view-ad-campaign"}>View Existing Campaigns</Link></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="create-ad-campaign">Create New Campaign</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to={"view-ad-campaign"}>View Existing Campaigns</Link></li>
+                        </div>
+                    </ul>
+                </li>
+                <li>
+                    <button onClick={(event) => toggleSubmenu(event.currentTarget)} className="dropdown-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-320h80q0-33-23.5-56.5T200-400v80Zm142 0h58q0-83-58.5-141.5T200-520v58q59 0 100.5 41.5T342-320Zm120 0h58q0-66-25-124.5t-68.5-102Q383-590 324.5-615T200-640v58q109 0 185.5 76.5T462-320ZM320-120v-80H160q-33 0-56.5-23.5T80-280v-480q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v480q0 33-23.5 56.5T800-200H640v80H320ZM160-280h640v-480H160v480Zm0 0v-480 480Z"/></svg>
+                        <span>TV Groups</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-528 296-344l-56-56 240-240 240 240-56 56-184-184Z"/></svg>
+                    </button>
+                    <ul className="sub-menu">
+                        <div>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="createtvgroup">Create New Group</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="viewtvgroup">View Existing Groups</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="jointvgroup">View TV Ad</Link></li>
                         </div>
                     </ul>
                 </li>
@@ -106,9 +106,9 @@ const Navbar: React.FC = () => {
                     </button>
                     <ul className="sub-menu">
                         <div>
-                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="view-advertisement">View Advertisements</Link></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="create-advertisement">Customize Advertisement</Link></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="generate-ad">Generate Advertisement</Link></li>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="view-advertisement">View Advertisements</Link></li>
                         </div>
                     </ul>
                 </li>
@@ -120,6 +120,7 @@ const Navbar: React.FC = () => {
                     </button>
                     <ul className="sub-menu">
                         <div>
+                            <li onClick={(event) => toggleActive(event.currentTarget)}><a>Add/Modify User</a></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="view-account">View Existing Users</Link></li>
                             <li onClick={(event) => toggleActive(event.currentTarget)}><Link to="add-user">Add User</Link></li>
                         </div>
