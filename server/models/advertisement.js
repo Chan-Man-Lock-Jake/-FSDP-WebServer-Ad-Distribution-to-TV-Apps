@@ -24,6 +24,7 @@ const getAllFinalizedAd = async (companyName, userId) => {
             new GetObjectCommand({
               Bucket: bucketName,
               Key: item.Key,
+              ResponseContentDisposition: 'inline',
             }),
             { expiresIn: 3600 }
           );
@@ -56,6 +57,7 @@ const getFinalizedAd = async (user, fileName) => {
     const command = new GetObjectCommand({
       Bucket: bucketName,
       Key: key,
+      ResponseContentDisposition: 'inline',
     });
 
     const data = await s3.send(command);
@@ -74,8 +76,7 @@ const getFinalizedAd = async (user, fileName) => {
 // Upload finalized advertisement 
 async function uploadFinalizedAd(req, fileName, fileContent) {
   try {
-    // Retrieve user data from the session or authenticated request.
-    // For testing, if no user exists, we force a test user.
+    // Retrieve user data from req.user or req.session.user
     const user = req.user || req.session?.user || "";
     if (!user || !user.Company || !user.UserId) {
       throw new Error("Invalid user object: Missing Company or UserId");
@@ -87,7 +88,7 @@ async function uploadFinalizedAd(req, fileName, fileContent) {
       throw new Error("FileContent is required");
     }
 
-    // Construct the bucket name. For example, "amazon-u00017"
+    // Construct the bucket name (e.g., "amazon-u00017")
     const bucketName = `${user.Company.toLowerCase().replace(/[^a-z0-9-]/g, "-")}-${user.UserId.toLowerCase()}`;
 
     // Verify if the bucket exists.
@@ -102,12 +103,33 @@ async function uploadFinalizedAd(req, fileName, fileContent) {
     // Define the key (file path) for the finalized advertisement folder.
     const key = `finalized-advertisement/${fileName}`;
 
-    // Upload the file.
+    // Dynamically determine the correct ContentType based on the file extension.
+    let contentType = "application/octet-stream";
+    const lowerFileName = fileName.toLowerCase();
+    if (lowerFileName.endsWith(".mp4")) {
+      contentType = "video/mp4";
+    } else if (lowerFileName.endsWith(".mov")) {
+      contentType = "video/quicktime";
+    } else if (lowerFileName.endsWith(".avi")) {
+      contentType = "video/x-msvideo";
+    } else if (lowerFileName.endsWith(".mkv")) {
+      contentType = "video/x-matroska";
+    } else if (lowerFileName.endsWith(".webm")) {
+      contentType = "video/webm";
+    } else if (lowerFileName.endsWith(".jpg") || lowerFileName.endsWith(".jpeg")) {
+      contentType = "image/jpeg";
+    } else if (lowerFileName.endsWith(".png")) {
+      contentType = "image/png";
+    }
+
+    // Upload the file with the correct metadata.
     const data = await s3.send(
       new PutObjectCommand({
         Bucket: bucketName,
         Key: key,
         Body: fileContent,
+        ContentType: contentType,           // Set proper MIME type
+        ContentDisposition: "inline",       // Force inline display for preview
       })
     );
 
@@ -120,11 +142,6 @@ async function uploadFinalizedAd(req, fileName, fileContent) {
     console.error("Error uploading file:", error.message);
     throw new Error(`Error uploading file: ${error.message}`);
   }
-};
-
-// Upload advertisement to socket
-async function uploadToSocket(TvGroupId, advertisementLink) {
-  
 };
 
 export { getAllFinalizedAd, getFinalizedAd, uploadFinalizedAd};

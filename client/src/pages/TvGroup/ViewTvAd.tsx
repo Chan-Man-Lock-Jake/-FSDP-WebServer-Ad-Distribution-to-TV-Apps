@@ -1,3 +1,4 @@
+// ViewTvAd.tsx
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import "./ViewTvAd.css";
@@ -7,23 +8,61 @@ const socket = io("http://localhost:3000", {
   transports: ["websocket", "polling"],
 });
 
+// Helper function: Determine if a URL points to a video file.
+const isVideoFile = (fileUrl: string, forceVideo = false): boolean => {
+  if (forceVideo) return true;
+  try {
+    const parsedUrl = new URL(fileUrl);
+    // Extract the pathname (ignores query parameters)
+    const pathname = parsedUrl.pathname; // e.g., "/finalized-advertisement/TEST TEST.webm"
+    const extension = pathname.split(".").pop()?.toLowerCase();
+    const videoExtensions = ["mp4", "mov", "avi", "mkv", "webm"];
+    return videoExtensions.includes(extension || "");
+  } catch (error) {
+    console.error("Error parsing URL:", error);
+    return false;
+  }
+};
+
+// Helper function: Get the proper MIME type based on the file extension.
+const getVideoMimeType = (url: string): string => {
+  try {
+    const extension = new URL(url).pathname.split(".").pop()?.toLowerCase();
+    switch (extension) {
+      case "mp4":
+        return "video/mp4";
+      case "mov":
+        return "video/quicktime";
+      case "avi":
+        return "video/x-msvideo";
+      case "mkv":
+        return "video/x-matroska";
+      case "webm":
+        return "video/webm";
+      default:
+        return "video/mp4"; // Fallback MIME type.
+    }
+  } catch (error) {
+    console.error("Error determining MIME type:", error);
+    return "video/mp4";
+  }
+};
+
+interface AdInfo {
+  url: string;
+  title?: string;
+}
+
 const ViewTvAd: React.FC = () => {
-  const [room, setRoom] = useState("");
-  const [ad, setAd] = useState<string | null>(null);
+  const [room, setRoom] = useState<string>("");
+  // Store ad data with URL and optional title.
+  const [adInfo, setAdInfo] = useState<AdInfo | null>(null);
   const tvDisplayRef = useRef<HTMLDivElement>(null);
 
-  // For debugging: force video rendering (set to true to test video rendering regardless of extension)
+  // For debugging: force video rendering regardless of extension.
   const forceVideo = false;
 
-  // Helper function to check if the given file name corresponds to a video.
-  const isVideoFile = (fileName: string) => {
-    if (forceVideo) return true;
-    const videoExtensions = ["mp4", "mov", "avi", "mkv", "webm"];
-    const extension = fileName.split(".").pop()?.toLowerCase();
-    return videoExtensions.includes(extension || "");
-  };
-
-  // Join a TV group room.
+  // Function to join a TV group room.
   const joinRoom = () => {
     if (room !== "") {
       socket.emit("joinRoom", room);
@@ -32,7 +71,7 @@ const ViewTvAd: React.FC = () => {
     }
   };
 
-  // Enter fullscreen mode for the TV display div.
+  // Function to enter fullscreen mode.
   const enterFullscreen = () => {
     if (tvDisplayRef.current) {
       if (tvDisplayRef.current.requestFullscreen) {
@@ -49,25 +88,33 @@ const ViewTvAd: React.FC = () => {
   useEffect(() => {
     socket.on("get_ad", (data) => {
       console.log("Received ad data:", data);
-      // Check if data.ad is a Blob; if so, convert it to an object URL.
       let adUrl = data.ad;
+      // If data.ad is a Blob, create an object URL.
       if (data.ad instanceof Blob) {
         adUrl = URL.createObjectURL(data.ad);
       }
-      // Save the URL to localStorage (if needed)
+      // Extract title from data if available (could be data.title or data.fileName).
+      const title = data.title || data.fileName;
+      const newAdInfo: AdInfo = { url: adUrl, title };
+      setAdInfo(newAdInfo);
+      // Optionally, store the URL in localStorage.
       localStorage.setItem(`${data.tv}`, adUrl);
-      setAd(adUrl);
     });
 
+    // Cleanup the socket listener when the component unmounts.
     return () => {
       socket.off("get_ad");
     };
   }, []);
 
-  // Log the ad URL when it changes.
+  // Log ad data when it updates and send a logging event to the server.
   useEffect(() => {
-    console.log("Ad URL:", ad);
-  }, [ad]);
+    if (adInfo) {
+      console.log("Ad Campaign Viewed:", adInfo);
+      // Emit an event so your backend can record the view.
+      socket.emit("log_view", adInfo);
+    }
+  }, [adInfo]);
 
   return (
     <section className="view-tv-group">
@@ -88,26 +135,32 @@ const ViewTvAd: React.FC = () => {
           className="TV-Display"
           onClick={enterFullscreen}
         >
-          {ad ? (
-            isVideoFile(ad) ? (
-              <video
-                autoPlay
-                loop
-                controls
-                muted
-                playsInline
-                onError={(e) => console.error("Video error:", e)}
-              >
-                <source src={ad} type="video/webm" />
-                Your browser does not support the video tag.
-              </video>
-            ) : (
-              <img
-                src={ad}
-                alt="Ad"
-                onError={(e) => console.error("Image error:", e)}
-              />
-            )
+          {adInfo ? (
+            <div>
+              {adInfo.title && <h2 className="ad-title">{adInfo.title}</h2>}
+              {isVideoFile(adInfo.url, forceVideo) ? (
+                <video
+                  autoPlay
+                  loop
+                  controls
+                  muted
+                  playsInline
+                  onError={(e) => console.error("Video error:", e)}
+                >
+                  <source
+                    src={adInfo.url}
+                    type={getVideoMimeType(adInfo.url)}
+                  />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img
+                  src={adInfo.url}
+                  alt={adInfo.title || "Ad"}
+                  onError={(e) => console.error("Image error:", e)}
+                />
+              )}
+            </div>
           ) : (
             <p>No Ads displayed</p>
           )}

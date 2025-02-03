@@ -413,7 +413,7 @@ const PushAdvertisement: React.FC = () => {
               >
                 Cancel
               </button>
-              <button className="push-button" onClick={handleConfirmPush}>
+              <button className="push-button" onClick={handleConfirmSave}>
                 Confirm
               </button>
             </div>

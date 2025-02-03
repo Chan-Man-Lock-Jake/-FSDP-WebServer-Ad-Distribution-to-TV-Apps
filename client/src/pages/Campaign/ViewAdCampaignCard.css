@@ -1,0 +1,61 @@
+.ad-campaign-card {
+    list-style: none;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    margin: 20px auto;
+    padding: 0;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #ffffff;
+    max-width: 320px;
+    text-align: center;
+  }
+  
+  .ad-campaign-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .ad-campaign-card .media-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
+  
+  .ad-campaign-card img,
+  .ad-campaign-card video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .ad-campaign-card h2 {
+    margin: 12px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  .ad-campaign-card-footer {
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+  }
+  
+  .ad-campaign-card-footer h3 {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  

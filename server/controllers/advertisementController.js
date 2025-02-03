@@ -32,29 +32,56 @@ const uploadFinalizedAdController = async (req, res) => {
 
 const getFinalizedAdController = async (req, res) => {
   try {
+    // Extract required fields from the query parameters
     const { companyName, userId, fileName } = req.query;
-
     if (!companyName || !userId || !fileName) {
-      return res.status(400).json({ message: "Missing required fields: companyName, userId, or fileName" });
+      return res.status(400).json({
+        message: "Missing required fields: companyName, userId, or fileName",
+      });
     }
 
+    // Construct a user object to pass to the model function
     const user = {
       Company: companyName,
       UserId: userId,
     };
 
+    // Retrieve the advertisement file stream from S3
     const response = await getFinalizedAd(user, fileName);
 
-    // Set headers for file download or inline viewing
-    res.setHeader("Content-Type", "image/jpeg"); // Adjust for the actual file type
-    res.setHeader("Content-Disposition", `inline; filename="${fileName}"`); // `inline` to view in Postman
+    // Determine the Content-Type header based on the file extension
+    let contentType = "application/octet-stream";
+    if (fileName.match(/\.(jpg|jpeg)$/i)) {
+      contentType = "image/jpeg";
+    } else if (fileName.match(/\.png$/i)) {
+      contentType = "image/png";
+    } else if (fileName.match(/\.mp4$/i)) {
+      contentType = "video/mp4";
+    } else if (fileName.match(/\.mov$/i)) {
+      contentType = "video/quicktime";
+    } else if (fileName.match(/\.avi$/i)) {
+      contentType = "video/x-msvideo";
+    } else if (fileName.match(/\.mkv$/i)) {
+      contentType = "video/x-matroska";
+    } else if (fileName.match(/\.webm$/i)) {
+      contentType = "video/webm";
+    }
 
-    response.fileStream.pipe(res); // Stream the file to the client
+    // Set headers to display the content inline (instead of forcing a download)
+    res.setHeader("Content-Type", contentType);
+    res.setHeader("Content-Disposition", `inline; filename="${fileName}"`);
+
+    // Pipe the file stream to the client
+    response.fileStream.pipe(res);
   } catch (error) {
     console.error("Error retrieving advertisement:", error.message);
-    res.status(500).json({ message: "Error retrieving advertisement", error: error.message });
+    res.status(500).json({
+      message: "Error retrieving advertisement",
+      error: error.message,
+    });
   }
 };
+
 
 // Retrieve all finalized advertisements
 const getAllFinalizedAdController = async (req, res) => {
