@@ -18,6 +18,7 @@
   }
   .signup-flow {
     display: flex;
+    width: 100%;
     flex-direction: row;
   }
   .left {
