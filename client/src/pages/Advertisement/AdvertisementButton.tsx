@@ -67,9 +67,9 @@ const AdvertisementButton: React.FC<AdvertisementButtonProps> = ({
             <option value="Scheduled">Status: Scheduled</option>
             <option value="Pushed">Status: Pushed</option>
           </select>
-          <button className="tab" onClick={handlePushAdNow}>
+          {/* <button className="tab" onClick={handlePushAdNow}>
             Push Ad Now
-          </button>
+          </button> */}
         </div>
       )}
     </div>

@@ -2,6 +2,15 @@ import React, { useRef, useState } from "react";
 import "./ImageGenerator.css";
 import default_image from "../ImageGeneratorAssets/suave_logo.svg";
 
+// Helper function to sanitize the prompt text for use as a file name.
+const sanitizePromptForFilename = (prompt: string): string => {
+  return prompt
+    .trim()
+    .replace(/\s+/g, "_")
+    .replace(/[^a-zA-Z0-9_]/g, "")
+    .toLowerCase();
+};
+
 const ImageGenerator: React.FC = () => {
   const [image_url, setImage_url] = useState("/");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -58,6 +67,11 @@ const ImageGenerator: React.FC = () => {
       return;
     }
 
+    if (!inputRef.current || inputRef.current.value.trim() === "") {
+      alert("No prompt provided for file naming.");
+      return;
+    }
+
     try {
       // Use the proxy endpoint to bypass CORS.
       const proxyUrl = `http://localhost:3000/proxy-image?url=${encodeURIComponent(
@@ -86,7 +100,9 @@ const ImageGenerator: React.FC = () => {
         console.warn("Unable to determine file extension, defaulting to png");
       }
 
-      const computedFileName = `ai-generated-image.${extension}`;
+      // Compute the file name from the prompt text.
+      const sanitizedPrompt = sanitizePromptForFilename(inputRef.current.value);
+      const computedFileName = `${sanitizedPrompt}.${extension}`;
       console.log("Final file name:", computedFileName);
 
       // Create FormData and append the file under key "file"
@@ -154,4 +170,3 @@ const ImageGenerator: React.FC = () => {
 };
 
 export default ImageGenerator;
-
