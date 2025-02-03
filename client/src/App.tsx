@@ -25,6 +25,7 @@ import UserDashboard from "./pages/Accounts/ViewAccounts";
 import ImageGenerator from "./pages/Advertisement/ImageGenerator/ImageGenerator";
 import SelectTV from './pages/TvGroup/SelectTV';
 import SubmitTvGroupDetail from './pages/TvGroup/SubmitTvGroupDetail';
+import AddUserPage from './pages/Accounts/AddUser';
 
 const App: React.FC = () => {
   return (
@@ -56,6 +57,7 @@ const App: React.FC = () => {
           />
           <Route path="jointvgroup" element={<ViewTvAd />} />
           <Route path="view-account" element={<UserDashboard />} />
+          <Route path="add-user" element={<AddUserPage />} />
           <Route path="createtvgroup" element={<CreateTvGroup />} />
           <Route path="viewtvgroup" element={<ViewTvGroup />} />
           <Route path="select-tvs/:outletId" element={<SelectTV/>} />
