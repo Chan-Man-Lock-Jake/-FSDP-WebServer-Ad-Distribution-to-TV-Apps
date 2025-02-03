@@ -16,13 +16,14 @@ const AdCampaignCard: React.FC<AdCampaignCardProps> = ({
   date,
   onClick,
 }) => {
-
   return (
     <li onClick={onClick}>
-        <div><img src={image}/></div>
-        <h2>{name}</h2>
-        <h3>Created on: {created_on}</h3>
-        <h3>Launch date: {date}</h3>
+      <div>
+        <img src={image} />
+      </div>
+      <h2>{name}</h2>
+      <h3>Created on: {created_on}</h3>
+      <h3>Launch date: {date}</h3>
     </li>
   );
 };

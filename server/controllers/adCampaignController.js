@@ -1,4 +1,4 @@
-import { createAdCampaign, getAllAdCampaign } from "../models/adCampaign.js";
+import { createAdCampaign, getAllAdCampaign, updateAdCampaign } from "../models/adCampaign.js";
 
 const createAdCampaignController = async (req, res) => {
   try {
@@ -41,7 +41,6 @@ const getAllAdCampaignController = async (req, res) => {
   }
 };
 
-// Update Campaign details
 const updateAdCampaignController = async (req, res) => {
   try {
     const { campaignId } = req.params; // Extract campaign ID from URL
@@ -60,4 +59,3 @@ const updateAdCampaignController = async (req, res) => {
 };
 
 export { createAdCampaignController, getAllAdCampaignController, updateAdCampaignController };
-
